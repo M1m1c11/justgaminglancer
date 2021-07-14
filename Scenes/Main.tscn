@@ -1,0 +1,23 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://Scripts/Main.gd" type="Script" id=1]
+[ext_resource path="res://Scenes/UI/Camera_rig.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Scenes/UI/HUD.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Scenes/Systems/System_1.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Scenes/Ships/Rogue_fighter.tscn" type="PackedScene" id=5]
+
+[node name="Main" type="Spatial"]
+script = ExtResource( 1 )
+
+[node name="HUD" parent="." instance=ExtResource( 3 )]
+
+[node name="Current_location" type="Spatial" parent="."]
+
+[node name="System_1" parent="Current_location" instance=ExtResource( 4 )]
+
+[node name="Player_ship_origin" type="Spatial" parent="."]
+
+[node name="Camera_rig" parent="Player_ship_origin" instance=ExtResource( 2 )]
+transform = Transform( 10, 0, 0, 0, 10, 0, 0, 0, 10, 0, 0, 0 )
+
+[node name="Rogue_fighter" parent="Player_ship_origin" instance=ExtResource( 5 )]

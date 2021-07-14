@@ -1,0 +1,19 @@
+[remap]
+
+importer="wavefront_obj"
+type="Mesh"
+path="res://.import/Rogue_fighter.obj-2e14010f2d89e7e8ef78f952778e551c.mesh"
+
+[deps]
+
+files=[ "res://.import/Rogue_fighter.obj-2e14010f2d89e7e8ef78f952778e551c.mesh" ]
+
+source_file="res://Assets/Ships/Rogue_fighter.obj"
+dest_files=[ "res://.import/Rogue_fighter.obj-2e14010f2d89e7e8ef78f952778e551c.mesh", "res://.import/Rogue_fighter.obj-2e14010f2d89e7e8ef78f952778e551c.mesh" ]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3( 1, 1, 1 )
+offset_mesh=Vector3( 0, 0, 0 )
+optimize_mesh=true

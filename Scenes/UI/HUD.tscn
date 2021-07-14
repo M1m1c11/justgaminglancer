@@ -1,0 +1,84 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://Scripts/HUD.gd" type="Script" id=1]
+
+[node name="HUD" type="CanvasLayer"]
+script = ExtResource( 1 )
+
+[node name="Debug_panel" type="Control" parent="."]
+margin_right = 128.0
+margin_bottom = 256.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Camera_y" type="Label" parent="Debug_panel"]
+margin_top = 16.0
+margin_right = 75.0
+margin_bottom = 30.0
+text = "Camera y: 0"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Camera_x" type="Label" parent="Debug_panel"]
+margin_right = 75.0
+margin_bottom = 14.0
+text = "Camera x: 0"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Mouse_x" type="Label" parent="Debug_panel"]
+margin_top = 32.0
+margin_right = 75.0
+margin_bottom = 46.0
+text = "Mouse x: 0"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Mouse_y" type="Label" parent="Debug_panel"]
+margin_top = 48.0
+margin_right = 75.0
+margin_bottom = 62.0
+text = "Mouse y: 0"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="FPS" type="Label" parent="Debug_panel"]
+margin_top = 304.0
+margin_right = 40.0
+margin_bottom = 318.0
+text = "FPS: 0"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Onscreen_controls" type="Control" parent="."]
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_top = -88.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Text" type="Control" parent="."]
+anchor_left = 1.0
+anchor_right = 1.0
+margin_left = -1024.0
+margin_bottom = 88.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Intro" type="Label" parent="Text"]
+anchor_left = 1.0
+anchor_right = 1.0
+margin_left = -249.0
+margin_bottom = 80.0
+text = "Left click and drag - rotate camera."
+align = 2
+autowrap = true

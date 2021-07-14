@@ -1,0 +1,29 @@
+[gd_scene load_steps=9 format=2]
+
+[ext_resource path="res://Assets/Ships/Rogue_fighter.obj" type="ArrayMesh" id=1]
+[ext_resource path="res://Scenes/0/_1_Light.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Scenes/FX/Engine_exhaust_blue.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Assets/Materials/Paint/Hull_paint_cyan_1.tres" type="Material" id=4]
+[ext_resource path="res://Assets/Materials/Metal/Metalic_1.tres" type="Material" id=5]
+[ext_resource path="res://Assets/Materials/Matte_details/Details_1.tres" type="Material" id=6]
+[ext_resource path="res://Assets/Materials/Glass_non_transparent/Cockpit_glow_golden.tres" type="Material" id=7]
+[ext_resource path="res://Assets/Materials/Engine_exhaust/Engine_exhaust_glow_white.tres" type="Material" id=8]
+
+[node name="Rogue_fighter" type="Spatial"]
+
+[node name="Ship_model" type="MeshInstance" parent="."]
+mesh = ExtResource( 1 )
+material/0 = ExtResource( 4 )
+material/1 = ExtResource( 5 )
+material/2 = ExtResource( 6 )
+material/3 = ExtResource( 7 )
+material/4 = ExtResource( 8 )
+
+[node name="_1_Light" parent="." instance=ExtResource( 2 )]
+visible = false
+
+[node name="Engine_exhaust_blue" parent="." instance=ExtResource( 3 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0242862, 3.72838 )
+
+[node name="Engine_exhaust_blue2" parent="." instance=ExtResource( 3 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.97768, 2.02314 )
