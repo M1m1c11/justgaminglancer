@@ -12,6 +12,7 @@
 [node name="Rogue_fighter" type="Spatial"]
 
 [node name="Ship_model" type="MeshInstance" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1.0697 )
 mesh = ExtResource( 1 )
 material/0 = ExtResource( 4 )
 material/1 = ExtResource( 5 )
@@ -20,10 +21,11 @@ material/3 = ExtResource( 7 )
 material/4 = ExtResource( 8 )
 
 [node name="_1_Light" parent="." instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1.0697 )
 visible = false
 
 [node name="Engine_exhaust_blue" parent="." instance=ExtResource( 3 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0242862, 3.72838 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0242862, 2.65868 )
 
 [node name="Engine_exhaust_blue2" parent="." instance=ExtResource( 3 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.97768, 2.02314 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.97768, 0.953437 )
