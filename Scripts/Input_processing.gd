@@ -1,72 +1,73 @@
 extends Node
 
-# Variable inits
+# ================================ Signals ====================================
+signal engine_switched_on
+signal engine_switched_off
+# =============================================================================
+
+var turret_mode = false
 var mouse_viewport_flag = true
 var mouse_x = 0
 var mouse_y = 0
-var fps = 0
 var viewport_size = Vector2(1,1)
 
-
-# Called when the node enters the scene tree for the first time. Inits.
 func _ready():
 	# ====================== Connect signals ==================================
-	var hud = get_parent().get_node("HUD")
+	var hud = get_node("/root/Main/UI")
 	hud.connect("mouse_on_UI", self, "mouse_on_UI")
 	hud.connect("mouse_on_viewport", self, "mouse_on_viewport")
 	hud.connect("update_viewport", self, "viewport_resized")
+	hud.connect("quit_game_pressed", self, "quit_game")
+	hud.connect("switch_to_turret", self, "camera_mode_turret")
+	hud.connect("switch_to_chase", self, "camera_mode_chase")
+	hud.connect("engine_switch_on", self, "engine_on")
+	hud.connect("engine_switch_off", self, "engine_off")
 	# =========================================================================
 
-# Input event processing.
 func _input(event):
 
 	# ==================== For events on 3D viewport ==========================
-	# This is ususally related to mouse events.
+	# Mouse over 3D viewport.
 	if mouse_viewport_flag:
 		
 		# Track the mouse position in +/-1, +/-1 viewport coordinates.
-		mouse_x = clamp(((event.global_position.x-viewport_size.x/2) \
-			/ viewport_size.x*2), -1, 1)
-		mouse_y = clamp(((event.global_position.y-viewport_size.y/2) \
-			/ viewport_size.y*2), -1, 1)
+		if event is InputEventMouseMotion:
+			mouse_x = clamp(((event.global_position.x-viewport_size.x/2) \
+				/ viewport_size.x*2), -1, 1)
+			mouse_y = clamp(((event.global_position.y-viewport_size.y/2) \
+				/ viewport_size.y*2), -1, 1)
 
 		# Camera orbiting.
-		if event is InputEventMouseMotion and \
-		 	event.button_mask == BUTTON_MASK_LEFT:
-			get_parent().get_node("Player_ship_origin/Camera_rig") \
+		# TODO: re-wire LMB to "joystick" actuator.
+		if event is InputEventMouseMotion and turret_mode and \
+			event.button_mask == BUTTON_MASK_LEFT:
+			get_node("/root/Main/Player_ship/Camera_rig") \
 				.orbit_camera(event)
 			
 		# Camera zoom.
-		if event is InputEventMouseButton:
-			get_parent().get_node("Player_ship_origin/Camera_rig") \
+		if event is InputEventMouseButton and turret_mode:
+			get_node("/root/Main/Player_ship/Camera_rig") \
 				.zoom_camera(event)
 
 	# =================== For input outside of 3D viewport ====================
-	# This is related to mouse events over widows and menus.
-	# There is no need to track the mouse in those, unless there are
-	# additional viewports created later on. This would require making another
-	# falgs?
+	# Mouse not over 3D viewport.
 	else:
 		pass
 		
-	# ========================== Keyboard keys ================================
+	# ========================= For events anywhere ===========================
 	if event is InputEventKey:
 		
 		# Quit the game.
 		if event.pressed and event.scancode == KEY_ESCAPE:
-			get_tree().quit()
+			quit_game()
 
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta):
 #	pass
 
-# Every physics frame. 'delta' is the elapsed time since the previous frame.
 #func _physics_process(delta):
 #	pass
 
-
-# ============================ SIGNAL PROCESSING ==============================
+# ============================ Signal processing ==============================
 # Check if viewport resized and get new values. Required for mouse coordinates.
 func viewport_resized():
 	viewport_size = get_viewport().size
@@ -77,3 +78,20 @@ func mouse_on_UI():
 
 func mouse_on_viewport():
 	mouse_viewport_flag = true
+
+func quit_game():
+	get_tree().quit()
+
+func camera_mode_turret():
+	turret_mode = true
+	get_node("/root/Main/Player_ship/Camera_rig").turret_camera()
+
+func camera_mode_chase():
+	turret_mode = false
+	get_node("/root/Main/Player_ship/Camera_rig").fix_camera()
+
+func engine_on():
+	emit_signal("engine_switched_on")
+
+func engine_off():
+	emit_signal("engine_switched_off")
