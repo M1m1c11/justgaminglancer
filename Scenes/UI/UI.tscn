@@ -20,7 +20,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Debug_left" type="Control" parent="Main3D"]
+[node name="Debug" type="Control" parent="Main3D"]
 anchor_bottom = 1.0
 margin_right = 192.0
 margin_bottom = -80.0
@@ -30,7 +30,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="_ColorRect" type="ColorRect" parent="Main3D/Debug_left"]
+[node name="_ColorRect" type="ColorRect" parent="Main3D/Debug"]
 visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -39,7 +39,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Camera_x" type="Label" parent="Main3D/Debug_left"]
+[node name="Camera_x" type="Label" parent="Main3D/Debug"]
 margin_right = 75.0
 margin_bottom = 14.0
 text = "Camera x: 0"
@@ -47,7 +47,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Camera_y" type="Label" parent="Main3D/Debug_left"]
+[node name="Camera_y" type="Label" parent="Main3D/Debug"]
 margin_top = 16.0
 margin_right = 75.0
 margin_bottom = 30.0
@@ -56,7 +56,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Current_zoom" type="Label" parent="Main3D/Debug_left"]
+[node name="Current_zoom" type="Label" parent="Main3D/Debug"]
 margin_top = 32.0
 margin_right = 103.0
 margin_bottom = 46.0
@@ -65,7 +65,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Mouse_x" type="Label" parent="Main3D/Debug_left"]
+[node name="Mouse_x" type="Label" parent="Main3D/Debug"]
 margin_top = 48.0
 margin_right = 75.0
 margin_bottom = 62.0
@@ -74,7 +74,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Mouse_y" type="Label" parent="Main3D/Debug_left"]
+[node name="Mouse_y" type="Label" parent="Main3D/Debug"]
 margin_top = 64.0
 margin_right = 75.0
 margin_bottom = 78.0
@@ -83,7 +83,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="FPS" type="Label" parent="Main3D/Debug_left"]
+[node name="FPS" type="Label" parent="Main3D/Debug"]
 margin_top = 80.0
 margin_right = 40.0
 margin_bottom = 94.0
@@ -92,7 +92,12 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Text_right" type="Control" parent="Main3D"]
+[node name="Mouse_vector" type="Line2D" parent="Main3D/Debug"]
+points = PoolVector2Array( 0, 0, 0, 0 )
+width = 1.0
+default_color = Color( 0.596078, 0, 0, 1 )
+
+[node name="Text_panel" type="Control" parent="Main3D"]
 anchor_left = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -104,7 +109,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="_ColorRect" type="ColorRect" parent="Main3D/Text_right"]
+[node name="_ColorRect" type="ColorRect" parent="Main3D/Text_panel"]
 visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -113,12 +118,14 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Text" type="Label" parent="Main3D/Text_right"]
+[node name="Text" type="Label" parent="Main3D/Text_panel"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 text = "Left click and drag - rotate.
 Mouse wheel - zoom in/out.
-Escape - quit."
+Escape - quit.
+Space - WIP.
+H - switch turret mode."
 autowrap = true
 __meta__ = {
 "_edit_use_anchors_": false
