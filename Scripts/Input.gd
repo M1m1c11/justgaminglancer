@@ -9,19 +9,23 @@ var mouse_y_abs = 0
 var mouse_vector = Vector2(0,0)
 var viewport_size = Vector2(1,1)
 # Flags.
+
 var LMB_held = false
 var LMB_released = true
 var mouse_on_viewport = true
-var turret_mode = false
+
+
 # Nodes.
 var camera_rig = Node
+var player_ship_state = Node
+var signals = Node
 var ui = Node
 var ui_button_turret = Node
-var signals = Node
 
 func _ready():
 	# ============================ Initialize nodes ===========================
 	camera_rig = get_node("/root/Main/Player_ship/Camera_rig")
+	player_ship_state = get_node("/root/Main/State/Player_ship")
 	signals = get_node("/root/Main/Input/Signals")
 	ui = get_node("/root/Main/UI")
 	ui_button_turret = get_node("/root/Main/UI/Controls/Button_turret")
@@ -29,7 +33,7 @@ func _ready():
 	signals.connect("sig_mouse_on_viewport", self, "is_mouse_on_viewport")
 	signals.connect("sig_viewport_update", self, "is_viewport_update")
 	signals.connect("sig_quit_game", self, "is_quit_game")
-	signals.connect("sig_turret_mode", self, "is_turret_mode_on")
+	signals.connect("sig_turret_mode_on", self, "is_turret_mode_on")
 	# =========================================================================
 	
 	# Initial value require for the mouse coords.
@@ -55,37 +59,69 @@ func _input(event):
 		# Mouse button held check. LMB_released is to reduce calls number.
 		if Input.is_mouse_button_pressed(BUTTON_LEFT) and LMB_released:
 			LMB_released = false
-			signals.emit_signal("sig_LMB_held", true)
+			LMB_held = true
 		
 		# Mouse button released check. LMB_released is to reduce calls number.
 		if not Input.is_mouse_button_pressed(BUTTON_LEFT) and not LMB_released:
 			LMB_released = true
-			signals.emit_signal("sig_LMB_held", false)
+			LMB_held = false
 		
 		# Camera orbiting is in the camera script.
 		
 		# Camera zoom.
-		if event is InputEventMouseButton and turret_mode:
+		if event is InputEventMouseButton and player_ship_state.turret_mode:
 			camera_rig.zoom_camera(event)
 		
 		# ======================= For keyboard buttons ========================
-		# TODO: Implement "mouse flight"-like thing that will ignore control bar mouse focus.
 		if event is InputEventKey:
+			
+			# Mouse flight.
 			if event.pressed and event.scancode == KEY_SPACE:
-				# TODO: emit signal
-				pass
-				
-			if event.pressed and event.scancode == KEY_H:
-				# TODO: emit signal
-				if not turret_mode:
-					turret_mode = true
-					ui_button_turret.pressed = true
-
+				if player_ship_state.mouse_flight:
+					player_ship_state.mouse_flight = false
+					signals.emit_signal("sig_mouse_flight_on", false)
 				else:
-					turret_mode = false
-					ui_button_turret.pressed = false
+					player_ship_state.mouse_flight = true
+					signals.emit_signal("sig_mouse_flight_on", true)
+			
+			# Turret mode. UI shortcut. Signal is emitted by UI.
+			if event.pressed and event.scancode == KEY_H:
+				if not player_ship_state.turret_mode: ui_button_turret.pressed = true
+				else: ui_button_turret.pressed = false
+			
+			# Accelerate forward.
+			# TODO: unique signals for simultaneous action.
+			if event.pressed and event.scancode == KEY_UP:
+				signals.emit_signal("sig_accelerate", true)
 
-				
+			# Accelerate backward.
+			if event.pressed and event.scancode == KEY_DOWN:
+				signals.emit_signal("sig_accelerate", false)
+
+			# Accelerate left sgtrafe.
+			if event.pressed and event.scancode == KEY_A:
+				signals.emit_signal("sig_accelerate", Vector3(1, 0, 0))
+
+			# Accelerate right strafe.
+			if event.pressed and event.scancode == KEY_D:
+				signals.emit_signal("sig_accelerate", Vector3(-1, 0, 0))
+			
+			# Accelerate up strafe.
+			if event.pressed and event.scancode == KEY_W:
+				signals.emit_signal("sig_accelerate", Vector3(0, -1, 0))
+
+			# Accelerate down strafe.
+			if event.pressed and event.scancode == KEY_S:
+				signals.emit_signal("sig_accelerate", Vector3(0, 1, 0))
+			
+			# Accelerate down strafe.
+			if event.pressed and event.scancode == KEY_Z:
+				if not player_ship_state.engine_kill: 
+					player_ship_state.engine_kill = true
+					signals.emit_signal("sig_engine_kill", true)
+				else: 
+					player_ship_state.engine_kill = false
+					signals.emit_signal("sig_engine_kill", false)
 	# =================== For events outside of 3D viewport ===================
 	# Mouse not over 3D viewport.
 	else:
@@ -120,5 +156,5 @@ func is_quit_game():
 	get_tree().quit()
 
 func is_turret_mode_on(flag):
-	if flag: turret_mode = true
-	else: turret_mode = false
+	player_ship_state.turret_mode = flag
+

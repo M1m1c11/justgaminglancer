@@ -9,13 +9,13 @@ extends Node
 # ============================== Generic =====================================
 signal sig_viewport_update
 signal sig_quit_game
-signal sig_LMB_held(flag)
 signal sig_mouse_on_viewport(flag)
 
 # =============================== Camera =====================================
-signal sig_turret_mode(flag)
+signal sig_turret_mode_on(flag)
+signal sig_mouse_flight_on(flag)
 
 # ================================ Ship =======================================
-signal sig_ship_engine(flag)
-
+signal sig_accelerate(flag)
+signal sig_engine_kill(flag)
 

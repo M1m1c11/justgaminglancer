@@ -10,6 +10,9 @@ var camera_rig = Node
 var debug = Node
 var input = Node
 var main = Node
+var marker = Node
+var marker2 = Node
+var monolith = Node
 var mouse_vector = Node
 var signals = Node
 var text_panel = Node
@@ -19,7 +22,10 @@ func _ready():
 	camera_rig = get_node("/root/Main/Player_ship/Camera_rig")
 	debug = get_node("Main3D/Debug")
 	input = get_node("/root/Main/Input")
-	main = get_node("/root/Main")	
+	main = get_node("/root/Main")
+	marker = get_node("Marker")
+	marker2 = get_node("Marker2")
+	monolith = get_node("/root/Main/Local_space/System_objects/Monolith")
 	mouse_vector = get_node("Main3D/Debug/Mouse_vector")
 	signals = get_node("/root/Main/Input/Signals")
 	text_panel = get_node("Main3D/Text_panel")
@@ -37,13 +43,23 @@ func _input(event):
 		mouse_vector.points[1] = Vector2(input.mouse_x_abs, input.mouse_y_abs)
 	
 func _process(_delta):
+	# TODO: make a system of spatial markers. Proper ones.
+	# This should be an iterator over objects within proximity.
+	var loc = camera_rig.global_transform.origin
+	var loc2 = monolith.global_transform.origin
+	marker.visible = not get_viewport().get_camera().is_position_behind(Vector3(0,0,0))
+	marker.rect_position = get_viewport().get_camera().unproject_position(Vector3(0,0,0))
+	marker.text = "Origin: "+str(loc.distance_to(Vector3(0,0,0)))
+	marker2.visible = not get_viewport().get_camera().is_position_behind(loc2)
+	marker2.rect_position = get_viewport().get_camera().unproject_position(loc2)
+	marker2.text = "Monolith: "+str(loc.distance_to(loc2))
 	if update_debug_text_on: update_debug_text()
 
 # ================================== Other ====================================
 func update_debug_text():
 	debug.get_node("FPS").text = str("FPS: ", main.fps)
-	debug.get_node("Camera_x").text = str("Camera x: ", camera_rig.camera_x)
-	debug.get_node("Camera_y").text = str("Camera y: ", camera_rig.camera_y)
+	debug.get_node("Camera_x").text = str("Camera x: ", camera_rig.camera_horiz)
+	debug.get_node("Camera_y").text = str("Camera y: ", camera_rig.camera_vert)
 	debug.get_node("Mouse_x").text = str("Mouse x: ", input.mouse_x)
 	debug.get_node("Mouse_y").text = str("Mouse y: ", input.mouse_y)
 	debug.get_node("Current_zoom").text = str("Current zoom: ", camera_rig.current_zoom)
@@ -63,8 +79,8 @@ func _on_Button_quit_pressed():
 	signals.emit_signal("sig_quit_game")
 
 func _on_Button_turret_toggled(button_pressed):
-	if button_pressed: signals.emit_signal("sig_turret_mode", true)
-	else: signals.emit_signal("sig_turret_mode", false)
+	if button_pressed: signals.emit_signal("sig_turret_mode_on", true)
+	else: signals.emit_signal("sig_turret_mode_on", false)
 
 func _on_Button_debug_toggled(button_pressed):
 	if button_pressed: 
@@ -77,7 +93,3 @@ func _on_Button_debug_toggled(button_pressed):
 func _on_Button_text_panel_toggled(button_pressed):
 	if button_pressed: text_panel.show()
 	else: text_panel.hide()
-	
-func _on_Button_engine_toggled(button_pressed):
-	if button_pressed: signals.emit_signal("sig_ship_engine", true)
-	else: signals.emit_signal("sig_ship_engine", false)

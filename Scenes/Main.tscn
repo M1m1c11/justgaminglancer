@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://Scripts/Main.gd" type="Script" id=1]
 [ext_resource path="res://Scenes/UI/Camera_rig.tscn" type="PackedScene" id=2]
@@ -8,19 +8,24 @@
 [ext_resource path="res://Scripts/Input.gd" type="Script" id=6]
 [ext_resource path="res://Scripts/Camera_rig.gd" type="Script" id=7]
 [ext_resource path="res://Scripts/Options_camera.gd" type="Script" id=8]
-[ext_resource path="res://Scripts/Player_ship.gd" type="Script" id=9]
+[ext_resource path="res://Scripts/State/Player_ship.gd" type="Script" id=9]
 [ext_resource path="res://Scripts/Signals.gd" type="Script" id=10]
+[ext_resource path="res://Environment/Default_env.tres" type="Environment" id=11]
+[ext_resource path="res://Scripts/Engine.gd" type="Script" id=12]
 
 [node name="Main" type="Spatial"]
 script = ExtResource( 1 )
 
+[node name="World" type="WorldEnvironment" parent="."]
+environment = ExtResource( 11 )
+
 [node name="Options" type="Node" parent="."]
+
+[node name="Engine" type="Node" parent="Options"]
+script = ExtResource( 12 )
 
 [node name="Camera" type="Node" parent="Options"]
 script = ExtResource( 8 )
-camera_sensitivity = 3.0
-camera_vert_limit_deg = 60
-camera_inertia_factor = 1.15
 
 [node name="Input" type="Node" parent="."]
 script = ExtResource( 6 )
@@ -28,22 +33,21 @@ script = ExtResource( 6 )
 [node name="Signals" type="Node" parent="Input"]
 script = ExtResource( 10 )
 
+[node name="State" type="Node" parent="."]
+
+[node name="Player_ship" type="Node" parent="State"]
+script = ExtResource( 9 )
+
 [node name="UI" parent="." instance=ExtResource( 3 )]
 
-[node name="Current_location" type="Position3D" parent="."]
+[node name="Local_space" type="Position3D" parent="."]
 __meta__ = {
 "_edit_group_": true
 }
 
-[node name="System_1" parent="Current_location" instance=ExtResource( 4 )]
+[node name="System_objects" parent="Local_space" instance=ExtResource( 4 )]
 
-[node name="Player_ship" type="Position3D" parent="."]
-script = ExtResource( 9 )
-__meta__ = {
-"_edit_group_": true
-}
-
-[node name="Rogue_fighter" parent="Player_ship" instance=ExtResource( 5 )]
+[node name="Player_ship" parent="." instance=ExtResource( 5 )]
 
 [node name="Camera_rig" parent="Player_ship" instance=ExtResource( 2 )]
 script = ExtResource( 7 )

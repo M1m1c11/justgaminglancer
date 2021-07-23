@@ -125,7 +125,8 @@ text = "Left click and drag - rotate.
 Mouse wheel - zoom in/out.
 Escape - quit.
 Space - WIP.
-H - switch turret mode."
+H - switch turret mode
+Space - mouse flight."
 autowrap = true
 __meta__ = {
 "_edit_use_anchors_": false
@@ -136,18 +137,17 @@ material = SubResource( 1 )
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_top = -88.0
+margin_top = -80.0
 mouse_filter = 1
 mouse_default_cursor_shape = 2
 __meta__ = {
+"_edit_group_": true,
 "_edit_use_anchors_": false
 }
 
 [node name="ColorRect" type="ColorRect" parent="Controls"]
-anchor_top = 0.091
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_top = -0.00800037
 mouse_filter = 2
 color = Color( 0.109804, 0.109804, 0.109804, 1 )
 __meta__ = {
@@ -167,7 +167,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Button_engine" type="Button" parent="Controls"]
+[node name="Button_" type="Button" parent="Controls"]
 margin_left = 16.0
 margin_top = 56.0
 margin_right = 72.0
@@ -175,7 +175,6 @@ margin_bottom = 76.0
 focus_mode = 0
 toggle_mode = true
 keep_pressed_outside = true
-text = "Engine"
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -227,11 +226,27 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="Marker" type="Label" parent="."]
+margin_right = 40.0
+margin_bottom = 14.0
+text = "Origin"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Marker2" type="Label" parent="."]
+margin_right = 40.0
+margin_bottom = 14.0
+text = "Monolith"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
 [connection signal="mouse_entered" from="Main3D" to="." method="_on_Viewport_main_mouse_entered"]
 [connection signal="mouse_exited" from="Main3D" to="." method="_on_Viewport_main_mouse_exited"]
 [connection signal="resized" from="Main3D" to="." method="_on_Viewport_main_resized"]
 [connection signal="toggled" from="Controls/Button_turret" to="." method="_on_Button_turret_toggled"]
-[connection signal="toggled" from="Controls/Button_engine" to="." method="_on_Button_engine_toggled"]
+[connection signal="toggled" from="Controls/Button_" to="." method="_on_Button_engine_toggled"]
 [connection signal="toggled" from="Controls/Button_debug" to="." method="_on_Button_debug_toggled"]
 [connection signal="toggled" from="Controls/Button_text_panel" to="." method="_on_Button_text_panel_toggled"]
 [connection signal="pressed" from="Controls/Button_quit" to="." method="_on_Button_quit_pressed"]

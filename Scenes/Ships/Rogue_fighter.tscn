@@ -1,10 +1,10 @@
-[gd_scene load_steps=13 format=2]
+[gd_scene load_steps=14 format=2]
 
-[ext_resource path="res://Scenes/0/_1_Light.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Assets/Materials/Metal/Metalic_1.tres" type="Material" id=1]
+[ext_resource path="res://Scripts/Player_ship.gd" type="Script" id=2]
 [ext_resource path="res://Scenes/FX/Engine_exhaust_blue.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Assets/Materials/Glass_non_transparent/Cockpit_glow_golden.tres" type="Material" id=8]
 [ext_resource path="res://Assets/Materials/Paint/Hull_paint_cyan_1.tres" type="Material" id=9]
-[ext_resource path="res://Assets/Materials/Metal/Metalic_1.tres" type="Material" id=10]
 [ext_resource path="res://Assets/Materials/Matte_details/Details_1.tres" type="Material" id=11]
 
 [sub_resource type="SpatialMaterial" id=1]
@@ -104,24 +104,36 @@ surfaces/4 = {
 "vertex_count": 24
 }
 
-[node name="Rogue_fighter" type="Spatial"]
+[sub_resource type="CapsuleShape" id=7]
+radius = 3.13616
+height = 3.56
+
+[node name="Rogue_fighter" type="RigidBody"]
+mass = 1000.0
+script = ExtResource( 2 )
 
 [node name="Ship_model" type="MeshInstance" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.955233 )
 mesh = SubResource( 6 )
 material/0 = ExtResource( 9 )
-material/1 = ExtResource( 10 )
-material/2 = ExtResource( 11 )
+material/1 = ExtResource( 11 )
+material/2 = ExtResource( 1 )
 material/3 = ExtResource( 8 )
 material/4 = ExtResource( 11 )
-
-[node name="_1_Light" parent="." instance=ExtResource( 2 )]
-transform = Transform( -0.713361, 0, -0.700797, 0, 1, 0, 0.700797, 0, -0.713361, 0, 0, -1.0697 )
 
 [node name="Engines" type="Spatial" parent="."]
 
 [node name="Engine_exhaust_blue" parent="Engines" instance=ExtResource( 3 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0242862, 2.60903 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0242862, 2.78689 )
 
 [node name="Engine_exhaust_blue2" parent="Engines" instance=ExtResource( 3 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.97768, 0.953437 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.97768, 1.01483 )
+
+[node name="CollisionShape" type="CollisionShape" parent="."]
+transform = Transform( 0.55, 0, 0, 0, 1.027, 0, 0, 0.71, 0.796, 0, 0, 0.0550251 )
+shape = SubResource( 7 )
+
+[node name="SpotLight" type="SpotLight" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -3.8261 )
+spot_range = 19.2981
+spot_angle = 14.9789

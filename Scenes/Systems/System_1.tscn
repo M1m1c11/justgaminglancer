@@ -1,13 +1,32 @@
-[gd_scene format=2]
+[gd_scene load_steps=4 format=2]
+
+[sub_resource type="CubeMesh" id=1]
+
+[sub_resource type="SpatialMaterial" id=2]
+albedo_color = Color( 0, 0, 0, 1 )
+metallic = 0.37
+roughness = 0.25
+
+[sub_resource type="BoxShape" id=3]
 
 [node name="System_1" type="Spatial"]
 
-[node name="Light_1" type="DirectionalLight" parent="."]
-transform = Transform( 0.677364, -3.21562e-08, 0.735648, -0.735648, -2.96085e-08, 0.677364, 0, -1, -4.37114e-08, 5.195, 4.01313, 0 )
-light_color = Color( 0.47451, 0.631373, 0.933333, 1 )
-light_energy = 1.51
-
 [node name="Light_2" type="DirectionalLight" parent="."]
-transform = Transform( 0.683207, -0.216931, -0.697258, 0.698332, 0.473208, 0.537035, 0.213449, -0.853824, 0.47479, -4.50332, 1.68485, 0 )
+transform = Transform( 0.136217, 0.0554836, 0.989124, -0.988262, -0.0620887, 0.139581, 0.0691579, -0.996527, 0.0463748, -5.86652, 1.68485, 0 )
+visible = false
 light_color = Color( 1, 0.768627, 0.439216, 1 )
 light_energy = 0.95
+
+[node name="Monolith" type="StaticBody" parent="."]
+transform = Transform( 3.05399, -0.484001, 0.643569, -0.421569, 8.75513, 0.20632, -2.54862, -2.02817, 0.737056, 242.706, 55.5225, -194.888 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="MeshInstance" type="MeshInstance" parent="Monolith"]
+transform = Transform( 1, 1.86265e-09, -3.72529e-09, 5.57546e-10, 1, 1.29015e-11, -4.76837e-07, 7.45058e-09, 1, 0, 0, 0 )
+mesh = SubResource( 1 )
+material/0 = SubResource( 2 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Monolith"]
+shape = SubResource( 3 )

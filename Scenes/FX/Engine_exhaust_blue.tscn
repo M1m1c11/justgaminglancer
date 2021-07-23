@@ -47,13 +47,11 @@ surfaces/0 = {
 
 [node name="Engine_exhaust_blue" type="Position3D"]
 
-[node name="OmniLight" type="OmniLight" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.141983 )
+[node name="Engine_exhaust_light" type="OmniLight" parent="."]
 light_color = Color( 0, 0.976471, 1, 1 )
-light_energy = 10.7
-light_specular = 0.0
 
 [node name="Engine_exhaust_shapes" type="Spatial" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 0.295, 0, 0, 0 )
 
 [node name="Exhaust_narrowing" type="MeshInstance" parent="Engine_exhaust_shapes"]
 transform = Transform( 0.22, 0, 0, 0, -1.09278e-08, -0.22, 0, 0.25, -9.61651e-09, 0, 0, 0 )
