@@ -7,9 +7,9 @@ extends Node
 
 # warning-ignore-all:unused_signal
 # ============================== Generic =====================================
+signal sig_mouse_on_viewport(flag)
 signal sig_viewport_update
 signal sig_quit_game
-signal sig_mouse_on_viewport(flag)
 
 # =============================== Camera =====================================
 signal sig_turret_mode_on(flag)

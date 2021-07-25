@@ -39,23 +39,6 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Camera_x" type="Label" parent="Main3D/Debug"]
-margin_right = 75.0
-margin_bottom = 14.0
-text = "Camera x: 0"
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Camera_y" type="Label" parent="Main3D/Debug"]
-margin_top = 16.0
-margin_right = 75.0
-margin_bottom = 30.0
-text = "Camera y: 0"
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
 [node name="Current_zoom" type="Label" parent="Main3D/Debug"]
 margin_top = 32.0
 margin_right = 103.0
@@ -97,6 +80,22 @@ points = PoolVector2Array( 0, 0, 0, 0 )
 width = 1.0
 default_color = Color( 0.596078, 0, 0, 1 )
 
+[node name="Marker" type="Label" parent="Main3D/Debug"]
+margin_right = 40.0
+margin_bottom = 14.0
+text = "Origin"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Marker2" type="Label" parent="Main3D/Debug"]
+margin_right = 57.0
+margin_bottom = 14.0
+text = "Monolith"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
 [node name="Text_panel" type="Control" parent="Main3D"]
 anchor_left = 1.0
 anchor_right = 1.0
@@ -121,12 +120,14 @@ __meta__ = {
 [node name="Text" type="Label" parent="Main3D/Text_panel"]
 anchor_right = 1.0
 anchor_bottom = 1.0
-text = "Left click and drag - rotate.
-Mouse wheel - zoom in/out.
+text = "Left - turret rotate / steer.
+Mouse wheel - zoom in / out.
 Escape - quit.
-Space - WIP.
-H - switch turret mode
-Space - mouse flight."
+Space - mouse flight.
+H - switch turret mode.
+Space - mouse flight.
+UP / DOWN - engine control.
+Z - drag anchor."
 autowrap = true
 __meta__ = {
 "_edit_use_anchors_": false
@@ -141,40 +142,28 @@ margin_top = -80.0
 mouse_filter = 1
 mouse_default_cursor_shape = 2
 __meta__ = {
-"_edit_group_": true,
 "_edit_use_anchors_": false
 }
 
 [node name="ColorRect" type="ColorRect" parent="Controls"]
+visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 mouse_filter = 2
-color = Color( 0.109804, 0.109804, 0.109804, 1 )
+color = Color( 0, 0, 0, 0.113725 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="Button_turret" type="Button" parent="Controls"]
 margin_left = 16.0
-margin_top = 24.0
+margin_top = 8.0
 margin_right = 72.0
-margin_bottom = 44.0
+margin_bottom = 28.0
 focus_mode = 0
 toggle_mode = true
 keep_pressed_outside = true
-text = "Turret view"
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Button_" type="Button" parent="Controls"]
-margin_left = 16.0
-margin_top = 56.0
-margin_right = 72.0
-margin_bottom = 76.0
-focus_mode = 0
-toggle_mode = true
-keep_pressed_outside = true
+text = "Turret"
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -183,9 +172,9 @@ __meta__ = {
 anchor_left = 1.0
 anchor_right = 1.0
 margin_left = -72.0
-margin_top = 24.0
+margin_top = 8.0
 margin_right = -16.0
-margin_bottom = 44.0
+margin_bottom = 28.0
 focus_mode = 0
 toggle_mode = true
 keep_pressed_outside = true
@@ -198,24 +187,22 @@ __meta__ = {
 anchor_left = 1.0
 anchor_right = 1.0
 margin_left = -72.0
-margin_top = 56.0
+margin_top = 40.0
 margin_right = -16.0
-margin_bottom = 76.0
+margin_bottom = 60.0
 focus_mode = 0
 toggle_mode = true
 keep_pressed_outside = true
-text = "Text"
+text = "Info"
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="Button_quit" type="Button" parent="Controls"]
-anchor_left = 1.0
-anchor_right = 1.0
-margin_left = -144.0
-margin_top = 56.0
-margin_right = -88.0
-margin_bottom = 76.0
+margin_left = 16.0
+margin_top = 40.0
+margin_right = 72.0
+margin_bottom = 60.0
 focus_mode = 0
 custom_styles/hover = ExtResource( 2 )
 custom_styles/pressed = ExtResource( 4 )
@@ -226,27 +213,10 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Marker" type="Label" parent="."]
-margin_right = 40.0
-margin_bottom = 14.0
-text = "Origin"
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Marker2" type="Label" parent="."]
-margin_right = 40.0
-margin_bottom = 14.0
-text = "Monolith"
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
 [connection signal="mouse_entered" from="Main3D" to="." method="_on_Viewport_main_mouse_entered"]
 [connection signal="mouse_exited" from="Main3D" to="." method="_on_Viewport_main_mouse_exited"]
 [connection signal="resized" from="Main3D" to="." method="_on_Viewport_main_resized"]
 [connection signal="toggled" from="Controls/Button_turret" to="." method="_on_Button_turret_toggled"]
-[connection signal="toggled" from="Controls/Button_" to="." method="_on_Button_engine_toggled"]
 [connection signal="toggled" from="Controls/Button_debug" to="." method="_on_Button_debug_toggled"]
 [connection signal="toggled" from="Controls/Button_text_panel" to="." method="_on_Button_text_panel_toggled"]
 [connection signal="pressed" from="Controls/Button_quit" to="." method="_on_Button_quit_pressed"]

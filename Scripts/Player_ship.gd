@@ -43,6 +43,7 @@ func _ready():
 func _integrate_forces(state):
 	#print("L: ", state.total_linear_damp, "   A: ", state.total_angular_damp)
 	# TODO: arrange for proper signs for accel and torque.
+
 	if not player_ship_state.engine_kill:
 		state.add_central_force(-global_transform.basis.z*acceleration)
 	
@@ -61,7 +62,6 @@ func _integrate_forces(state):
 
 # ================================== Other ====================================
 func init_ship():
-	
 	self.custom_integrator = true
 	self.can_sleep = false
 	
@@ -78,8 +78,12 @@ func init_ship():
 func adjust_exhaust():
 	for i in engines.get_children():
 		i.scale.z = accel_ticks
-		i.get_node("Engine_exhaust_light").light_energy = accel_ticks
-		
+		if accel_ticks > 0:
+			i.get_node("Engine_exhaust_light").light_energy = accel_ticks
+		else:
+			i.get_node("Engine_exhaust_light").light_energy = 0.1
+			
+			
 # ============================ Signal processing ==============================
 func is_accelerating(flag):
 	# TODO: make engine state readouts.

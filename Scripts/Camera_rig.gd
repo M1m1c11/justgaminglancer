@@ -42,6 +42,7 @@ func _ready():
 	
 func _process(delta):
 	# Track the change in camera mode and update mouse vector when LMB is held.
+	# When the mouse is released proceed with a little of inertia for smoothness.
 	if player_ship_state.turret_mode and \
 	(input.LMB_held or player_ship_state.mouse_flight):
 		mouse_vector = input.mouse_vector
@@ -53,11 +54,18 @@ func _process(delta):
 			mouse_vector /= cam_opts.camera_inertia_factor
 			yield(get_tree().create_timer(delta), "timeout")
 			orbit_camera(mouse_vector)
-	elif not player_ship_state.turret_mode and \
+	
+	# Chase camera.
+	if not player_ship_state.turret_mode and \
 	(input.LMB_held or player_ship_state.mouse_flight):
 		mouse_vector = input.mouse_vector
-		tilt_camera(mouse_vector)
-			
+		tilt_camera(mouse_vector, delta)\
+	# Return to initial position.
+	elif not player_ship_state.turret_mode and not \
+	(input.LMB_held or player_ship_state.mouse_flight):
+		mouse_vector = Vector2(0,0)
+		tilt_camera(mouse_vector, delta)
+	
 # ================================== Other ====================================
 func orbit_camera(mv):
 	# Compensate camera roll speed by camera altitude.
@@ -75,30 +83,23 @@ func orbit_camera(mv):
 	self.rotate_object_local(Vector3(0,1,0), deg2rad(roll_horiz))
 	self.rotation.z = 0
 
-func tilt_camera(mv):
-	# TODO: make camera return back into initial position.
-	# Compensate camera roll speed by camera altitude.
-	var phi = abs(cos(self.rotation.x))
-	var tilt_vert = -mv.y*cam_opts.camera_sensitivity
-	var tilt_horiz = -mv.x*cam_opts.camera_sensitivity*phi
-	camera_vert = self.rotation_degrees.x
-	camera_horiz = self.rotation_degrees.y
-	# Horizontal tilt
-	if camera_vert + tilt_vert >= cam_opts.camera_chase_tilt_vert_limit:
-		self.rotation_degrees.x = cam_opts.camera_chase_tilt_vert_limit
-	elif camera_vert + tilt_vert <= -cam_opts.camera_chase_tilt_vert_limit:
-		self.rotation_degrees.x = -cam_opts.camera_chase_tilt_vert_limit
-	else:
-		self.rotate_object_local(Vector3(1,0,0), deg2rad(tilt_vert))
-	# Vertical tilt.
-	if camera_horiz + tilt_horiz >= cam_opts.camera_chase_tilt_horiz_limit:
-		self.rotation_degrees.y = cam_opts.camera_chase_tilt_horiz_limit
-	elif camera_horiz + tilt_horiz <= -cam_opts.camera_chase_tilt_horiz_limit:
-		self.rotation_degrees.y = -cam_opts.camera_chase_tilt_horiz_limit
-	else:
-		self.rotate_object_local(Vector3(1,0,0), deg2rad(tilt_vert))
-	self.rotate_object_local(Vector3(0,1,0), deg2rad(tilt_horiz))
-	self.rotation.z = 0
+func tilt_camera(mv, delta):
+	# TODO: move values to options and remove unused ones.
+	var ax = 2
+	var ay = 1.5
+	
+	var phi = cos($Camera.rotation.x*ax)
+	var phi2 = cos($Camera.rotation.y*ay)
+	var init = Vector2($Camera.rotation.x, $Camera.rotation.y)
+	var fin = Vector2(-mv.y*phi2/ax, -mv.x*phi/ay)
+	var tmp = init.linear_interpolate(fin, delta*2)
+
+	$Camera.rotation.x = tmp.x
+	$Camera.rotation.y = tmp.y
+	self.rotation.x = -tmp.x
+	self.rotation.y = -tmp.y
+	
+
 
 # Initial position for turret camera
 func turret_camera():
@@ -112,6 +113,9 @@ func fix_camera():
 	self.rotation_degrees.x = 0
 	self.rotation_degrees.y = 0
 	self.rotation_degrees.z = 0
+	$Camera.rotation_degrees.x = 0
+	$Camera.rotation_degrees.y = 0
+	$Camera.rotation_degrees.z = 0
 	$Camera.translation.y = cam_opts.camera_chase_vert_offset
 	$Camera.translation.z = camera_min_zoom+cam_opts.camera_chase_offset
 	zoom_ticks = 0
@@ -131,5 +135,9 @@ func zoom_camera(mouse_event):
 			$Camera.translation.z = current_zoom
 
 func is_turret_mode_on(flag):
-	if flag: self.turret_camera()
-	else: self.fix_camera()
+	if flag:
+		# Reset camera first.
+		fix_camera()
+		turret_camera()
+	else:
+		fix_camera()

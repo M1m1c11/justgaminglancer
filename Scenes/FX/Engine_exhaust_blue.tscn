@@ -49,6 +49,7 @@ surfaces/0 = {
 
 [node name="Engine_exhaust_light" type="OmniLight" parent="."]
 light_color = Color( 0, 0.976471, 1, 1 )
+omni_range = 2.0
 
 [node name="Engine_exhaust_shapes" type="Spatial" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 0.295, 0, 0, 0 )

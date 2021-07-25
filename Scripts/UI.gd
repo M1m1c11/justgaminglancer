@@ -23,8 +23,8 @@ func _ready():
 	debug = get_node("Main3D/Debug")
 	input = get_node("/root/Main/Input")
 	main = get_node("/root/Main")
-	marker = get_node("Marker")
-	marker2 = get_node("Marker2")
+	marker = get_node("Main3D/Debug/Marker")
+	marker2 = get_node("Main3D/Debug/Marker2")
 	monolith = get_node("/root/Main/Local_space/System_objects/Monolith")
 	mouse_vector = get_node("Main3D/Debug/Mouse_vector")
 	signals = get_node("/root/Main/Input/Signals")
@@ -58,8 +58,6 @@ func _process(_delta):
 # ================================== Other ====================================
 func update_debug_text():
 	debug.get_node("FPS").text = str("FPS: ", main.fps)
-	debug.get_node("Camera_x").text = str("Camera x: ", camera_rig.camera_horiz)
-	debug.get_node("Camera_y").text = str("Camera y: ", camera_rig.camera_vert)
 	debug.get_node("Mouse_x").text = str("Mouse x: ", input.mouse_x)
 	debug.get_node("Mouse_y").text = str("Mouse y: ", input.mouse_y)
 	debug.get_node("Current_zoom").text = str("Current zoom: ", camera_rig.current_zoom)
