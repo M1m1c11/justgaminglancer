@@ -125,6 +125,7 @@ material/3 = ExtResource( 8 )
 material/4 = ExtResource( 11 )
 
 [node name="Ship_lights" type="Spatial" parent="."]
+visible = false
 
 [node name="OmniLight" type="OmniLight" parent="Ship_lights"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.70695, 0.697875 )

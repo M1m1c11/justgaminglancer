@@ -7,11 +7,11 @@
 [ext_resource path="res://Scenes/Ships/Rogue_fighter.tscn" type="PackedScene" id=5]
 [ext_resource path="res://Scripts/Input.gd" type="Script" id=6]
 [ext_resource path="res://Scripts/Camera_rig.gd" type="Script" id=7]
-[ext_resource path="res://Scripts/Options_camera.gd" type="Script" id=8]
+[ext_resource path="res://Scripts/Options/Camera.gd" type="Script" id=8]
 [ext_resource path="res://Scripts/State/Player_ship.gd" type="Script" id=9]
 [ext_resource path="res://Scripts/Signals.gd" type="Script" id=10]
-[ext_resource path="res://Environment/Default_env.tres" type="Environment" id=11]
-[ext_resource path="res://Scripts/Engine.gd" type="Script" id=12]
+[ext_resource path="res://Environment/Env_1.tres" type="Environment" id=11]
+[ext_resource path="res://Scripts/Options/Engine.gd" type="Script" id=12]
 
 [node name="Main" type="Spatial"]
 script = ExtResource( 1 )

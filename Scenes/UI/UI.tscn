@@ -96,6 +96,14 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="Marker3" type="Label" parent="Main3D/Debug"]
+margin_right = 57.0
+margin_bottom = 14.0
+text = "Monolith2"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
 [node name="Text_panel" type="Control" parent="Main3D"]
 anchor_left = 1.0
 anchor_right = 1.0
@@ -134,6 +142,7 @@ __meta__ = {
 }
 
 [node name="Controls" type="Control" parent="."]
+visible = false
 material = SubResource( 1 )
 anchor_top = 1.0
 anchor_right = 1.0

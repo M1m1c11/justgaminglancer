@@ -65,13 +65,13 @@ func init_ship():
 	self.custom_integrator = true
 	self.can_sleep = false
 	
-	self.mass = 1000
+	self.mass = 5000
 	self.linear_damp = engine_opts.ship_linear_damp
 	self.angular_damp = engine_opts.ship_angular_damp
 	
 	accel_factor = 10000 # Propulsion force.
-	accel_ticks_max = 10 # Engine propulsion increments.
-	torque_factor = Vector3(50000,50000,50000)
+	accel_ticks_max = 200 # Engine propulsion increments.
+	torque_factor = Vector3(300000,300000,300000)
 	
 	adjust_exhaust()
 
