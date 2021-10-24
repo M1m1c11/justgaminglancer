@@ -34,10 +34,11 @@ func _ready():
 	signals.connect("sig_turret_mode_on", self, "is_turret_mode_on")
 	# =========================================================================
 	
-	# Puts camera at proper distance from the model at start.
+	# Safeguards to prevent clipping.
 	camera_min_zoom = round(ship_model.get_aabb().get_longest_axis_size())
 	camera_max_zoom = camera_min_zoom*cam_opts.camera_zoom_out_times
-	current_zoom = camera_min_zoom
+	# Puts camera at proper distance from the model at start.
+	current_zoom = camera_min_zoom+ship.camera_horiz_offset
 	fix_camera()
 	
 func _process(delta):
@@ -104,9 +105,9 @@ func tilt_camera(mv, delta):
 # Initial position for turret camera
 func turret_camera():
 	$Camera.translation.y = 0
-	$Camera.translation.z = camera_min_zoom
+	$Camera.translation.z = camera_min_zoom+ship.camera_horiz_offset
 	zoom_ticks = 0
-	current_zoom = camera_min_zoom
+	current_zoom = camera_min_zoom+ship.camera_horiz_offset
 
 # Initial position for chase camera
 func fix_camera():
@@ -116,10 +117,10 @@ func fix_camera():
 	$Camera.rotation_degrees.x = 0
 	$Camera.rotation_degrees.y = 0
 	$Camera.rotation_degrees.z = 0
-	$Camera.translation.y = cam_opts.camera_chase_vert_offset
-	$Camera.translation.z = camera_min_zoom+cam_opts.camera_chase_offset
+	$Camera.translation.y = ship.camera_vert_offset
+	$Camera.translation.z = camera_min_zoom+ship.camera_horiz_offset
 	zoom_ticks = 0
-	current_zoom = camera_min_zoom
+	current_zoom = camera_min_zoom+ship.camera_horiz_offset
 	
 func zoom_camera(mouse_event):
 	if mouse_event.is_pressed():

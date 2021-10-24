@@ -1,15 +1,18 @@
 extends RigidBody
 
+# Params.
+export var accel_factor = 10000 # Propulsion force.
+export var accel_ticks_max = 200 # Engine propulsion increments.
+export var torque_factor = Vector3(300000,300000,300000)
+export var camera_vert_offset = 4
+export var camera_horiz_offset = 10 # Additional value
 # Vars.
 var accel_ticks = 0
 var accel_ticks_prev = 0
-var accel_ticks_max = 0
 var default_linear_damp = 0
-# Objects.
 var acceleration = 0
-var accel_factor = 0
+# Objects.
 var torque = Vector3(0,0,0)
-var torque_factor = Vector3(0,0,0)
 # Nodes.
 var engines = Node
 var engine_opts = Node
@@ -43,6 +46,7 @@ func _ready():
 func _integrate_forces(state):
 	#print("L: ", state.total_linear_damp, "   A: ", state.total_angular_damp)
 	# TODO: arrange for proper signs for accel and torque.
+	print(state.linear_velocity.length())
 
 	if not player_ship_state.engine_kill:
 		state.add_central_force(-global_transform.basis.z*acceleration)
@@ -61,6 +65,7 @@ func _integrate_forces(state):
 	#print(state.linear_velocity, " ticks: ", accel_ticks)
 
 # ================================== Other ====================================
+# TODO: Split it off to ship's specific properties later on.
 func init_ship():
 	self.custom_integrator = true
 	self.can_sleep = false
@@ -69,9 +74,7 @@ func init_ship():
 	self.linear_damp = engine_opts.ship_linear_damp
 	self.angular_damp = engine_opts.ship_angular_damp
 	
-	accel_factor = 10000 # Propulsion force.
-	accel_ticks_max = 200 # Engine propulsion increments.
-	torque_factor = Vector3(300000,300000,300000)
+
 	
 	adjust_exhaust()
 

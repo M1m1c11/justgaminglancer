@@ -1,67 +1,115 @@
 /*
-	Original code from:
+	Original code:
 	魔法防御シェーダー 3 by あるる（きのもと 結衣）
-	Magical Shield Shader 3 by Yui Kinomoto @arlez80
-
-	MIT License
+	Magical Shield Shader 3 by Yui Kinomoto @arlez80.
+	
+	Modified by Roal-Yr.
+	
+	Supply this shader with decently detailed 2k noise map.
+	
+	MIT License.
 */
 
 shader_type spatial;
-render_mode unshaded;
-
-
-uniform vec4 star_color : hint_color = vec4( 0.5, 0.8, 1.0, 1.0 );
+render_mode unshaded, depth_draw_alpha_prepass;
 uniform float rim_strength = 50.0;
+uniform vec4 color_surface_hot : hint_color = vec4(1.0, 0.9, 0.4, 1.0);
+uniform vec4 color_surface_cold : hint_color = vec4(1.0, 0.7, 0.0, 1.0);
+uniform vec4 color_details_major : hint_color = vec4(0.0, 0.9, 1.0, 1.0);
+uniform vec4 color_details_small : hint_color = vec4(1.0, 1.0, 0.0, 1.0);
 
 uniform sampler2D surface_noise : hint_normal;
-uniform float surface_strength = 1.0;
-uniform float surface_flow_speed = 0.02;
-uniform float surface_noise_size = 10.0;
+uniform float surface_hot_value = 2.55;
+uniform float surface_cold_value = 1.0;
+uniform float surface_noise_scale = 3.0;
+uniform float surface_noise_to_power = 0.4;
+uniform float surface_flow = 0.0015;
 
-uniform sampler2D detail_noise : hint_normal;
-uniform float details_strength = 0.6;
-uniform float detail_noise_filter = 0.99;
-uniform float detail_noise_size = 5;
-uniform float details_flow_speed = 0.02;
+uniform sampler2D major_detail_noise : hint_normal;
+uniform float major_detail_strength = -0.55;
+uniform float major_detail_filter = 0.996;
+uniform float major_detail_scale = 2;
+uniform float major_detail_flow = 0.002;
 
+uniform sampler2D small_detail_noise : hint_normal;
+uniform float small_detail_strength = -0.55;
+uniform float small_detail_filter = 0.99;
+uniform float small_detail_scale = 5;
+uniform float small_detail_flow = 0.02;
 
 const float pi = 3.1415926535;
 
 void fragment( )
 {
-	float rim = clamp(pow( dot( NORMAL, VIEW ), 2.0 ) * rim_strength, 0.0, 1.0);
+	// Edge hardness, like atmosphere haze.
+	float rim = clamp(pow( dot( NORMAL, VIEW ), 2.0 )*rim_strength, 0.0, 1.0);
 	
-	
-	vec2 p = texture( detail_noise, -UV*detail_noise_size).xy + TIME * -details_flow_speed;
-	
-	// Surface details.
-	float detail_pixel = 
+	// Surface details major.
+	vec2 p = texture(major_detail_noise, -UV*major_detail_scale).xy 
+		-TIME*major_detail_flow;
+		
+	float detail_major = 
 		clamp(
 			(sin(
-				texture(
-					detail_noise, 
-					p
-					).r * pi
-				) - detail_noise_filter
-			) * 90.0
-		, 0.0, 1.0) 
-	* details_strength;
+				texture(major_detail_noise, p).r * pi) 
+					-major_detail_filter
+				) * 90.0
+			, 0.0, 1.0);
 	
-	// Base surface.
-	float surface_pixel = 
-		texture(
-			surface_noise, 
-			vec2(UV.x*surface_noise_size-TIME*surface_flow_speed, UV.y*surface_noise_size) 
-		).r * surface_strength;
+	// Surface details small.
+	vec2 p_2 = texture(small_detail_noise, -UV*small_detail_scale).xy 
+		-TIME*small_detail_flow;
+		
+	float detail_small = 
+		clamp(
+			(sin(texture(small_detail_noise, p_2).r * pi) 
+				-small_detail_filter)*90.0
+			, 0.0, 1.0);
 
-	// Colors of the surface.
-	ALBEDO = vec3(
-		detail_pixel+surface_pixel*star_color.r, 
-		detail_pixel+surface_pixel*star_color.g, 
-		detail_pixel+surface_pixel*star_color.b);
+	
+	// Surface main colors.
+	float surface = 
+		pow(
+			texture(
+				surface_noise, 
+				vec2(
+					UV.x*surface_noise_scale-TIME*surface_flow, 
+					UV.y*surface_noise_scale) 
+				).r,
+			surface_noise_to_power);
+
+	// Combine surface colors with details. Not clamping it because it makes
+	// interesting effects when colors overflow.
+	ALBEDO = 
+		// Surface hot.
+		vec3(
+			surface*color_surface_hot.r, 
+			surface*color_surface_hot.g, 
+			surface*color_surface_hot.b)
+		* surface_hot_value
+		// Surface cold.
+		+ vec3(
+			(1.0-surface)*color_surface_cold.r, 
+			(1.0-surface)*color_surface_cold.g, 
+			(1.0-surface)*color_surface_cold.b)
+		* surface_cold_value
+		// Details major.
+		+ vec3(
+			detail_major*color_details_major.r, 
+			detail_major*color_details_major.g, 
+			detail_major*color_details_major.b)
+		* major_detail_strength
+		// Details small.
+		+ vec3(
+			detail_small*color_details_small.r, 
+			detail_small*color_details_small.g, 
+			detail_small*color_details_small.b)
+		* small_detail_strength
+		;
+
 	
 	// This affects the border of the star, making it more or less sharp.
 	ALPHA = rim;
-	
+
 	
 }

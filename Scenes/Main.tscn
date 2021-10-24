@@ -10,7 +10,7 @@
 [ext_resource path="res://Scripts/Options/Camera.gd" type="Script" id=8]
 [ext_resource path="res://Scripts/State/Player_ship.gd" type="Script" id=9]
 [ext_resource path="res://Scripts/Signals.gd" type="Script" id=10]
-[ext_resource path="res://Environment/Env_1.tres" type="Environment" id=11]
+[ext_resource path="res://Default_env.tres" type="Environment" id=11]
 [ext_resource path="res://Scripts/Options/Engine.gd" type="Script" id=12]
 
 [node name="Main" type="Spatial"]
@@ -48,6 +48,8 @@ __meta__ = {
 [node name="System_objects" parent="Local_space" instance=ExtResource( 4 )]
 
 [node name="Player_ship" parent="." instance=ExtResource( 5 )]
+accel_factor = 20000
+accel_ticks_max = 100
 
 [node name="Camera_rig" parent="Player_ship" instance=ExtResource( 2 )]
 script = ExtResource( 7 )
