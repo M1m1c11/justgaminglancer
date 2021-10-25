@@ -13,8 +13,8 @@ config_version=4
 config/name="GDTLancer"
 config/description="A space shooter arcade inspired by Freelancer."
 run/main_scene="res://Scenes/Main.tscn"
-boot_splash/image="res://Images/Splash.png"
-config/icon="res://Images/Icon.png"
+boot_splash/image="res://Assets/Images/Splash.png"
+config/icon="res://Assets/Images/Icon.png"
 
 [physics]
 

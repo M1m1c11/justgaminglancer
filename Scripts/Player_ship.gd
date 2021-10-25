@@ -1,9 +1,10 @@
 extends RigidBody
 
 # Params.
+export var ship_mass = 2000
 export var accel_factor = 10000 # Propulsion force.
-export var accel_ticks_max = 200 # Engine propulsion increments.
-export var torque_factor = Vector3(300000,300000,300000)
+export var accel_ticks_max = 50 # Engine propulsion increments.
+export var torque_factor = Vector3(150000,150000,150000)
 export var camera_vert_offset = 4
 export var camera_horiz_offset = 10 # Additional value
 # Vars.
@@ -70,7 +71,7 @@ func init_ship():
 	self.custom_integrator = true
 	self.can_sleep = false
 	
-	self.mass = 5000
+	self.mass = ship_mass
 	self.linear_damp = engine_opts.ship_linear_damp
 	self.angular_damp = engine_opts.ship_angular_damp
 	

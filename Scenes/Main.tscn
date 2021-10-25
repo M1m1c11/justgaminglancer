@@ -42,14 +42,15 @@ script = ExtResource( 9 )
 
 [node name="Local_space" type="Position3D" parent="."]
 __meta__ = {
-"_edit_group_": true
+"_edit_group_": true,
+"_edit_lock_": true
 }
 
 [node name="System_objects" parent="Local_space" instance=ExtResource( 4 )]
 
 [node name="Player_ship" parent="." instance=ExtResource( 5 )]
+visible = false
 accel_factor = 20000
-accel_ticks_max = 100
 
 [node name="Camera_rig" parent="Player_ship" instance=ExtResource( 2 )]
 script = ExtResource( 7 )

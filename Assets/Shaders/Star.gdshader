@@ -11,8 +11,7 @@
 */
 
 shader_type spatial;
-render_mode unshaded, depth_draw_alpha_prepass;
-uniform float rim_strength = 50.0;
+render_mode unshaded, depth_draw_opaque;
 uniform vec4 color_surface_hot : hint_color = vec4(1.0, 0.9, 0.4, 1.0);
 uniform vec4 color_surface_cold : hint_color = vec4(1.0, 0.7, 0.0, 1.0);
 uniform vec4 color_details_major : hint_color = vec4(0.0, 0.9, 1.0, 1.0);
@@ -23,7 +22,6 @@ uniform float surface_hot_value = 2.55;
 uniform float surface_cold_value = 1.0;
 uniform float surface_noise_scale = 3.0;
 uniform float surface_noise_to_power = 0.4;
-uniform float surface_flow = 0.0015;
 
 uniform sampler2D major_detail_noise : hint_normal;
 uniform float major_detail_strength = -0.55;
@@ -39,11 +37,12 @@ uniform float small_detail_flow = 0.02;
 
 const float pi = 3.1415926535;
 
+void vertex() {
+	UV=UV*surface_noise_scale;
+}
+
 void fragment( )
 {
-	// Edge hardness, like atmosphere haze.
-	float rim = clamp(pow( dot( NORMAL, VIEW ), 2.0 )*rim_strength, 0.0, 1.0);
-	
 	// Surface details major.
 	vec2 p = texture(major_detail_noise, -UV*major_detail_scale).xy 
 		-TIME*major_detail_flow;
@@ -61,22 +60,12 @@ void fragment( )
 		-TIME*small_detail_flow;
 		
 	float detail_small = 
-		clamp(
-			(sin(texture(small_detail_noise, p_2).r * pi) 
-				-small_detail_filter)*90.0
-			, 0.0, 1.0);
-
+		clamp((sin(texture(small_detail_noise, p_2).r * pi) 
+			-small_detail_filter)*90.0
+		, 0.0, 1.0);
 	
 	// Surface main colors.
-	float surface = 
-		pow(
-			texture(
-				surface_noise, 
-				vec2(
-					UV.x*surface_noise_scale-TIME*surface_flow, 
-					UV.y*surface_noise_scale) 
-				).r,
-			surface_noise_to_power);
+	float surface = pow(texture(surface_noise, UV).r, surface_noise_to_power);
 
 	// Combine surface colors with details. Not clamping it because it makes
 	// interesting effects when colors overflow.
@@ -106,10 +95,5 @@ void fragment( )
 			detail_small*color_details_small.b)
 		* small_detail_strength
 		;
-
-	
-	// This affects the border of the star, making it more or less sharp.
-	ALPHA = rim;
-
 	
 }
