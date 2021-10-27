@@ -37,10 +37,6 @@ uniform float small_detail_flow = 0.02;
 
 const float pi = 3.1415926535;
 
-void vertex() {
-	UV=UV*surface_noise_scale;
-}
-
 void fragment( )
 {
 	// Surface details major.
@@ -65,7 +61,8 @@ void fragment( )
 		, 0.0, 1.0);
 	
 	// Surface main colors.
-	float surface = pow(texture(surface_noise, UV).r, surface_noise_to_power);
+	float surface = pow(texture(surface_noise, UV*surface_noise_scale).r, 
+		surface_noise_to_power);
 
 	// Combine surface colors with details. Not clamping it because it makes
 	// interesting effects when colors overflow.

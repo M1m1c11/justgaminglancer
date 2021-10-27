@@ -9,6 +9,10 @@ var current_zoom = 0
 var camera_vert = 0
 var camera_horiz = 0
 var zoom_ticks = 0
+# Chase camera positions.
+var vert = 0
+var horiz = 0
+var velocity_factor = 0
 # Objects.
 var mouse_vector = Vector2(0,0)
 # Nodes.
@@ -35,10 +39,10 @@ func _ready():
 	# =========================================================================
 	
 	# Safeguards to prevent clipping.
-	camera_min_zoom = round(ship_model.get_aabb().get_longest_axis_size())
+	camera_min_zoom = ship.camera_horiz_offset
 	camera_max_zoom = camera_min_zoom*cam_opts.camera_zoom_out_times
 	# Puts camera at proper distance from the model at start.
-	current_zoom = camera_min_zoom+ship.camera_horiz_offset
+	current_zoom = ship.camera_horiz_offset
 	fix_camera()
 	
 func _process(delta):
@@ -60,12 +64,12 @@ func _process(delta):
 	if not player_ship_state.turret_mode and \
 	(input.LMB_held or player_ship_state.mouse_flight):
 		mouse_vector = input.mouse_vector
-		tilt_camera(mouse_vector, delta)\
+		chase_camera(mouse_vector, delta)\
 	# Return to initial position.
 	elif not player_ship_state.turret_mode and not \
 	(input.LMB_held or player_ship_state.mouse_flight):
 		mouse_vector = Vector2(0,0)
-		tilt_camera(mouse_vector, delta)
+		chase_camera(mouse_vector, delta)
 	
 # ================================== Other ====================================
 func orbit_camera(mv):
@@ -84,30 +88,59 @@ func orbit_camera(mv):
 	self.rotate_object_local(Vector3(0,1,0), deg2rad(roll_horiz))
 	self.rotation.z = 0
 
-func tilt_camera(mv, delta):
-	# TODO: move values to options and remove unused ones.
-	var ax = 2
-	var ay = 1.5
+func chase_camera(mv, delta):
+	# Initial and final camera position.
+	var init_tilt = Vector2($Camera.rotation.x, $Camera.rotation.y)
+	var init_push = Vector2(0.0, 0.0)
+	# $Camera.rotation.x - vertical, $Camera.rotation.y - horizontal
+	# UP - DOWN
+	if mv.y < 0:
+		vert = -mv.y*cos(
+			$Camera.rotation.x
+			)/(ship.camera_chase_tilt_horiz_damp_up)
+	else:
+		vert = -mv.y*cos(
+			$Camera.rotation.x
+			)/(ship.camera_chase_tilt_horiz_damp_down)
+	# LEFT - RIGHT
+	if mv.x < 0:
+		horiz = -mv.x*cos(
+			$Camera.rotation.y
+			)/(ship.camera_chase_tilt_vert_damp_left)
+	else:
+		horiz = -mv.x*cos(
+			$Camera.rotation.y
+			)/(ship.camera_chase_tilt_vert_damp_right)
+			
+	# FORWARD - velocity_factor
+	velocity_factor = ship.ship_linear_velocity*0.1
 	
-	var phi = cos($Camera.rotation.x*ax)
-	var phi2 = cos($Camera.rotation.y*ay)
-	var init = Vector2($Camera.rotation.x, $Camera.rotation.y)
-	var fin = Vector2(-mv.y*phi2/ax, -mv.x*phi/ay)
-	var tmp = init.linear_interpolate(fin, delta*2)
-
-	$Camera.rotation.x = tmp.x
-	$Camera.rotation.y = tmp.y
-	self.rotation.x = -tmp.x
-	self.rotation.y = -tmp.y
+	var fin_tilt = Vector2(vert, horiz)
+	var fin_push = Vector2(velocity_factor, 0.0)
+	var tmp_tilt = init_tilt.linear_interpolate(fin_tilt, delta
+		*ship.camera_tilt_velocity_factor)
+	var tmp_push = init_push.linear_interpolate(fin_push, delta
+		*ship.camera_push_velocity_factor)
 	
+	# Prevent camera sliding forward
+	if tmp_push.x < camera_min_zoom:
+		tmp_push.x = camera_min_zoom+tmp_push.x
+	$Camera.translation.z = tmp_push.x
+	
+	# Tilt motion
+	$Camera.rotation.x = tmp_tilt.x
+	$Camera.rotation.y = tmp_tilt.y
+	self.rotation.x = -tmp_tilt.x
+	self.rotation.y = -tmp_tilt.y
 
+	
 
 # Initial position for turret camera
 func turret_camera():
 	$Camera.translation.y = 0
-	$Camera.translation.z = camera_min_zoom+ship.camera_horiz_offset
+	$Camera.translation.z = ship.camera_horiz_offset
 	zoom_ticks = 0
-	current_zoom = camera_min_zoom+ship.camera_horiz_offset
+	current_zoom = ship.camera_horiz_offset
 
 # Initial position for chase camera
 func fix_camera():
@@ -118,9 +151,9 @@ func fix_camera():
 	$Camera.rotation_degrees.y = 0
 	$Camera.rotation_degrees.z = 0
 	$Camera.translation.y = ship.camera_vert_offset
-	$Camera.translation.z = camera_min_zoom+ship.camera_horiz_offset
+	$Camera.translation.z = ship.camera_horiz_offset
 	zoom_ticks = 0
-	current_zoom = camera_min_zoom+ship.camera_horiz_offset
+	current_zoom = ship.camera_horiz_offset
 	
 func zoom_camera(mouse_event):
 	if mouse_event.is_pressed():

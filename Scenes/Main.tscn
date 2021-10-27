@@ -49,7 +49,6 @@ __meta__ = {
 [node name="System_objects" parent="Local_space" instance=ExtResource( 4 )]
 
 [node name="Player_ship" parent="." instance=ExtResource( 5 )]
-visible = false
 accel_factor = 20000
 
 [node name="Camera_rig" parent="Player_ship" instance=ExtResource( 2 )]

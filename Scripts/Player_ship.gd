@@ -1,17 +1,28 @@
 extends RigidBody
 
+# TODO check materials and shaders for FX
 # Params.
 export var ship_mass = 2000
-export var accel_factor = 10000 # Propulsion force.
-export var accel_ticks_max = 50 # Engine propulsion increments.
-export var torque_factor = Vector3(150000,150000,150000)
-export var camera_vert_offset = 4
-export var camera_horiz_offset = 10 # Additional value
+export var accel_factor = 1000 # Propulsion force.
+export var accel_ticks_max = 10 # Engine propulsion increments.
+# Turning sensitivity LEFT-RIGHT | UP-DOWN | ROLL
+export var torque_factor = Vector3(1500,700,700)
+export var camera_vert_offset = 0.4
+export var camera_horiz_offset = 2 
+# Higher damp value - more restricted camera motion in given direction.
+export var camera_chase_tilt_horiz_damp_up = 4 # Can't be zero
+export var camera_chase_tilt_horiz_damp_down = 2 # Can't be zero
+export var camera_chase_tilt_vert_damp_left = 2 # Can't be zero
+export var camera_chase_tilt_vert_damp_right = 2 # Can't be zero
+# Higher values - more responsive camera.
+export var camera_tilt_velocity_factor = 1
+export var camera_push_velocity_factor = 2
 # Vars.
 var accel_ticks = 0
 var accel_ticks_prev = 0
 var default_linear_damp = 0
 var acceleration = 0
+var ship_linear_velocity = 0
 # Objects.
 var torque = Vector3(0,0,0)
 # Nodes.
@@ -43,12 +54,13 @@ func _ready():
 	
 	# Initialize the vessel params.
 	init_ship()
-	
+
+
 func _integrate_forces(state):
 	#print("L: ", state.total_linear_damp, "   A: ", state.total_angular_damp)
 	# TODO: arrange for proper signs for accel and torque.
-	print(state.linear_velocity.length())
-
+	ship_linear_velocity = state.linear_velocity.length()
+	
 	if not player_ship_state.engine_kill:
 		state.add_central_force(-global_transform.basis.z*acceleration)
 	
@@ -62,26 +74,20 @@ func _integrate_forces(state):
 		var ty = -transform.basis.x*torque_factor.y*input.mouse_vector.y
 		
 		state.add_torque(tx+ty)
-	
-	#print(state.linear_velocity, " ticks: ", accel_ticks)
 
 # ================================== Other ====================================
 # TODO: Split it off to ship's specific properties later on.
 func init_ship():
 	self.custom_integrator = true
 	self.can_sleep = false
-	
 	self.mass = ship_mass
 	self.linear_damp = engine_opts.ship_linear_damp
 	self.angular_damp = engine_opts.ship_angular_damp
-	
-
-	
 	adjust_exhaust()
 
 func adjust_exhaust():
 	for i in engines.get_children():
-		i.scale.z = accel_ticks
+		i.scale.z = pow(accel_ticks, 1.5)*0.01
 		if accel_ticks > 0:
 			i.get_node("Engine_exhaust_light").light_energy = accel_ticks
 		else:
@@ -98,7 +104,7 @@ func is_accelerating(flag):
 		acceleration -= accel_ticks*accel_factor
 		accel_ticks -= 1
 	adjust_exhaust()
-
+	
 # TODO: make a button-hold temporary kill.
 func is_engine_kill(flag):
 	if flag:
@@ -106,7 +112,7 @@ func is_engine_kill(flag):
 		player_ship_state.engine_kill = true
 		accel_ticks_prev = accel_ticks
 		accel_ticks = 0
-		self.linear_damp = -1
+		self.linear_damp = engine_opts.ship_linear_damp_ekill
 	else:
 		# Disable inertia-less flight.
 		player_ship_state.engine_kill = false

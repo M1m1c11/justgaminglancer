@@ -46,10 +46,11 @@ material/0 = SubResource( 2 )
 shape = SubResource( 3 )
 
 [node name="Star_blue" parent="." instance=ExtResource( 1 )]
-transform = Transform( 5000, 0, 0, 0, 5000, 0, 0, 0, 5000, 0, 0, 40000 )
+transform = Transform( 5000, 0, 0, 0, 5000, 0, 0, 0, 5000, 25000, 0, 0 )
+visible = false
 
 [node name="Star_orange" parent="." instance=ExtResource( 2 )]
-transform = Transform( 1000, 0, 0, 0, 1000, 0, 0, 0, 1000, -15.665, 0, -40000 )
+transform = Transform( 1000, 0, 0, 0, 1000, 0, 0, 0, 1000, -25000, 0, 0 )
 
 [node name="Cloud" parent="." instance=ExtResource( 3 )]
 transform = Transform( 10000, 0, 0, 0, 10000, 0, 0, 0, 10000, -14938.7, 0, 0 )

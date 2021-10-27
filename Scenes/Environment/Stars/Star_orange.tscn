@@ -5,7 +5,7 @@
 
 [sub_resource type="SphereShape" id=1]
 
-[sub_resource type="ArrayMesh" id=4]
+[sub_resource type="ArrayMesh" id=2]
 resource_name = "Cube.001"
 surfaces/0 = {
 "aabb": AABB( -0.999999, -0.999999, -0.999998, 2, 2, 2 ),
@@ -19,7 +19,28 @@ surfaces/0 = {
 "vertex_count": 527
 }
 
-[sub_resource type="Shader" id=9]
+[sub_resource type="Shader" id=3]
+code = "shader_type spatial;
+render_mode depth_draw_opaque, cull_disabled, unshaded;
+
+uniform vec4 albedo : hint_color;
+uniform float rim_strength = 0.05;
+uniform float rim_power = 9.0;
+
+void fragment() {
+	float rim = clamp(pow( dot( NORMAL, VIEW ), rim_power)*rim_strength, 0.0, 1.0);
+	ALBEDO = albedo.rgb;
+	ALPHA = rim;
+}
+"
+
+[sub_resource type="ShaderMaterial" id=4]
+shader = SubResource( 3 )
+shader_param/albedo = Color( 1, 0.913725, 0.682353, 1 )
+shader_param/rim_strength = 0.116
+shader_param/rim_power = 19.934
+
+[sub_resource type="Shader" id=5]
 code = "shader_type spatial;
 render_mode depth_draw_opaque, cull_disabled, unshaded;
 
@@ -35,33 +56,12 @@ void fragment() {
 "
 
 [sub_resource type="ShaderMaterial" id=6]
-shader = SubResource( 9 )
-shader_param/albedo = Color( 1, 0.976, 0.84, 1 )
-shader_param/rim_strength = 0.127
-shader_param/rim_power = 20.0
-
-[sub_resource type="Shader" id=10]
-code = "shader_type spatial;
-render_mode depth_draw_opaque, cull_disabled, unshaded;
-
-uniform vec4 albedo : hint_color;
-uniform float rim_strength = 0.05;
-uniform float rim_power = 9.0;
-
-void fragment() {
-	float rim = clamp(pow( dot( NORMAL, VIEW ), rim_power)*rim_strength, 0.0, 1.0);
-	ALBEDO = albedo.rgb;
-	ALPHA = rim;
-}
-"
+shader = SubResource( 5 )
+shader_param/albedo = Color( 1, 0.959167, 0.65, 1 )
+shader_param/rim_strength = 0.019
+shader_param/rim_power = 2.864
 
 [sub_resource type="ShaderMaterial" id=7]
-shader = SubResource( 10 )
-shader_param/albedo = Color( 1, 0.959167, 0.65, 1 )
-shader_param/rim_strength = 0.021
-shader_param/rim_power = 8.0
-
-[sub_resource type="ShaderMaterial" id=8]
 render_priority = 1
 shader = ExtResource( 4 )
 shader_param/albedo = Color( 0.96, 0.76128, 0.4416, 1 )
@@ -69,7 +69,7 @@ shader_param/rim_strength = 38.43
 shader_param/inner_rim_power = 11.923
 shader_param/outer_rim_power = 9.083
 
-[sub_resource type="ArrayMesh" id=11]
+[sub_resource type="ArrayMesh" id=8]
 resource_name = "Cube.002"
 surfaces/0 = {
 "aabb": AABB( -0.999997, -0.999997, -0.999997, 1.99999, 1.99999, 1.99999 ),
@@ -83,7 +83,7 @@ surfaces/0 = {
 "vertex_count": 1876
 }
 
-[sub_resource type="Shader" id=14]
+[sub_resource type="Shader" id=9]
 code = "/*
 	Original code:
 	魔法防御シェーダー 3 by あるる（きのもと 結衣）
@@ -97,7 +97,7 @@ code = "/*
 */
 
 shader_type spatial;
-render_mode unshaded, depth_draw_opaque;
+render_mode unshaded, depth_draw_opaque, vertex_lighting;
 uniform vec4 color_surface_hot : hint_color = vec4(1.0, 0.9, 0.4, 1.0);
 uniform vec4 color_surface_cold : hint_color = vec4(1.0, 0.7, 0.0, 1.0);
 uniform vec4 color_details_major : hint_color = vec4(0.0, 0.9, 1.0, 1.0);
@@ -123,10 +123,6 @@ uniform float small_detail_flow = 0.02;
 
 const float pi = 3.1415926535;
 
-void vertex() {
-	UV=UV*surface_noise_scale;
-}
-
 void fragment( )
 {
 	// Surface details major.
@@ -151,7 +147,8 @@ void fragment( )
 		, 0.0, 1.0);
 	
 	// Surface main colors.
-	float surface = pow(texture(surface_noise, UV).r, surface_noise_to_power);
+	float surface = pow(texture(surface_noise, UV*surface_noise_scale).r, 
+		surface_noise_to_power);
 
 	// Combine surface colors with details. Not clamping it because it makes
 	// interesting effects when colors overflow.
@@ -184,8 +181,8 @@ void fragment( )
 	
 }"
 
-[sub_resource type="ShaderMaterial" id=13]
-shader = SubResource( 14 )
+[sub_resource type="ShaderMaterial" id=10]
+shader = SubResource( 9 )
 shader_param/color_surface_hot = Color( 1, 0.772549, 0.321569, 1 )
 shader_param/color_surface_cold = Color( 1, 0.695167, 0.41, 1 )
 shader_param/color_details_major = Color( 0.592157, 1, 0, 1 )
@@ -212,30 +209,30 @@ __meta__ = {
 }
 
 [node name="OmniLight" type="OmniLight" parent="."]
-light_color = Color( 1, 0.701961, 0.137255, 1 )
-light_energy = 200.0
+light_color = Color( 1, 0.839216, 0.529412, 1 )
+light_energy = 10.0
 light_indirect_energy = 0.5
-omni_range = 100000.0
-omni_attenuation = 10.0
+omni_range = 50000.0
+omni_attenuation = 5.0
 
 [node name="CollisionShape" type="CollisionShape" parent="."]
 shape = SubResource( 1 )
 
 [node name="Sphere_768_halo" type="MeshInstance" parent="."]
 transform = Transform( 5, 0, 0, 0, 5, 0, 0, 0, 5, 0, 0, 0 )
-mesh = SubResource( 4 )
-material/0 = SubResource( 6 )
+mesh = SubResource( 2 )
+material/0 = SubResource( 4 )
 
 [node name="Sphere_768_halo2" type="MeshInstance" parent="."]
-transform = Transform( 10, 0, 0, 0, 10, 0, 0, 0, 10, 0, 0, 0 )
-mesh = SubResource( 4 )
-material/0 = SubResource( 7 )
+transform = Transform( 5, 0, 0, 0, 5, 0, 0, 0, 5, 0, 0, 0 )
+mesh = SubResource( 2 )
+material/0 = SubResource( 6 )
 
 [node name="Sphere_768_rim" type="MeshInstance" parent="."]
 transform = Transform( 1.26139, 0, 0, 0, 1.26139, 0, 0, 0, 1.26139, 0, 0, 0 )
-mesh = SubResource( 4 )
-material/0 = SubResource( 8 )
+mesh = SubResource( 2 )
+material/0 = SubResource( 7 )
 
 [node name="Sphere_3072_surface" type="MeshInstance" parent="."]
-mesh = SubResource( 11 )
-material/0 = SubResource( 13 )
+mesh = SubResource( 8 )
+material/0 = SubResource( 10 )

@@ -4,4 +4,5 @@
 
 [node name="Camera" type="Camera" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1 )
-near = 0.1
+near = 0.03
+far = 200000.0
