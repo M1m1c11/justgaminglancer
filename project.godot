@@ -8,6 +8,40 @@
 
 config_version=4
 
+_global_script_classes=[ {
+"base": "CPUParticles",
+"class": "LODCPUParticles",
+"language": "GDScript",
+"path": "res://addons/lod/lod_cpu_particles.gd"
+}, {
+"base": "OmniLight",
+"class": "LODOmniLight",
+"language": "GDScript",
+"path": "res://addons/lod/lod_omni_light.gd"
+}, {
+"base": "Particles",
+"class": "LODParticles",
+"language": "GDScript",
+"path": "res://addons/lod/lod_particles.gd"
+}, {
+"base": "Spatial",
+"class": "LODSpatial",
+"language": "GDScript",
+"path": "res://addons/lod/lod_spatial.gd"
+}, {
+"base": "SpotLight",
+"class": "LODSpotLight",
+"language": "GDScript",
+"path": "res://addons/lod/lod_spot_light.gd"
+} ]
+_global_script_class_icons={
+"LODCPUParticles": "res://addons/lod/lod_cpu_particles.svg",
+"LODOmniLight": "res://addons/lod/lod_omni_light.svg",
+"LODParticles": "res://addons/lod/lod_particles.svg",
+"LODSpatial": "res://addons/lod/lod_spatial.svg",
+"LODSpotLight": "res://addons/lod/lod_spot_light.svg"
+}
+
 [application]
 
 config/name="GDTLancer"
@@ -15,6 +49,10 @@ config/description="A space shooter arcade inspired by Freelancer."
 run/main_scene="res://Scenes/Main.tscn"
 boot_splash/image="res://Assets/Images/Splash.png"
 config/icon="res://Assets/Images/Icon.png"
+
+[editor_plugins]
+
+enabled=PoolStringArray( "res://addons/lod/plugin.cfg" )
 
 [physics]
 
@@ -28,4 +66,18 @@ common/enable_pause_aware_picking=true
 
 vram_compression/import_etc=true
 vram_compression/import_etc2=false
+quality/directional_shadow/size=2048
+quality/shadow_atlas/size=2048
+quality/reflections/texture_array_reflections=false
+quality/reflections/high_quality_ggx=false
+quality/reflections/irradiance_max_size=64
+quality/shading/force_vertex_shading.mobile=false
+quality/shading/force_lambert_over_burley.mobile=false
+quality/shading/force_blinn_over_ggx.mobile=false
+cpu_lightmapper/quality/low_quality_ray_count=32
+cpu_lightmapper/quality/medium_quality_ray_count=64
+cpu_lightmapper/quality/high_quality_ray_count=128
+cpu_lightmapper/quality/ultra_quality_ray_count=256
+quality/reflections/atlas_size=256
+quality/depth/hdr.mobile=true
 environment/default_environment="res://Default_env.tres"

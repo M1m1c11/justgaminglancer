@@ -26,6 +26,7 @@ script = ExtResource( 12 )
 
 [node name="Camera" type="Node" parent="Options"]
 script = ExtResource( 8 )
+camera_far = 60000
 
 [node name="Input" type="Node" parent="."]
 script = ExtResource( 6 )
@@ -49,7 +50,8 @@ __meta__ = {
 [node name="System_objects" parent="Local_space" instance=ExtResource( 4 )]
 
 [node name="Player_ship" parent="." instance=ExtResource( 5 )]
-accel_factor = 20000
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2500, 0, 0 )
+accel_ticks_max = 100
 
 [node name="Camera_rig" parent="Player_ship" instance=ExtResource( 2 )]
 script = ExtResource( 7 )

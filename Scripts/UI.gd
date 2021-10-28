@@ -82,7 +82,7 @@ func _on_Viewport_main_mouse_exited():
 
 func _on_Viewport_main_resized():
 	signals.emit_signal("sig_viewport_update")
-	viewport_size = get_viewport().size
+	viewport_size = OS.window_size
 	
 func _on_Button_quit_pressed():
 	signals.emit_signal("sig_quit_game")

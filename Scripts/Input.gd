@@ -37,7 +37,7 @@ func _ready():
 	# =========================================================================
 	
 	# Initial value require for the mouse coords.
-	viewport_size = get_viewport().size
+	viewport_size = OS.window_size
 	
 # TODO: Link a script for key shortcuts (like options).
 func _input(event):
@@ -145,7 +145,7 @@ func _input(event):
 # ============================ Signal processing ==============================
 # Check if viewport resized and get new values. Required for mouse coordinates.
 func is_viewport_update():
-	viewport_size = get_viewport().size
+	viewport_size = OS.window_size
 
 # Check if we are hovering mouse over the control bar.
 func is_mouse_on_viewport(flag):

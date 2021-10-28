@@ -4,14 +4,14 @@ extends RigidBody
 # Params.
 export var ship_mass = 2000
 export var accel_factor = 1000 # Propulsion force.
-export var accel_ticks_max = 10 # Engine propulsion increments.
+export var accel_ticks_max = 20 # Engine propulsion increments.
 # Turning sensitivity LEFT-RIGHT | UP-DOWN | ROLL
 export var torque_factor = Vector3(1500,700,700)
 export var camera_vert_offset = 0.4
 export var camera_horiz_offset = 2 
 # Higher damp value - more restricted camera motion in given direction.
-export var camera_chase_tilt_horiz_damp_up = 4 # Can't be zero
-export var camera_chase_tilt_horiz_damp_down = 2 # Can't be zero
+export var camera_chase_tilt_horiz_damp_up = 6 # Can't be zero
+export var camera_chase_tilt_horiz_damp_down = 1.8 # Can't be zero
 export var camera_chase_tilt_vert_damp_left = 2 # Can't be zero
 export var camera_chase_tilt_vert_damp_right = 2 # Can't be zero
 # Higher values - more responsive camera.
@@ -55,7 +55,6 @@ func _ready():
 	# Initialize the vessel params.
 	init_ship()
 
-
 func _integrate_forces(state):
 	#print("L: ", state.total_linear_damp, "   A: ", state.total_angular_damp)
 	# TODO: arrange for proper signs for accel and torque.
@@ -92,8 +91,7 @@ func adjust_exhaust():
 			i.get_node("Engine_exhaust_light").light_energy = accel_ticks
 		else:
 			i.get_node("Engine_exhaust_light").light_energy = 0.1
-			
-			
+
 # ============================ Signal processing ==============================
 func is_accelerating(flag):
 	# TODO: make engine state readouts.

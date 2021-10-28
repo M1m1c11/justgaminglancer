@@ -123,9 +123,11 @@ func chase_camera(mv, delta):
 		*ship.camera_push_velocity_factor)
 	
 	# Prevent camera sliding forward
-	if tmp_push.x < camera_min_zoom:
-		tmp_push.x = camera_min_zoom+tmp_push.x
+	# if tmp_push.x < camera_min_zoom:
+	tmp_push.x = camera_min_zoom+tmp_push.x
 	$Camera.translation.z = tmp_push.x
+	#else:
+	#	$Camera.translation.z = tmp_push.x
 	
 	# Tilt motion
 	$Camera.rotation.x = tmp_tilt.x
