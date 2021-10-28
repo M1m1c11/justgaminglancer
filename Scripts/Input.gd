@@ -24,11 +24,11 @@ var ui_button_turret = Node
 
 func _ready():
 	# ============================ Initialize nodes ===========================
-	camera_rig = get_node("/root/Main/Player_ship/Camera_rig")
-	player_ship_state = get_node("/root/Main/State/Player_ship")
-	signals = get_node("/root/Main/Input/Signals")
-	ui = get_node("/root/Main/UI")
-	ui_button_turret = get_node("/root/Main/UI/Controls/Button_turret")
+	camera_rig = get_node("/root/Cont/View/Main/Player_ship/Camera_rig")
+	player_ship_state = get_node("/root/Cont/View/Main/State/Player_ship")
+	signals = get_node("/root/Cont/View/Main/Input/Signals")
+	ui = get_node("/root/Cont/UI")
+	ui_button_turret = get_node("/root/Cont/UI/Controls/Button_turret")
 	# ============================ Connect signals ============================
 	signals.connect("sig_mouse_on_viewport", self, "is_mouse_on_viewport")
 	signals.connect("sig_viewport_update", self, "is_viewport_update")

@@ -16,7 +16,7 @@ var camera = Node
 
 func _ready():
 	# ============================ Initialize nodes ===========================
-	camera = get_node("/root/Main/Player_ship/Camera_rig/Camera")
+	camera = get_node("/root/Cont/View/Main/Player_ship/Camera_rig/Camera")
 	
 	# Set camera properties.
 	camera.fov = camera_fov

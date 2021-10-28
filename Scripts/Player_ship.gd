@@ -38,12 +38,12 @@ var player_ship_state = Node
 func _ready():
 	# ============================ Initialize nodes ===========================
 	engines = get_node("Engines")
-	engine_opts = get_node("/root/Main/Options/Engine")
-	input = get_node("/root/Main/Input")
-	local_space = get_node("/root/Main/Local_space")
-	ui = get_node("/root/Main/UI")
-	signals = get_node("/root/Main/Input/Signals")
-	player_ship_state = get_node("/root/Main/State/Player_ship")
+	engine_opts = get_node("/root/Cont/View/Main/Options/Engine")
+	input = get_node("/root/Cont/View/Main/Input")
+	local_space = get_node("/root/Cont/View/Main/Local_space")
+	ui = get_node("/root/Cont/UI")
+	signals = get_node("/root/Cont/View/Main/Input/Signals")
+	player_ship_state = get_node("/root/Cont/View/Main/State/Player_ship")
 	# ============================= Connect signals ===========================
 	signals.connect("sig_accelerate", self, "is_accelerating")
 	signals.connect("sig_engine_kill", self, "is_engine_kill")

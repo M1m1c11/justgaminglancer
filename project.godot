@@ -50,6 +50,10 @@ run/main_scene="res://Scenes/Main.tscn"
 boot_splash/image="res://Assets/Images/Splash.png"
 config/icon="res://Assets/Images/Icon.png"
 
+[display]
+
+window/stretch/aspect="keep"
+
 [editor_plugins]
 
 enabled=PoolStringArray( "res://addons/lod/plugin.cfg" )

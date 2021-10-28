@@ -26,14 +26,14 @@ var ship_model = Node
 
 func _ready():
 	# ============================ Initialize nodes ===========================
-	input = get_node("/root/Main/Input")
-	cam_opts = get_node("/root/Main/Options/Camera")
-	player_ship_state = get_node("/root/Main/State/Player_ship")
+	input = get_node("/root/Cont/View/Main/Input")
+	cam_opts = get_node("/root/Cont/View/Main/Options/Camera")
+	player_ship_state = get_node("/root/Cont/View/Main/State/Player_ship")
 	# TODO: make reference to model universal.
 	ship = get_parent()
 	ship_model = get_node("../Ship_model")
-	signals = get_node("/root/Main/Input/Signals")
-	ui = get_node("/root/Main/UI")
+	signals = get_node("/root/Cont/View/Main/Input/Signals")
+	ui = get_node("/root/Cont/UI")
 	# ============================ Connect signals ============================
 	signals.connect("sig_turret_mode_on", self, "is_turret_mode_on")
 	# =========================================================================
