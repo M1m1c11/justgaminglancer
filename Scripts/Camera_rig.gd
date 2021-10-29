@@ -170,6 +170,7 @@ func zoom_camera(mouse_event):
 			zoom_ticks -= 1
 			$Camera.translation.z = current_zoom
 
+# ============================ Signal processing ==============================
 func is_turret_mode_on(flag):
 	if flag:
 		# Reset camera first.

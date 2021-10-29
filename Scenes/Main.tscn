@@ -28,9 +28,9 @@ __meta__ = {
 [node name="View" type="Viewport" parent="."]
 size = Vector2( 1024, 600 )
 handle_input_locally = false
+msaa = 1
 render_target_update_mode = 3
 script = ExtResource( 13 )
-scale_factor = 1.0
 
 [node name="Main" type="Spatial" parent="View"]
 script = ExtResource( 1 )
@@ -72,5 +72,3 @@ accel_ticks_max = 100
 
 [node name="Camera_rig" parent="View/Main/Player_ship" instance=ExtResource( 2 )]
 script = ExtResource( 7 )
-
-[connection signal="size_changed" from="View" to="View" method="_on_View_size_changed"]

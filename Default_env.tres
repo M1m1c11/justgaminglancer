@@ -18,3 +18,4 @@ background_color = Color( 0.0156863, 0.0156863, 0.0745098, 1 )
 fog_color = Color( 0, 0, 0, 1 )
 fog_sun_color = Color( 0, 0, 0, 1 )
 tonemap_mode = 3
+glow_bicubic_upscale = true

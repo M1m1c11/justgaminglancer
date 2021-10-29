@@ -98,3 +98,10 @@ func _on_Button_debug_toggled(button_pressed):
 func _on_Button_text_panel_toggled(button_pressed):
 	if button_pressed: text_panel.show()
 	else: text_panel.hide()
+
+func _on_Button_screen_filter_toggled(button_pressed):
+	if button_pressed: signals.emit_signal("sig_screen_filter_on", true)
+	else: signals.emit_signal("sig_screen_filter_on", false)
+
+func _on_Slider_screen_res_value_changed(value):
+	signals.emit_signal("sig_screen_res_value_changed", value)

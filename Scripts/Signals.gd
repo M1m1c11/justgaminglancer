@@ -8,6 +8,8 @@ extends Node
 # warning-ignore-all:unused_signal
 # ============================== Generic =====================================
 signal sig_mouse_on_viewport(flag)
+signal sig_screen_filter_on(flag)
+signal sig_screen_res_value_changed(value)
 signal sig_viewport_update
 signal sig_quit_game
 

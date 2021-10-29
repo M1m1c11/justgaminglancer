@@ -21,6 +21,7 @@ var player_ship_state = Node
 var signals = Node
 var ui = Node
 var ui_button_turret = Node
+var ui_controls_bar = Node
 
 func _ready():
 	# ============================ Initialize nodes ===========================
@@ -28,6 +29,7 @@ func _ready():
 	player_ship_state = get_node("/root/Cont/View/Main/State/Player_ship")
 	signals = get_node("/root/Cont/View/Main/Input/Signals")
 	ui = get_node("/root/Cont/UI")
+	ui_controls_bar = get_node("/root/Cont/UI/Controls")
 	ui_button_turret = get_node("/root/Cont/UI/Controls/Button_turret")
 	# ============================ Connect signals ============================
 	signals.connect("sig_mouse_on_viewport", self, "is_mouse_on_viewport")
@@ -72,9 +74,10 @@ func _input(event):
 		if event is InputEventMouseButton and player_ship_state.turret_mode:
 			camera_rig.zoom_camera(event)
 		
-		# ======================= For keyboard buttons ========================
+		# ======================= For keyboard buttons =========================
 		if event is InputEventKey:
 			
+			# ============================ UI Controls =========================
 			# Mouse flight.
 			if event.pressed and event.scancode == KEY_SPACE:
 				if player_ship_state.mouse_flight:
@@ -84,11 +87,22 @@ func _input(event):
 					player_ship_state.mouse_flight = true
 					signals.emit_signal("sig_mouse_flight_on", true)
 			
+			# TODO: Should also be accessible from other areas and windows.
+			# Show toolbar.
+			if event.pressed and event.scancode == KEY_BACKSPACE:
+				if ui_controls_bar.visible:
+					ui_controls_bar.visible = false
+				else:
+					ui_controls_bar.visible = true
+					
+			
 			# Turret mode. UI shortcut. Signal is emitted by UI.
 			if event.pressed and event.scancode == KEY_H:
-				if not player_ship_state.turret_mode: ui_button_turret.pressed = true
+				if not player_ship_state.turret_mode: 
+					ui_button_turret.pressed = true
 				else: ui_button_turret.pressed = false
 			
+			# ============================= Ship controls ======================
 			# Accelerate forward.
 			# TODO: unique signals for simultaneous action.
 			if event.pressed and event.scancode == KEY_UP:
@@ -145,6 +159,7 @@ func _input(event):
 # ============================ Signal processing ==============================
 # Check if viewport resized and get new values. Required for mouse coordinates.
 func is_viewport_update():
+	# For mouse coords.
 	viewport_size = OS.window_size
 
 # Check if we are hovering mouse over the control bar.
