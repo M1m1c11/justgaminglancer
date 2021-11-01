@@ -13,11 +13,12 @@ var main = Node
 var marker = Node
 var marker2 = Node
 var marker3 = Node
-var monolith = Node
-var monolith2 = Node
+#var monolith = Node
+#var monolith2 = Node
 var mouse_vector = Node
 var signals = Node
 var text_panel = Node
+var viewport = Node
 
 func _ready():
 	# ============================ Initialize nodes ===========================
@@ -28,10 +29,11 @@ func _ready():
 	marker = get_node("Main3D/Debug/Marker")
 	marker2 = get_node("Main3D/Debug/Marker2")
 	marker3 = get_node("Main3D/Debug/Marker3")
-	monolith = get_node("/root/Cont/View/Main/Local_space/System_objects/Monolith")
+	#monolith = get_node("/root/Cont/View/Main/Local_space/System_objects/Monolith")
 	mouse_vector = get_node("Main3D/Debug/Mouse_vector")
 	signals = get_node("/root/Cont/View/Main/Input/Signals")
 	text_panel = get_node("Main3D/Text_panel")
+	viewport = get_node("/root/Cont/View")
 	# =========================================================================
 		
 	# Initialize windows in switched off mode to match button states.
@@ -49,11 +51,11 @@ func _process(_delta):
 	# TODO: make a system of spatial markers. Proper ones.
 	# This should be an iterator over objects within proximity.
 	var loc = camera_rig.global_transform.origin
-	var loc2 = monolith.global_transform.origin
+	#var loc2 = monolith.global_transform.origin
 	
-	#marker.visible = not get_viewport().get_camera().is_position_behind(Vector3(0,0,0))
-	#marker.rect_position = get_viewport().get_camera().unproject_position(Vector3(0,0,0))
-	#marker.text = "Origin: "+str(loc.distance_to(Vector3(0,0,0)))
+	marker.visible = not viewport.get_camera().is_position_behind(Vector3(0,0,0))
+	marker.rect_position = viewport.get_camera().unproject_position(Vector3(0,0,0))
+	marker.text = "Origin: "+str(loc.distance_to(Vector3(0,0,0)))
 	
 	#marker2.visible = not get_viewport().get_camera().is_position_behind(loc2)
 	#marker2.rect_position = get_viewport().get_camera().unproject_position(loc2)

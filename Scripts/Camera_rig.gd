@@ -22,7 +22,6 @@ var ui = Node
 var player_ship_state = Node
 var signals = Node
 var ship = Node
-var ship_model = Node
 
 func _ready():
 	# ============================ Initialize nodes ===========================
@@ -31,7 +30,6 @@ func _ready():
 	player_ship_state = get_node("/root/Cont/View/Main/State/Player_ship")
 	# TODO: make reference to model universal.
 	ship = get_parent()
-	ship_model = get_node("../Ship_model")
 	signals = get_node("/root/Cont/View/Main/Input/Signals")
 	ui = get_node("/root/Cont/UI")
 	# ============================ Connect signals ============================

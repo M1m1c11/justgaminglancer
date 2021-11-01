@@ -92,5 +92,6 @@ void fragment( )
 			detail_small*color_details_small.b)
 		* small_detail_strength
 		;
-	
+	// This is needed by alpha sorting.
+	//ALPHA = 1.0;
 }

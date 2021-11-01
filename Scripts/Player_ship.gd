@@ -56,9 +56,11 @@ func _ready():
 	init_ship()
 
 func _integrate_forces(state):
+	
 	#print("L: ", state.total_linear_damp, "   A: ", state.total_angular_damp)
 	# TODO: arrange for proper signs for accel and torque.
 	ship_linear_velocity = state.linear_velocity.length()
+	# print(ship_linear_velocity)
 	
 	if not player_ship_state.engine_kill:
 		state.add_central_force(-global_transform.basis.z*acceleration)
@@ -77,6 +79,8 @@ func _integrate_forces(state):
 # ================================== Other ====================================
 # TODO: Split it off to ship's specific properties later on.
 func init_ship():
+	# Enable continuous collision detection
+	self.continuous_cd = true
 	self.custom_integrator = true
 	self.can_sleep = false
 	self.mass = ship_mass

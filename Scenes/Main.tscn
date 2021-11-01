@@ -3,7 +3,7 @@
 [ext_resource path="res://Scripts/Main.gd" type="Script" id=1]
 [ext_resource path="res://Scenes/UI/Camera_rig.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Scenes/UI/UI.tscn" type="PackedScene" id=3]
-[ext_resource path="res://Scenes/Systems/System_1.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Scenes/Systems/System_Gate.tscn" type="PackedScene" id=4]
 [ext_resource path="res://Scenes/Ships/Rogue_fighter.tscn" type="PackedScene" id=5]
 [ext_resource path="res://Scripts/Input.gd" type="Script" id=6]
 [ext_resource path="res://Scripts/Camera_rig.gd" type="Script" id=7]
@@ -45,7 +45,7 @@ script = ExtResource( 12 )
 
 [node name="Camera" type="Node" parent="View/Main/Options"]
 script = ExtResource( 8 )
-camera_far = 60000
+camera_far = 250000
 
 [node name="Input" type="Node" parent="View/Main"]
 script = ExtResource( 6 )
@@ -64,10 +64,10 @@ __meta__ = {
 "_edit_lock_": true
 }
 
-[node name="System_objects" parent="View/Main/Local_space" instance=ExtResource( 4 )]
+[node name="System_Gate" parent="View/Main/Local_space" instance=ExtResource( 4 )]
 
 [node name="Player_ship" parent="View/Main" instance=ExtResource( 5 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2500, 0, 0 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.38067, 3977.48 )
 accel_ticks_max = 100
 
 [node name="Camera_rig" parent="View/Main/Player_ship" instance=ExtResource( 2 )]

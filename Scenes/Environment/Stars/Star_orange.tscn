@@ -2,7 +2,7 @@
 
 [ext_resource path="res://addons/lod/lod_spatial.gd" type="Script" id=1]
 [ext_resource path="res://Assets/Textures/Noise/Noise_4_way_tileable.dds" type="Texture" id=2]
-[ext_resource path="res://Assets/Shaders/Rim.gdshader" type="Shader" id=4]
+[ext_resource path="res://Assets/Shaders/Star_rim.gdshader" type="Shader" id=4]
 
 [sub_resource type="SphereShape" id=1]
 radius = 1000.0
@@ -184,7 +184,7 @@ surfaces/0 = {
 
 [sub_resource type="Shader" id=8]
 code = "shader_type spatial;
-render_mode depth_draw_opaque, cull_disabled, unshaded;
+render_mode depth_draw_opaque, cull_front, unshaded;
 
 uniform vec4 albedo : hint_color;
 uniform float rim_strength = 0.05;
@@ -219,7 +219,7 @@ surfaces/0 = {
 
 [sub_resource type="Shader" id=11]
 code = "shader_type spatial;
-render_mode depth_draw_opaque, cull_disabled, unshaded;
+render_mode depth_draw_opaque, cull_front, unshaded;
 
 uniform vec4 albedo : hint_color;
 uniform float rim_strength = 0.05;
