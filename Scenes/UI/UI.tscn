@@ -1,15 +1,20 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://Scripts/UI.gd" type="Script" id=1]
 [ext_resource path="res://Assets/UI_styles/Button_red/Hover_focus.tres" type="StyleBox" id=2]
 [ext_resource path="res://Assets/UI_styles/Button_red/Normal.tres" type="StyleBox" id=3]
 [ext_resource path="res://Assets/UI_styles/Button_red/Pressed.tres" type="StyleBox" id=4]
+[ext_resource path="res://Assets/Fonts/Ubuntu-Regular.ttf" type="DynamicFontData" id=5]
 
 [sub_resource type="ShaderMaterial" id=1]
 
 [sub_resource type="ShaderMaterial" id=2]
 
 [sub_resource type="CanvasItemMaterial" id=3]
+
+[sub_resource type="DynamicFont" id=4]
+size = 30
+font_data = ExtResource( 5 )
 
 [node name="UI" type="CanvasLayer"]
 script = ExtResource( 1 )
@@ -30,7 +35,6 @@ margin_right = 192.0
 margin_bottom = -80.0
 mouse_filter = 2
 __meta__ = {
-"_edit_group_": true,
 "_edit_use_anchors_": false
 }
 
@@ -85,10 +89,46 @@ points = PoolVector2Array( 0, 0, 0, 0 )
 width = 1.0
 default_color = Color( 0.596078, 0, 0, 1 )
 
-[node name="Marker" type="Label" parent="Main3D/Debug"]
-margin_right = 40.0
-margin_bottom = 14.0
+[node name="Marker" type="Control" parent="Main3D/Debug"]
+
+[node name="Text" type="Label" parent="Main3D/Debug/Marker"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -25.0
+margin_top = -10.0
+margin_right = 25.0
+margin_bottom = 10.0
 text = "Origin"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ColorRect2" type="ColorRect" parent="Main3D/Debug/Marker"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -1.0
+margin_top = 10.0
+margin_right = 1.0
+margin_bottom = 18.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ColorRect" type="ColorRect" parent="Main3D/Debug/Marker"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -1.0
+margin_top = -18.0
+margin_right = 1.0
+margin_bottom = -10.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -266,6 +306,65 @@ margin_right = -11.0
 margin_bottom = 17.0
 text = "Quality"
 
+[node name="Slider_fov" type="HSlider" parent="Controls"]
+anchor_left = 1.0
+anchor_right = 1.0
+margin_left = -315.0
+margin_top = 8.0
+margin_right = -235.0
+margin_bottom = 28.0
+min_value = 40.0
+max_value = 70.0
+value = 55.0
+tick_count = 10
+ticks_on_borders = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="Controls/Slider_fov"]
+margin_left = -57.0
+margin_top = 3.0
+margin_right = -11.0
+margin_bottom = 17.0
+text = "FOV"
+
+[node name="Apparent_velocity" type="Label" parent="Controls"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -192.0
+margin_top = -24.0
+margin_right = -4.0
+margin_bottom = 24.0
+custom_fonts/font = SubResource( 4 )
+custom_colors/font_color = Color( 0.909804, 0.909804, 0.909804, 1 )
+text = "0000"
+align = 2
+valign = 1
+clip_text = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Apparent_velocity_us" type="Label" parent="Controls"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = 4.0
+margin_top = -24.0
+margin_right = 92.0
+margin_bottom = 24.0
+custom_fonts/font = SubResource( 4 )
+custom_colors/font_color = Color( 0.517647, 0.517647, 0.517647, 1 )
+text = "cu/s"
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
 [connection signal="mouse_entered" from="Main3D" to="." method="_on_Viewport_main_mouse_entered"]
 [connection signal="mouse_exited" from="Main3D" to="." method="_on_Viewport_main_mouse_exited"]
 [connection signal="resized" from="Main3D" to="." method="_on_Viewport_main_resized"]
@@ -275,3 +374,4 @@ text = "Quality"
 [connection signal="pressed" from="Controls/Button_quit" to="." method="_on_Button_quit_pressed"]
 [connection signal="toggled" from="Controls/Button_screen_filter" to="." method="_on_Button_screen_filter_toggled"]
 [connection signal="value_changed" from="Controls/Slider_screen_res" to="." method="_on_Slider_screen_res_value_changed"]
+[connection signal="value_changed" from="Controls/Slider_fov" to="." method="_on_Slider_fov_value_changed"]

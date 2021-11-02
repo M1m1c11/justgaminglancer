@@ -2,12 +2,12 @@
 
 importer="scene"
 type="PackedScene"
-path="res://.import/Array_squares_4_petals.dae-c5da5a92d382102988712a4c9f16f70d.scn"
+path="res://.import/Phoenix.dae-fb04eed918bc5dedd71f955a715c56a0.scn"
 
 [deps]
 
-source_file="res://Assets/Models/Objects/Arrays/Array_squares_4_petals.dae"
-dest_files=[ "res://.import/Array_squares_4_petals.dae-c5da5a92d382102988712a4c9f16f70d.scn" ]
+source_file="res://Assets/Models/Ships/Phoenix/Phoenix.dae"
+dest_files=[ "res://.import/Phoenix.dae-fb04eed918bc5dedd71f955a715c56a0.scn" ]
 
 [params]
 
@@ -18,7 +18,7 @@ nodes/custom_script=""
 nodes/storage=0
 nodes/use_legacy_names=false
 materials/location=1
-materials/storage=1
+materials/storage=0
 materials/keep_on_reimport=true
 meshes/compress=true
 meshes/ensure_tangents=true
@@ -27,7 +27,7 @@ meshes/light_baking=0
 meshes/lightmap_texel_size=0.1
 skins/use_named_skins=true
 external_files/store_in_subdir=false
-animation/import=true
+animation/import=false
 animation/fps=15
 animation/filter_script=""
 animation/storage=false

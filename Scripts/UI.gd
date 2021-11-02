@@ -19,16 +19,22 @@ var mouse_vector = Node
 var signals = Node
 var text_panel = Node
 var viewport = Node
+var apparent_velocity = Node
+var player_ship_state = Node
+var local_space = Node
 
 func _ready():
 	# ============================ Initialize nodes ===========================
+	apparent_velocity = get_node("Controls/Apparent_velocity")
 	camera_rig = get_node("/root/Cont/View/Main/Player_ship/Camera_rig")
 	debug = get_node("Main3D/Debug")
 	input = get_node("/root/Cont/View/Main/Input")
+	local_space = get_node("/root/Cont/View/Main/Local_space")
 	main = get_node("/root/Cont/View/Main")
 	marker = get_node("Main3D/Debug/Marker")
 	marker2 = get_node("Main3D/Debug/Marker2")
 	marker3 = get_node("Main3D/Debug/Marker3")
+	player_ship_state = get_node("/root/Cont/View/Main/State/Player_ship")
 	#monolith = get_node("/root/Cont/View/Main/Local_space/System_objects/Monolith")
 	mouse_vector = get_node("Main3D/Debug/Mouse_vector")
 	signals = get_node("/root/Cont/View/Main/Input/Signals")
@@ -51,17 +57,23 @@ func _process(_delta):
 	# TODO: make a system of spatial markers. Proper ones.
 	# This should be an iterator over objects within proximity.
 	var loc = camera_rig.global_transform.origin
+	var loc_space = local_space.global_transform.origin
 	#var loc2 = monolith.global_transform.origin
 	
-	marker.visible = not viewport.get_camera().is_position_behind(Vector3(0,0,0))
-	marker.rect_position = viewport.get_camera().unproject_position(Vector3(0,0,0))
-	marker.text = "Origin: "+str(loc.distance_to(Vector3(0,0,0)))
+	# Origin. Multiply by scale factor of viewport.
+	marker.visible = not viewport.get_camera().is_position_behind(loc_space)
+	marker.rect_position = viewport.get_camera().unproject_position(
+		loc_space)/viewport.screen_res_factor
+	# TODO: properly align and center on the object.
+	marker.get_node("Text").text = "Origin: "+str(round(10*loc.distance_to(loc_space)))+ " cu"
 	
 	#marker2.visible = not get_viewport().get_camera().is_position_behind(loc2)
 	#marker2.rect_position = get_viewport().get_camera().unproject_position(loc2)
 	#marker2.text = "Monolith: "+str(loc.distance_to(loc2))
 	
 	if update_debug_text_on: update_debug_text()
+	
+	apparent_velocity.text = str(round(player_ship_state.apparent_velocity))
 
 # ================================== Other ====================================
 func update_debug_text():
@@ -107,3 +119,6 @@ func _on_Button_screen_filter_toggled(button_pressed):
 
 func _on_Slider_screen_res_value_changed(value):
 	signals.emit_signal("sig_screen_res_value_changed", value)
+
+func _on_Slider_fov_value_changed(value):
+	signals.emit_signal("sig_fov_value_changed", value)

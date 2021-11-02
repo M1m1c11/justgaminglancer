@@ -3,12 +3,12 @@ extends RigidBody
 # TODO check materials and shaders for FX
 # Params.
 export var ship_mass = 2000
-export var accel_factor = 1000 # Propulsion force.
-export var accel_ticks_max = 20 # Engine propulsion increments.
+export var accel_factor = 10000 # Propulsion force.
+export var accel_ticks_max = 10 # Engine propulsion increments.
 # Turning sensitivity LEFT-RIGHT | UP-DOWN | ROLL
 export var torque_factor = Vector3(1500,700,700)
-export var camera_vert_offset = 0.4
-export var camera_horiz_offset = 2 
+export var camera_vert_offset = 0.2
+export var camera_horiz_offset = 1 
 # Higher damp value - more restricted camera motion in given direction.
 export var camera_chase_tilt_horiz_damp_up = 6 # Can't be zero
 export var camera_chase_tilt_horiz_damp_down = 1.8 # Can't be zero
@@ -55,26 +55,54 @@ func _ready():
 	# Initialize the vessel params.
 	init_ship()
 
+
+func _physics_process(_delta):
+	
+	# Testing origin rebase. Start this only at some point.
+	# 10k seems like the optimal.
+	var limit = 10000
+	
+	if self.translation.x > limit:
+		self.translation.x = 0
+		local_space.translation.x = local_space.translation.x-limit
+	elif self.translation.x < -limit:
+		self.translation.x = 0
+		local_space.translation.x = local_space.translation.x+limit
+		
+	if self.translation.y > limit:
+		self.translation.y = 0
+		local_space.translation.y = local_space.translation.y-limit
+	elif self.translation.y < -limit:
+		self.translation.y = 0
+		local_space.translation.y = local_space.translation.y+limit
+
+	if self.translation.z > limit:
+		self.translation.z = 0
+		local_space.translation.z = local_space.translation.z-limit
+	elif self.translation.z < -limit:
+		self.translation.z = 0
+		local_space.translation.z = local_space.translation.z+limit
+
+
+
 func _integrate_forces(state):
 	
 	#print("L: ", state.total_linear_damp, "   A: ", state.total_angular_damp)
 	# TODO: arrange for proper signs for accel and torque.
 	ship_linear_velocity = state.linear_velocity.length()
-	# print(ship_linear_velocity)
+	# Since everything is scaled down 10 times, then:
+	player_ship_state.apparent_velocity = ship_linear_velocity*10
 	
 	if not player_ship_state.engine_kill:
 		state.add_central_force(-global_transform.basis.z*acceleration)
 	
 	if not player_ship_state.turret_mode and (input.LMB_held or player_ship_state.mouse_flight):
-		var torque = Vector3( \
-			-input.mouse_vector.y, \
-			-input.mouse_vector.x, \
-			0) \
-				*torque_factor 
+
 		var tx = -transform.basis.y*torque_factor.x*input.mouse_vector.x
 		var ty = -transform.basis.x*torque_factor.y*input.mouse_vector.y
 		
 		state.add_torque(tx+ty)
+		
 
 # ================================== Other ====================================
 # TODO: Split it off to ship's specific properties later on.

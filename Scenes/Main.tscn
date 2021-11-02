@@ -45,7 +45,8 @@ script = ExtResource( 12 )
 
 [node name="Camera" type="Node" parent="View/Main/Options"]
 script = ExtResource( 8 )
-camera_far = 250000
+camera_far = 500000
+camera_fov = 60
 
 [node name="Input" type="Node" parent="View/Main"]
 script = ExtResource( 6 )
@@ -60,14 +61,14 @@ script = ExtResource( 9 )
 
 [node name="Local_space" type="Position3D" parent="View/Main"]
 __meta__ = {
-"_edit_group_": true,
-"_edit_lock_": true
+"_edit_group_": true
 }
 
 [node name="System_Gate" parent="View/Main/Local_space" instance=ExtResource( 4 )]
 
 [node name="Player_ship" parent="View/Main" instance=ExtResource( 5 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.38067, 3977.48 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 191.301 )
+continuous_cd = false
 accel_ticks_max = 100
 
 [node name="Camera_rig" parent="View/Main/Player_ship" instance=ExtResource( 2 )]

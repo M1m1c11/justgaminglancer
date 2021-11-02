@@ -13,12 +13,20 @@ export var velocity_factor_on_tilt = 0.1 # Should be more than one
 
 # Nodes.
 var camera = Node
+var signals = Node
 
 func _ready():
 	# ============================ Initialize nodes ===========================
 	camera = get_node("/root/Cont/View/Main/Player_ship/Camera_rig/Camera")
+	signals = get_node("/root/Cont/View/Main/Input/Signals")
+	# ============================ Connect signals ============================
+	signals.connect("sig_fov_value_changed", self, "is_fov_value_changed")
+	# =========================================================================
 	
 	# Set camera properties.
 	camera.fov = camera_fov
 	camera.far = camera_far
 	camera.near = camera_near
+
+func is_fov_value_changed(value):
+	camera.fov = value
