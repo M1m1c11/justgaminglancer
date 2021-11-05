@@ -1,6 +1,6 @@
 extends Node
 
-export var physics_fps = 60
+export var physics_fps = 120
 export var graphic_fps = 60
 export var ship_linear_damp = 1
 export var ship_angular_damp = 5

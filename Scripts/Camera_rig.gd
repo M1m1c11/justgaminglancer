@@ -19,7 +19,7 @@ var mouse_vector = Vector2(0,0)
 var cam_opts = Node
 var input = Node
 var ui = Node
-var player_ship_state = Node
+var ship_state = Node
 var signals = Node
 var ship = Node
 
@@ -27,9 +27,9 @@ func _ready():
 	# ============================ Initialize nodes ===========================
 	input = get_node("/root/Cont/View/Main/Input")
 	cam_opts = get_node("/root/Cont/View/Main/Options/Camera")
-	player_ship_state = get_node("/root/Cont/View/Main/State/Player_ship")
+	ship_state = get_node("/root/Cont/View/Main/Ship/Ship_state")
 	# TODO: make reference to model universal.
-	ship = get_parent()
+	ship = get_node("/root/Cont/View/Main/Ship")
 	signals = get_node("/root/Cont/View/Main/Input/Signals")
 	ui = get_node("/root/Cont/UI")
 	# ============================ Connect signals ============================
@@ -46,12 +46,12 @@ func _ready():
 func _process(delta):
 	# Track the change in camera mode and update mouse vector when LMB is held.
 	# When the mouse is released proceed with a little of inertia for smoothness.
-	if player_ship_state.turret_mode and \
-	(input.LMB_held or player_ship_state.mouse_flight):
+	if ship_state.turret_mode and \
+	(input.LMB_held or ship_state.mouse_flight):
 		mouse_vector = input.mouse_vector
 		orbit_camera(mouse_vector)
-	elif player_ship_state.turret_mode and \
-	(not input.LMB_held or not player_ship_state.mouse_flight):
+	elif ship_state.turret_mode and \
+	(not input.LMB_held or not ship_state.mouse_flight):
 		# Stop inertia at small value of the vector.
 		if abs(mouse_vector.x) > 0.01:
 			mouse_vector /= cam_opts.camera_inertia_factor
@@ -59,13 +59,13 @@ func _process(delta):
 			orbit_camera(mouse_vector)
 	
 	# Chase camera.
-	if not player_ship_state.turret_mode and \
-	(input.LMB_held or player_ship_state.mouse_flight):
+	if not ship_state.turret_mode and \
+	(input.LMB_held or ship_state.mouse_flight):
 		mouse_vector = input.mouse_vector
 		chase_camera(mouse_vector, delta)\
 	# Return to initial position.
-	elif not player_ship_state.turret_mode and not \
-	(input.LMB_held or player_ship_state.mouse_flight):
+	elif not ship_state.turret_mode and not \
+	(input.LMB_held or ship_state.mouse_flight):
 		mouse_vector = Vector2(0,0)
 		chase_camera(mouse_vector, delta)
 	
@@ -111,7 +111,7 @@ func chase_camera(mv, delta):
 			)/(ship.camera_chase_tilt_vert_damp_right)
 			
 	# FORWARD - velocity_factor
-	velocity_factor = ship.ship_linear_velocity*0.1
+	velocity_factor = ship_state.ship_linear_velocity*0.1
 	
 	var fin_tilt = Vector2(vert, horiz)
 	var fin_push = Vector2(velocity_factor, 0.0)

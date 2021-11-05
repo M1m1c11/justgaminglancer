@@ -17,7 +17,7 @@ var signals = Node
 
 func _ready():
 	# ============================ Initialize nodes ===========================
-	camera = get_node("/root/Cont/View/Main/Player_ship/Camera_rig/Camera")
+	camera = get_node("/root/Cont/View/Main/Ship/Camera_rig/Camera")
 	signals = get_node("/root/Cont/View/Main/Input/Signals")
 	# ============================ Connect signals ============================
 	signals.connect("sig_fov_value_changed", self, "is_fov_value_changed")

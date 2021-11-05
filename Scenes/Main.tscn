@@ -4,11 +4,11 @@
 [ext_resource path="res://Scenes/UI/Camera_rig.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Scenes/UI/UI.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Scenes/Systems/System_Gate.tscn" type="PackedScene" id=4]
-[ext_resource path="res://Scenes/Ships/Rogue_fighter.tscn" type="PackedScene" id=5]
+[ext_resource path="res://Scenes/Ships/Phoenix.tscn" type="PackedScene" id=5]
 [ext_resource path="res://Scripts/Input.gd" type="Script" id=6]
 [ext_resource path="res://Scripts/Camera_rig.gd" type="Script" id=7]
 [ext_resource path="res://Scripts/Options/Camera.gd" type="Script" id=8]
-[ext_resource path="res://Scripts/State/Player_ship.gd" type="Script" id=9]
+[ext_resource path="res://Scenes/States/Ship_state.tscn" type="PackedScene" id=9]
 [ext_resource path="res://Scripts/Signals.gd" type="Script" id=10]
 [ext_resource path="res://Default_env.tres" type="Environment" id=11]
 [ext_resource path="res://Scripts/Options/Engine.gd" type="Script" id=12]
@@ -54,11 +54,6 @@ script = ExtResource( 6 )
 [node name="Signals" type="Node" parent="View/Main/Input"]
 script = ExtResource( 10 )
 
-[node name="State" type="Node" parent="View/Main"]
-
-[node name="Player_ship" type="Node" parent="View/Main/State"]
-script = ExtResource( 9 )
-
 [node name="Local_space" type="Position3D" parent="View/Main"]
 __meta__ = {
 "_edit_group_": true
@@ -66,10 +61,9 @@ __meta__ = {
 
 [node name="System_Gate" parent="View/Main/Local_space" instance=ExtResource( 4 )]
 
-[node name="Player_ship" parent="View/Main" instance=ExtResource( 5 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 191.301 )
-continuous_cd = false
-accel_ticks_max = 100
+[node name="Ship" parent="View/Main" instance=ExtResource( 5 )]
 
-[node name="Camera_rig" parent="View/Main/Player_ship" instance=ExtResource( 2 )]
+[node name="Camera_rig" parent="View/Main/Ship" instance=ExtResource( 2 )]
 script = ExtResource( 7 )
+
+[node name="Ship_state" parent="View/Main/Ship" instance=ExtResource( 9 )]

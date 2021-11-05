@@ -20,13 +20,13 @@ var signals = Node
 var text_panel = Node
 var viewport = Node
 var apparent_velocity = Node
-var player_ship_state = Node
+var ship_state = Node
 var local_space = Node
 
 func _ready():
 	# ============================ Initialize nodes ===========================
 	apparent_velocity = get_node("Controls/Apparent_velocity")
-	camera_rig = get_node("/root/Cont/View/Main/Player_ship/Camera_rig")
+	camera_rig = get_node("/root/Cont/View/Main/Ship/Camera_rig")
 	debug = get_node("Main3D/Debug")
 	input = get_node("/root/Cont/View/Main/Input")
 	local_space = get_node("/root/Cont/View/Main/Local_space")
@@ -34,7 +34,7 @@ func _ready():
 	marker = get_node("Main3D/Debug/Marker")
 	marker2 = get_node("Main3D/Debug/Marker2")
 	marker3 = get_node("Main3D/Debug/Marker3")
-	player_ship_state = get_node("/root/Cont/View/Main/State/Player_ship")
+	ship_state = get_node("/root/Cont/View/Main/Ship/Ship_state")
 	#monolith = get_node("/root/Cont/View/Main/Local_space/System_objects/Monolith")
 	mouse_vector = get_node("Main3D/Debug/Mouse_vector")
 	signals = get_node("/root/Cont/View/Main/Input/Signals")
@@ -73,7 +73,7 @@ func _process(_delta):
 	
 	if update_debug_text_on: update_debug_text()
 	
-	apparent_velocity.text = str(round(player_ship_state.apparent_velocity))
+	apparent_velocity.text = str(round(ship_state.apparent_velocity))
 
 # ================================== Other ====================================
 func update_debug_text():

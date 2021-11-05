@@ -17,7 +17,7 @@ var mouse_on_viewport = true
 
 # Nodes.
 var camera_rig = Node
-var player_ship_state = Node
+var ship_state = Node
 var signals = Node
 var ui = Node
 var ui_button_turret = Node
@@ -25,8 +25,8 @@ var ui_controls_bar = Node
 
 func _ready():
 	# ============================ Initialize nodes ===========================
-	camera_rig = get_node("/root/Cont/View/Main/Player_ship/Camera_rig")
-	player_ship_state = get_node("/root/Cont/View/Main/State/Player_ship")
+	camera_rig = get_node("/root/Cont/View/Main/Ship/Camera_rig")
+	ship_state = get_node("/root/Cont/View/Main/Ship/Ship_state")
 	signals = get_node("/root/Cont/View/Main/Input/Signals")
 	ui = get_node("/root/Cont/UI")
 	ui_controls_bar = get_node("/root/Cont/UI/Controls")
@@ -71,7 +71,7 @@ func _input(event):
 		# Camera orbiting is in the camera script.
 		
 		# Camera zoom.
-		if event is InputEventMouseButton and player_ship_state.turret_mode:
+		if event is InputEventMouseButton and ship_state.turret_mode:
 			camera_rig.zoom_camera(event)
 		
 		# ======================= For keyboard buttons =========================
@@ -80,11 +80,11 @@ func _input(event):
 			# ============================ UI Controls =========================
 			# Mouse flight.
 			if event.pressed and event.scancode == KEY_SPACE:
-				if player_ship_state.mouse_flight:
-					player_ship_state.mouse_flight = false
+				if ship_state.mouse_flight:
+					ship_state.mouse_flight = false
 					signals.emit_signal("sig_mouse_flight_on", false)
 				else:
-					player_ship_state.mouse_flight = true
+					ship_state.mouse_flight = true
 					signals.emit_signal("sig_mouse_flight_on", true)
 			
 			# TODO: Should also be accessible from other areas and windows.
@@ -98,7 +98,7 @@ func _input(event):
 			
 			# Turret mode. UI shortcut. Signal is emitted by UI.
 			if event.pressed and event.scancode == KEY_H:
-				if not player_ship_state.turret_mode: 
+				if not ship_state.turret_mode: 
 					ui_button_turret.pressed = true
 				else: ui_button_turret.pressed = false
 			
@@ -130,11 +130,11 @@ func _input(event):
 			
 			# Accelerate down strafe.
 			if event.pressed and event.scancode == KEY_Z:
-				if not player_ship_state.engine_kill: 
-					player_ship_state.engine_kill = true
+				if not ship_state.engine_kill: 
+					ship_state.engine_kill = true
 					signals.emit_signal("sig_engine_kill", true)
 				else: 
-					player_ship_state.engine_kill = false
+					ship_state.engine_kill = false
 					signals.emit_signal("sig_engine_kill", false)
 	# =================== For events outside of 3D viewport ===================
 	# Mouse not over 3D viewport.
@@ -171,5 +171,5 @@ func is_quit_game():
 	get_tree().quit()
 
 func is_turret_mode_on(flag):
-	player_ship_state.turret_mode = flag
+	ship_state.turret_mode = flag
 
