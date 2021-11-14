@@ -1,11 +1,11 @@
 extends RigidBody
 
-
+var limit = 5000
 # TODO check materials and shaders for FX
 # Params.
 export var ship_mass = 2000
-export var accel_factor = 20000 # Propulsion force.
-export var accel_ticks_max = 20 # Engine propulsion increments.
+export var accel_factor = 20 # Propulsion force.
+export var accel_ticks_max = 500 # Engine propulsion increments.
 # Turning sensitivity LEFT-RIGHT | UP-DOWN | ROLL
 export var torque_factor = Vector3(1500,700,700)
 export var camera_vert_offset = 0.2
@@ -64,7 +64,7 @@ func _physics_process(_delta):
 	
 	# Testing origin rebase. Start this only at some point.
 	# 10k seems like the optimal.
-	var limit = 10000
+	
 	
 	if self.translation.x > limit:
 		self.translation.x = 0
@@ -98,9 +98,13 @@ func _integrate_forces(state):
 	# Since everything is scaled down 10 times, then:
 	ship_state.apparent_velocity = vel*10
 	
-	if not ship_state.engine_kill:
-		print(ship_state.acceleration)
-		state.add_central_force(-global_transform.basis.z*ship_state.acceleration)
+	# Limit by origin rebase speed (600000 u/s).
+	if not ship_state.engine_kill and vel < limit*engine_opts.physics_fps:
+		state.add_central_force(-global_transform.basis.z*ship_state.acceleration*ship_state.acceleration)
+	
+	# Limiting by engine ticks. It is a hard limits.
+	if vel > limit*engine_opts.physics_fps:
+		signals.emit_signal("sig_accelerate", false)
 	
 	if not ship_state.turret_mode and (input.LMB_held or ship_state.mouse_flight):
 

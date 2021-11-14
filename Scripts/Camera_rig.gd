@@ -123,7 +123,7 @@ func chase_camera(mv, delta):
 	# Prevent camera sliding forward
 	# if tmp_push.x < camera_min_zoom:
 	tmp_push.x = camera_min_zoom+tmp_push.x
-	$Camera.translation.z = tmp_push.x
+	$Camera.translation.z = clamp(tmp_push.x, 0.0, 10.0)
 	#else:
 	#	$Camera.translation.z = tmp_push.x
 	

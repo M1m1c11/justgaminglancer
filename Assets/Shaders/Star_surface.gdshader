@@ -57,8 +57,7 @@ void fragment( )
 		
 	float detail_small = 
 		clamp((sin(texture(small_detail_noise, p_2).r * pi) 
-			-small_detail_filter)*90.0
-		, 0.0, 1.0);
+			-small_detail_filter)*90.0, 0.0, 1.0);
 	
 	// Surface main colors.
 	float surface = pow(texture(surface_noise, UV*surface_noise_scale).r, 
@@ -67,31 +66,11 @@ void fragment( )
 	// Combine surface colors with details. Not clamping it because it makes
 	// interesting effects when colors overflow.
 	ALBEDO = 
-		// Surface hot.
-		vec3(
-			surface*color_surface_hot.r, 
-			surface*color_surface_hot.g, 
-			surface*color_surface_hot.b)
-		* surface_hot_value
-		// Surface cold.
-		+ vec3(
-			(1.0-surface)*color_surface_cold.r, 
-			(1.0-surface)*color_surface_cold.g, 
-			(1.0-surface)*color_surface_cold.b)
-		* surface_cold_value
-		// Details major.
-		+ vec3(
-			detail_major*color_details_major.r, 
-			detail_major*color_details_major.g, 
-			detail_major*color_details_major.b)
-		* major_detail_strength
-		// Details small.
-		+ vec3(
-			detail_small*color_details_small.r, 
-			detail_small*color_details_small.g, 
-			detail_small*color_details_small.b)
-		* small_detail_strength
-		;
-	// This is needed by alpha sorting.
+		surface*color_surface_hot.rgb*surface_hot_value
+		+(1.0-surface)*color_surface_cold.rgb*surface_cold_value
+		+detail_major*color_details_major.rgb*major_detail_strength
+		+detail_small*color_details_small.rgb*small_detail_strength;
+	
+	// This is may be needed by alpha sorting.
 	//ALPHA = 1.0;
 }

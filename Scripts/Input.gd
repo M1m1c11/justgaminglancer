@@ -111,7 +111,8 @@ func _input(event):
 			# Accelerate backward.
 			if event.pressed and event.scancode == KEY_DOWN:
 				signals.emit_signal("sig_accelerate", false)
-
+			
+			# TODO: sort out acceleration WSAD keys
 			# Accelerate left sgtrafe.
 			if event.pressed and event.scancode == KEY_A:
 				signals.emit_signal("sig_accelerate", Vector3(1, 0, 0))

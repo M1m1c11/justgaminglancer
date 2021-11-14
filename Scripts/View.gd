@@ -26,12 +26,8 @@ func _ready():
 	
 # ============================ Signal processing ==============================	
 func is_screen_filter_on(flag):
-	if flag: 
-		self.get_texture().flags = Texture.FLAG_FILTER
-		print("ON")
-	else: 
-		self.get_texture().flags = !Texture.FLAG_FILTER
-		print("OFF")
+	if flag: self.get_texture().flags = Texture.FLAG_FILTER
+	else: self.get_texture().flags = !Texture.FLAG_FILTER
 		
 func is_viewport_update():
 	self.size = OS.window_size*screen_res_factor

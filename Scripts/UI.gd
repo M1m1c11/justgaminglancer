@@ -65,7 +65,7 @@ func _process(_delta):
 	marker.rect_position = viewport.get_camera().unproject_position(
 		loc_space)/viewport.screen_res_factor
 	# TODO: properly align and center on the object.
-	marker.get_node("Text").text = "Origin: "+str(round(10*loc.distance_to(loc_space)))+ " cu"
+	marker.get_node("Text").text = "Origin: "+str(round(10*loc.distance_to(loc_space)))+ " du"
 	
 	#marker2.visible = not get_viewport().get_camera().is_position_behind(loc2)
 	#marker2.rect_position = get_viewport().get_camera().unproject_position(loc2)

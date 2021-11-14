@@ -1,8 +1,8 @@
 extends Node
 
 # TODO: make a function to cap values and pass those through it.
-export var camera_far = 100000 # 1000000 is a hard cap.
-export var camera_near = 0.03 # 0.01 is a hard cap.
+export var camera_far = 500000 # 1000000 is a hard cap.
+export var camera_near = 0.05 # 0.01 is a hard cap.
 export var camera_fov = 40 # Is added to bounding box axis value.
 export var camera_inertia_factor = 1.1 # 1.05 ... 1.5 Affects camera inertia.
 export var camera_sensitivity = 3 # 0.1 ... 0.5
