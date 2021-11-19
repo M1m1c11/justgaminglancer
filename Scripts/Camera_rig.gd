@@ -15,12 +15,13 @@ var horiz = 0
 var velocity_factor = 0
 # Objects.
 var mouse_vector = Vector2(0,0)
+
 # Paths node.
 var p = Node
 
 func _ready():
 	# ============================ Initialize nodes ===========================
-	p = get_node("/root/Cont/View/Main/Paths")
+	p = get_node("/root/Container/Paths")
 	# ============================ Connect signals ============================
 	p.signals.connect("sig_turret_mode_on", self, "is_turret_mode_on")
 	# =========================================================================

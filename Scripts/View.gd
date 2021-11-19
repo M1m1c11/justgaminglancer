@@ -9,15 +9,15 @@ var screen_res_factor = 0.7
 # Objects.
 # Parameters.
 # Nodes.
-var signals = Node
+var p = Node
 
 func _ready():
 	# ======================Z====== Initialize nodes ===========================
-	signals = get_node("/root/Cont/View/Main/Input/Signals")
+	p = get_node("/root/Container/Paths")
 	# ============================ Connect signals ============================
-	signals.connect("sig_screen_filter_on", self, "is_screen_filter_on")
-	signals.connect("sig_viewport_update", self, "is_viewport_update")
-	signals.connect("sig_screen_res_value_changed", self, "is_screen_res_value_changed")
+	p.signals.connect("sig_screen_filter_on", self, "is_screen_filter_on")
+	p.signals.connect("sig_viewport_update", self, "is_viewport_update")
+	p.signals.connect("sig_screen_res_value_changed", self, "is_screen_res_value_changed")
 	# =========================================================================
 	
 	# Init the screen res and factor

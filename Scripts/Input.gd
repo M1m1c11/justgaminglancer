@@ -14,28 +14,22 @@ var LMB_held = false
 var LMB_released = true
 var mouse_on_viewport = true
 
-
-# Nodes.
-var camera_rig = Node
-var ship_state = Node
-var signals = Node
-var ui = Node
-var ui_button_turret = Node
+# Paths node.
+var p = Node
 var ui_controls_bar = Node
+var ui_button_turret = Node
 
 func _ready():
 	# ============================ Initialize nodes ===========================
-	camera_rig = get_node("/root/Cont/View/Main/Ship/Camera_rig")
-	ship_state = get_node("/root/Cont/View/Main/Ship/Ship_state")
-	signals = get_node("/root/Cont/View/Main/Input/Signals")
-	ui = get_node("/root/Cont/UI")
-	ui_controls_bar = get_node("/root/Cont/UI/Controls")
-	ui_button_turret = get_node("/root/Cont/UI/Controls/Button_turret")
+	p = get_node("/root/Container/Paths")
+	ui_controls_bar = p.ui.get_node("Controls")
+	ui_button_turret = p.ui.get_node("Controls/Button_turret")
+
 	# ============================ Connect signals ============================
-	signals.connect("sig_mouse_on_viewport", self, "is_mouse_on_viewport")
-	signals.connect("sig_viewport_update", self, "is_viewport_update")
-	signals.connect("sig_quit_game", self, "is_quit_game")
-	signals.connect("sig_turret_mode_on", self, "is_turret_mode_on")
+	p.signals.connect("sig_mouse_on_viewport", self, "is_mouse_on_viewport")
+	p.signals.connect("sig_viewport_update", self, "is_viewport_update")
+	p.signals.connect("sig_quit_game", self, "is_quit_game")
+	p.signals.connect("sig_turret_mode_on", self, "is_turret_mode_on")
 	# =========================================================================
 	
 	# Initial value require for the mouse coords.
@@ -71,8 +65,8 @@ func _input(event):
 		# Camera orbiting is in the camera script.
 		
 		# Camera zoom.
-		if event is InputEventMouseButton and ship_state.turret_mode:
-			camera_rig.zoom_camera(event)
+		if event is InputEventMouseButton and p.ship_state.turret_mode:
+			p.camera_rig.zoom_camera(event)
 		
 		# ======================= For keyboard buttons =========================
 		if event is InputEventKey:
@@ -80,12 +74,12 @@ func _input(event):
 			# ============================ UI Controls =========================
 			# Mouse flight.
 			if event.pressed and event.scancode == KEY_SPACE:
-				if ship_state.mouse_flight:
-					ship_state.mouse_flight = false
-					signals.emit_signal("sig_mouse_flight_on", false)
+				if p.ship_state.mouse_flight:
+					p.ship_state.mouse_flight = false
+					p.signals.emit_signal("sig_mouse_flight_on", false)
 				else:
-					ship_state.mouse_flight = true
-					signals.emit_signal("sig_mouse_flight_on", true)
+					p.ship_state.mouse_flight = true
+					p.signals.emit_signal("sig_mouse_flight_on", true)
 			
 			# TODO: Should also be accessible from other areas and windows.
 			# Show toolbar.
@@ -98,7 +92,7 @@ func _input(event):
 			
 			# Turret mode. UI shortcut. Signal is emitted by UI.
 			if event.pressed and event.scancode == KEY_H:
-				if not ship_state.turret_mode: 
+				if not p.ship_state.turret_mode: 
 					ui_button_turret.pressed = true
 				else: ui_button_turret.pressed = false
 			
@@ -106,37 +100,37 @@ func _input(event):
 			# Accelerate forward.
 			# TODO: unique signals for simultaneous action.
 			if event.pressed and event.scancode == KEY_UP:
-				signals.emit_signal("sig_accelerate", true)
+				p.signals.emit_signal("sig_accelerate", true)
 
 			# Accelerate backward.
 			if event.pressed and event.scancode == KEY_DOWN:
-				signals.emit_signal("sig_accelerate", false)
+				p.signals.emit_signal("sig_accelerate", false)
 			
 			# TODO: sort out acceleration WSAD keys
 			# Accelerate left sgtrafe.
 			if event.pressed and event.scancode == KEY_A:
-				signals.emit_signal("sig_accelerate", Vector3(1, 0, 0))
+				p.signals.emit_signal("sig_accelerate", Vector3(1, 0, 0))
 
 			# Accelerate right strafe.
 			if event.pressed and event.scancode == KEY_D:
-				signals.emit_signal("sig_accelerate", Vector3(-1, 0, 0))
+				p.signals.emit_signal("sig_accelerate", Vector3(-1, 0, 0))
 			
 			# Accelerate up strafe.
 			if event.pressed and event.scancode == KEY_W:
-				signals.emit_signal("sig_accelerate", Vector3(0, -1, 0))
+				p.signals.emit_signal("sig_accelerate", Vector3(0, -1, 0))
 
 			# Accelerate down strafe.
 			if event.pressed and event.scancode == KEY_S:
-				signals.emit_signal("sig_accelerate", Vector3(0, 1, 0))
+				p.signals.emit_signal("sig_accelerate", Vector3(0, 1, 0))
 			
 			# Accelerate down strafe.
 			if event.pressed and event.scancode == KEY_Z:
-				if not ship_state.engine_kill: 
-					ship_state.engine_kill = true
-					signals.emit_signal("sig_engine_kill", true)
+				if not p.ship_state.engine_kill: 
+					p.ship_state.engine_kill = true
+					p.signals.emit_signal("sig_engine_kill", true)
 				else: 
-					ship_state.engine_kill = false
-					signals.emit_signal("sig_engine_kill", false)
+					p.ship_state.engine_kill = false
+					p.signals.emit_signal("sig_engine_kill", false)
 	# =================== For events outside of 3D viewport ===================
 	# Mouse not over 3D viewport.
 	else:
@@ -172,5 +166,5 @@ func is_quit_game():
 	get_tree().quit()
 
 func is_turret_mode_on(flag):
-	ship_state.turret_mode = flag
+	p.ship_state.turret_mode = flag
 
