@@ -121,22 +121,22 @@ void fragment( )
 
 [sub_resource type="ShaderMaterial" id=4]
 shader = SubResource( 3 )
-shader_param/color_surface_hot = Color( 1, 0.772549, 0.321569, 1 )
-shader_param/color_surface_cold = Color( 1, 0.695167, 0.41, 1 )
-shader_param/color_details_major = Color( 0.592157, 1, 0, 1 )
+shader_param/color_surface_hot = Color( 1, 0.470588, 0, 1 )
+shader_param/color_surface_cold = Color( 0.368627, 0.537255, 0.219608, 1 )
+shader_param/color_details_major = Color( 1, 1, 1, 1 )
 shader_param/color_details_small = Color( 1, 1, 0, 1 )
-shader_param/surface_hot_value = 1.79
-shader_param/surface_cold_value = 1.958
+shader_param/surface_hot_value = 9.494
+shader_param/surface_cold_value = -2.221
 shader_param/surface_noise_scale = 1.0
-shader_param/surface_noise_to_power = 1.882
-shader_param/major_detail_strength = -0.188
-shader_param/major_detail_filter = 0.971
+shader_param/surface_noise_to_power = 3.811
+shader_param/major_detail_strength = 0.803
+shader_param/major_detail_filter = 0.998
 shader_param/major_detail_scale = 1.0
-shader_param/major_detail_flow = 0.004
-shader_param/small_detail_strength = 0.917
-shader_param/small_detail_filter = 0.99
+shader_param/major_detail_flow = -0.016
+shader_param/small_detail_strength = -0.205
+shader_param/small_detail_filter = 0.994
 shader_param/small_detail_scale = 3.0
-shader_param/small_detail_flow = 0.04
+shader_param/small_detail_flow = -0.243
 shader_param/surface_noise = ExtResource( 2 )
 shader_param/major_detail_noise = ExtResource( 2 )
 shader_param/small_detail_noise = ExtResource( 2 )
@@ -199,8 +199,8 @@ void fragment() {
 
 [sub_resource type="ShaderMaterial" id=9]
 shader = SubResource( 8 )
-shader_param/albedo = Color( 1, 0.913725, 0.682353, 1 )
-shader_param/rim_strength = 0.116
+shader_param/albedo = Color( 1, 0.282353, 0, 1 )
+shader_param/rim_strength = 0.493
 shader_param/rim_power = 19.934
 
 [sub_resource type="ArrayMesh" id=10]
@@ -234,17 +234,19 @@ void fragment() {
 
 [sub_resource type="ShaderMaterial" id=12]
 shader = SubResource( 11 )
-shader_param/albedo = Color( 1, 0.959167, 0.65, 1 )
-shader_param/rim_strength = 0.019
+shader_param/albedo = Color( 1, 0.505882, 0.890196, 1 )
+shader_param/rim_strength = 0.027
 shader_param/rim_power = 2.864
 
 [sub_resource type="ShaderMaterial" id=13]
 render_priority = 1
 shader = ExtResource( 4 )
-shader_param/albedo = Color( 0.96, 0.76128, 0.4416, 1 )
-shader_param/rim_strength = 38.43
-shader_param/inner_rim_power = 11.923
-shader_param/outer_rim_power = 9.083
+shader_param/albedo = Color( 1, 0.211765, 0.415686, 1 )
+shader_param/rim_strength = 50.0
+shader_param/inner_rim_power = 13.396
+shader_param/outer_rim_power = 7.142
+shader_param/inner_rim_smoothness = 3.919
+shader_param/outter_rim_smoothness = 3.094
 
 [node name="Star_orange" type="StaticBody"]
 __meta__ = {

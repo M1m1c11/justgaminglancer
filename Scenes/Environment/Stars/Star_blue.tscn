@@ -83,7 +83,7 @@ __meta__ = {
 
 [node name="OmniLight" type="OmniLight" parent="."]
 light_color = Color( 0.870588, 0.698039, 1, 1 )
-light_energy = 30.0
+light_energy = 20.0
 light_indirect_energy = 0.5
 omni_range = 1e+07
 omni_attenuation = 2.17638

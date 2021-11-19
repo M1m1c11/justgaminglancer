@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=2]
+[gd_scene load_steps=21 format=2]
 
 [ext_resource path="res://Scripts/Main.gd" type="Script" id=1]
 [ext_resource path="res://Scenes/UI/Camera_rig.tscn" type="PackedScene" id=2]
@@ -15,6 +15,7 @@
 [ext_resource path="res://Scripts/View.gd" type="Script" id=13]
 [ext_resource path="res://Scripts/Starsphere_orientation.gd" type="Script" id=14]
 [ext_resource path="res://Assets/Shaders/Starsphere_background.gdshader" type="Shader" id=15]
+[ext_resource path="res://Scripts/Paths.gd" type="Script" id=16]
 
 [sub_resource type="ArrayMesh" id=1]
 resource_name = "1500_stars_Icosphere"
@@ -84,7 +85,6 @@ __meta__ = {
 [node name="View" type="Viewport" parent="."]
 size = Vector2( 1024, 600 )
 handle_input_locally = false
-msaa = 1
 render_target_update_mode = 3
 script = ExtResource( 13 )
 
@@ -94,6 +94,9 @@ script = ExtResource( 1 )
 [node name="World" type="WorldEnvironment" parent="View/Main"]
 environment = ExtResource( 11 )
 
+[node name="Paths" type="Node" parent="View/Main"]
+script = ExtResource( 16 )
+
 [node name="Options" type="Node" parent="View/Main"]
 
 [node name="Engine" type="Node" parent="View/Main/Options"]
@@ -101,7 +104,7 @@ script = ExtResource( 12 )
 
 [node name="Camera" type="Node" parent="View/Main/Options"]
 script = ExtResource( 8 )
-camera_far = 1000000
+camera_near = 0.01
 camera_fov = 60
 
 [node name="Input" type="Node" parent="View/Main"]

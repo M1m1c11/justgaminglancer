@@ -11,22 +11,20 @@ export var camera_zoom_out_times = 5 # Times ship's bounding box axis length.
 export var camera_zoom_step = 0.1 # 0.05 ... 0.2
 export var velocity_factor_on_tilt = 0.1 # Should be more than one
 
-# Nodes.
-var camera = Node
-var signals = Node
+# Paths node.
+var p = Node
 
 func _ready():
 	# ============================ Initialize nodes ===========================
-	camera = get_node("/root/Cont/View/Main/Ship/Camera_rig/Camera")
-	signals = get_node("/root/Cont/View/Main/Input/Signals")
+	p = get_node("/root/Cont/View/Main/Paths")
 	# ============================ Connect signals ============================
-	signals.connect("sig_fov_value_changed", self, "is_fov_value_changed")
+	p.signals.connect("sig_fov_value_changed", self, "is_fov_value_changed")
 	# =========================================================================
 	
 	# Set camera properties.
-	camera.fov = camera_fov
-	camera.far = camera_far
-	camera.near = camera_near
+	p.camera.fov = camera_fov
+	p.camera.far = camera_far
+	p.camera.near = camera_near
 
 func is_fov_value_changed(value):
-	camera.fov = value
+	p.camera.fov = value

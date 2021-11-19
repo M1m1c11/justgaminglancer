@@ -99,11 +99,11 @@ func _integrate_forces(state):
 	ship_state.apparent_velocity = vel*10
 	
 	# Limit by origin rebase speed (600000 u/s).
-	if not ship_state.engine_kill and vel < limit*engine_opts.physics_fps:
+	if not ship_state.engine_kill and vel < limit*engine_opts.physics_fps*0.9:
 		state.add_central_force(-global_transform.basis.z*ship_state.acceleration*ship_state.acceleration)
 	
 	# Limiting by engine ticks. It is a hard limits.
-	if vel > limit*engine_opts.physics_fps:
+	if vel > limit*engine_opts.physics_fps*0.9:
 		signals.emit_signal("sig_accelerate", false)
 	
 	if not ship_state.turret_mode and (input.LMB_held or ship_state.mouse_flight):
@@ -130,6 +130,17 @@ func init_ship():
 func adjust_exhaust():
 	for i in engines.get_children():
 		i.scale.z = pow(ship_state.accel_ticks, 1.5)*0.01
+
+		var albedo =  pow(ship_state.accel_ticks, 1.5)*0.1
+		# Get and modify sprite intensity.
+		var shapes = i.get_node("Engine_exhaust_shapes")
+		for shape in shapes.get_children():
+			var m = shape.get_surface_material(0)
+			print(albedo)
+			m["shader_param/albedo"].r = clamp(albedo*0.4, 0.0, 0.6)
+			m["shader_param/albedo"].g = clamp(albedo*0.1, 0.0, 0.2)
+			m["shader_param/albedo"].b = clamp(albedo*0.05, 0.0, 0.8)
+		
 		if ship_state.accel_ticks > 0:
 			i.get_node("Engine_exhaust_light").light_energy = ship_state.accel_ticks
 		else:
