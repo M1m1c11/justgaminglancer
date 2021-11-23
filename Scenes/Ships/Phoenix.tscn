@@ -169,9 +169,9 @@ shader = ExtResource( 1 )
 shader_param/albedo = Color( 0, 0, 0, 1 )
 shader_param/emission = Color( 0.596078, 0, 0, 1 )
 shader_param/specular = 0.5
-shader_param/metallic = 0.85
+shader_param/metallic = 0.0
 shader_param/roughness = 1.0
-shader_param/rim = 0.01
+shader_param/rim = 0.0
 shader_param/rim_tint = 0.0
 
 [sub_resource type="ShaderMaterial" id=23]

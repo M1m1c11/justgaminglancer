@@ -6,8 +6,7 @@ uniform float rim_strength = 0.05;
 uniform float rim_power = 9.0;
 
 // For logarithmic depth buffer.
-const float far = 1e12; // This is enough for camera far = 1M units.
-const float c = 2.0 / log2(far + 1.0);
+const float c = 0.001;
 varying vec4 gl_Position;
 
 void vertex()

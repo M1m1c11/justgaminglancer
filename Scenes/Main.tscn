@@ -93,6 +93,7 @@ script = ExtResource( 12 )
 
 [node name="Camera" type="Node" parent="Options"]
 script = ExtResource( 8 )
+camera_far = 100000000
 
 [node name="Input" type="Node" parent="."]
 script = ExtResource( 6 )
@@ -123,14 +124,10 @@ material/1 = SubResource( 3 )
 material/2 = SubResource( 4 )
 
 [node name="Local_space" type="Position3D" parent="View/Global_space"]
-__meta__ = {
-"_edit_group_": true
-}
 
 [node name="System_Gate" parent="View/Global_space/Local_space" instance=ExtResource( 4 )]
 
 [node name="Ship" parent="View/Global_space" instance=ExtResource( 5 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.709, 0, 1.923 )
 
 [node name="Camera_rig" parent="View/Global_space/Ship" instance=ExtResource( 2 )]
 script = ExtResource( 7 )

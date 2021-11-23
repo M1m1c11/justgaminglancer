@@ -5,6 +5,8 @@ extends CanvasLayer
 # Flags.
 var update_debug_text_on = false
 var viewport_size = Vector2(1,1)
+
+
 # Nodes.
 var p = Node
 var debug = Node
@@ -14,11 +16,13 @@ var marker3 = Node
 var mouse_vector = Node
 var text_panel = Node
 var apparent_velocity = Node
+var apparent_velocity_units = Node
 
 func _ready():
 	# ============================ Initialize nodes ===========================
 	p = get_node("/root/Container/Paths")
 	apparent_velocity = get_node("Controls/Apparent_velocity")
+	apparent_velocity_units = get_node("Controls/Apparent_velocity_units")
 	debug = get_node("Main3D/Debug")
 	marker = get_node("Main3D/Debug/Marker")
 	marker2 = get_node("Main3D/Debug/Marker2")
@@ -51,7 +55,11 @@ func _process(_delta):
 	marker.rect_position = p.viewport.get_camera().unproject_position(
 		loc_space)/p.viewport.screen_res_factor
 	# TODO: properly align and center on the object.
-	marker.get_node("Text").text = "Origin: "+str(round(10*loc.distance_to(loc_space)))+ " du"
+	# Adjust displayed distance
+	var dist_val = round(10*loc.distance_to(loc_space))
+	var result_d = get_magnitude_units(dist_val)
+	marker.get_node("Text").text = "Origin: "\
+			+str(round(result_d[0]))+ " " + result_d[1]
 	
 	#marker2.visible = not get_viewport().get_camera().is_position_behind(loc2)
 	#marker2.rect_position = get_viewport().get_camera().unproject_position(loc2)
@@ -59,7 +67,11 @@ func _process(_delta):
 	
 	if update_debug_text_on: update_debug_text()
 	
-	apparent_velocity.text = str(round(p.ship_state.apparent_velocity))
+	# Adjust displayed speed
+	var speed_val = round(p.ship_state.apparent_velocity)
+	var result_s = get_magnitude_units(speed_val)
+	apparent_velocity.text = str(result_s[0])
+	apparent_velocity_units.text = str(result_s[1])+"/s"
 
 # ================================== Other ====================================
 func update_debug_text():
@@ -67,6 +79,18 @@ func update_debug_text():
 	debug.get_node("Mouse_x").text = str("Mouse x: ", p.input.mouse_x)
 	debug.get_node("Mouse_y").text = str("Mouse y: ", p.input.mouse_y)
 	debug.get_node("Current_zoom").text = str("Current zoom: ", p.camera_rig.current_zoom)
+
+func get_magnitude_units(val):
+	# Val MUST BE IN DECIUNITS!
+	# TODO: scale everything back to how it was and switch to units?
+	if val < 10:
+		return [val, "du"]
+	elif (val >= 10) and (val < 10000):
+		return [val/10, "u"]
+	elif (val >= 10000) and (val < 10000000):
+		return [val/10000, "ku"]
+	elif (val >= 10000000) and (val < 10000000000):
+		return [val/10000000, "Mu"]
 
 # ========================== Signals connections =============================
 func _on_Viewport_main_mouse_entered():

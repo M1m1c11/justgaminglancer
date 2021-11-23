@@ -38,8 +38,7 @@ uniform float small_detail_flow = 0.02;
 const float pi = 3.1415926535;
 
 // For logarithmic depth buffer.
-const float far = 1e12; // This is enough for camera far = 1M units.
-const float c = 2.0 / log2(far + 1.0);
+const float c = 0.001;
 varying vec4 gl_Position;
 
 void vertex()

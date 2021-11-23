@@ -1,6 +1,6 @@
 extends RigidBody
 
-var limit = 5000
+var limit = 200000
 # TODO check materials and shaders for FX
 # Params.
 export var ship_mass = 2000
@@ -121,7 +121,10 @@ func init_ship():
 
 func adjust_exhaust():
 	for i in engines.get_children():
-		i.scale.z = pow(p.ship_state.accel_ticks, 1.5)*0.01
+		
+		# Adjust shape size.
+		i.get_node("Engine_exhaust_shapes").scale.z = \
+				pow(p.ship_state.accel_ticks, 1.5)*0.1
 
 		var albedo =  pow(p.ship_state.accel_ticks, 1.5)*0.1
 		# Get and modify sprite intensity.
@@ -133,8 +136,10 @@ func adjust_exhaust():
 			m["shader_param/albedo"].g = clamp(albedo*0.1, 0.0, 0.2)
 			m["shader_param/albedo"].b = clamp(albedo*0.05, 0.0, 0.8)
 		
+		# Adjust light intensity
 		if p.ship_state.accel_ticks > 0:
-			i.get_node("Engine_exhaust_light").light_energy = p.ship_state.accel_ticks
+			i.get_node("Engine_exhaust_light").light_energy = \
+					p.ship_state.accel_ticks * 0.1
 		else:
 			i.get_node("Engine_exhaust_light").light_energy = 0.1
 

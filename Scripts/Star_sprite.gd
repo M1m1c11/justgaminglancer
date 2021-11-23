@@ -28,7 +28,7 @@ func _ready():
 	sprite.scale *= sprite_appearance_distance*0.4
 	# Record this value as ref
 	sprite_scale = sprite.scale
-	sprite.visible = true
+	sprite.visible = false
 	
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta):
