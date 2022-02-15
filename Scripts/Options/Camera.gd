@@ -7,16 +7,18 @@ export var camera_fov = 60 # Is added to bounding box axis value.
 export var camera_inertia_factor = 1.1 # 1.05 ... 1.5 Affects camera inertia.
 export var camera_sensitivity = 3 # 0.1 ... 0.5
 export var camera_turret_roll_vert_limit = 70 # Deg +\-
-export var camera_zoom_out_times = 50 # Times ship's bounding box axis length.
+# Zoom out times is multiplied by minimum ship camera distance to define maximum.
+# Sync with touchscreen control slider (max_val = camera_zoom_out_times/camera_zoom_step).
+export var camera_zoom_out_times = 50
 export var camera_zoom_step = 0.1 # 0.05 ... 0.2
 export var velocity_factor_on_tilt = 0.1 # Should be more than one
 
 # Paths node.
-var p = Node
+onready var p = get_tree().get_root().get_node("Container/Paths")
 
 func _ready():
 	# ============================ Initialize nodes ===========================
-	p = get_node("/root/Container/Paths")
+
 	# ============================ Connect signals ============================
 	p.signals.connect("sig_fov_value_changed", self, "is_fov_value_changed")
 	# =========================================================================

@@ -8,14 +8,14 @@ class_name LODSpatial, "lod_spatial.svg"
 export var enable_lod := true
 
 # The maximum LOD 0 (high quality) distance in units.
-export(float, 0.0, 50000.0, 0.1) var lod_0_max_distance := 10
+export(float, 0.0, 500000.0, 0.1) var lod_0_max_distance := 500000
 
 # The maximum LOD 1 (medium quality) distance in units.
-export(float, 0.0, 100000.0, 0.1) var lod_1_max_distance := 25
+export(float, 0.0, 10000000.0, 0.1) var lod_1_max_distance := 10000000
 
 # The maximum LOD 2 (low quality) distance in units.
 # Past this distance, all LOD variants are hidden.
-export(float, 0.0, 500000.0, 0.1) var lod_2_max_distance := 100
+export(float, 0.0, 500000000.0, 0.1) var lod_2_max_distance := 500000000
 
 # The rate at which LODs will be updated (in seconds). Lower values are more reactive
 # but use more CPU, which is especially noticeable with large amounts of LOD-enabled nodes.
@@ -53,7 +53,7 @@ func _physics_process(delta: float) -> void:
 		return
 
 	# We need a camera to do the rest.
-	var camera := get_viewport().get_camera()
+	var camera = get_viewport().get_camera()
 	if camera == null:
 		return
 
@@ -63,7 +63,7 @@ func _physics_process(delta: float) -> void:
 
 	timer = 0.0
 
-	var distance := camera.global_transform.origin.distance_to(global_transform.origin) + lod_bias
+	var distance = camera.global_transform.origin.distance_to(global_transform.origin) + lod_bias
 	# The LOD level to choose (lower is more detailed).
 	var lod: int
 	if distance < lod_0_max_distance:

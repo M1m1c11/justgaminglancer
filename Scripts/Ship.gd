@@ -1,11 +1,12 @@
 extends RigidBody
 
-var limit = 200000
+var limit = 10000
+
 # TODO check materials and shaders for FX
 # Params.
 export var ship_mass = 2000
 export var accel_factor = 20 # Propulsion force.
-export var accel_ticks_max = 500 # Engine propulsion increments.
+export var accel_ticks_max = 50 # Engine propulsion increments.
 # Turning sensitivity LEFT-RIGHT | UP-DOWN | ROLL
 export var torque_factor = Vector3(1500,700,700)
 export var camera_vert_offset = 0.2
@@ -30,14 +31,14 @@ var default_linear_damp = 0
 var torque = Vector3(0,0,0)
 
 # Nodes.
-var p = Node
+onready var p = get_tree().get_root().get_node("Container/Paths")
 var engines = Node
 
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	# ============================ Initialize nodes ===========================
-	p = get_node("/root/Container/Paths")
+
 	engines = get_node("Engines")
 
 	# ============================= Connect signals ===========================
@@ -50,7 +51,6 @@ func _ready():
 	
 	# Initialize the vessel params.
 	init_ship()
-
 
 func _physics_process(_delta):
 	
@@ -80,7 +80,6 @@ func _physics_process(_delta):
 		p.local_space.translation.z = p.local_space.translation.z+limit
 
 
-
 func _integrate_forces(state):
 	
 	#print("L: ", state.total_linear_damp, "   A: ", state.total_angular_damp)
@@ -95,8 +94,10 @@ func _integrate_forces(state):
 		state.add_central_force(-global_transform.basis.z* p.ship_state.acceleration* p.ship_state.acceleration)
 	
 	# Limiting by engine ticks. It is a hard limits.
-	if vel > limit* p.engine_opts.physics_fps*0.9:
+	# TODO: move capped velocity to constants.
+	if vel > 1000000:
 		p.signals.emit_signal("sig_accelerate", false)
+
 	
 	if not p.ship_state.turret_mode and (p.input.LMB_held or p.ship_state.mouse_flight):
 
@@ -145,6 +146,7 @@ func adjust_exhaust():
 
 # ============================ Signal processing ==============================
 func is_accelerating(flag):
+
 	# TODO: make engine state readouts.
 	if flag and not p.ship_state.engine_kill and (p.ship_state.accel_ticks < self.accel_ticks_max):
 		p.ship_state.accel_ticks += 1

@@ -17,13 +17,14 @@ var velocity_factor = 0
 var mouse_vector = Vector2(0,0)
 
 # Paths node.
-var p = Node
+onready var p = get_tree().get_root().get_node("Container/Paths")
 
 func _ready():
 	# ============================ Initialize nodes ===========================
-	p = get_node("/root/Container/Paths")
+
 	# ============================ Connect signals ============================
 	p.signals.connect("sig_turret_mode_on", self, "is_turret_mode_on")
+	p.signals.connect("sig_zoom_value_changed", self, "is_zoom_value_changed")
 	# =========================================================================
 	
 	# Safeguards to prevent clipping.
@@ -147,6 +148,7 @@ func fix_camera():
 	
 func zoom_camera(mouse_event):
 	if mouse_event.is_pressed():
+		print(camera_min_zoom," | ",  current_zoom, " | ", camera_max_zoom)
 		if mouse_event.button_index == BUTTON_WHEEL_UP and \
 		current_zoom <= camera_max_zoom:
 			zoom_ticks += 1
@@ -166,3 +168,12 @@ func is_turret_mode_on(flag):
 		turret_camera()
 	else:
 		fix_camera()
+
+func is_zoom_value_changed(value):
+	print(camera_min_zoom," | ",  current_zoom, " | ", camera_max_zoom)
+	zoom_ticks = value
+	current_zoom = p.cam_opts.camera_zoom_step*zoom_ticks
+	if current_zoom <= camera_max_zoom and \
+	current_zoom >= camera_min_zoom and \
+	zoom_ticks > 0:
+		$Camera.translation.z = current_zoom

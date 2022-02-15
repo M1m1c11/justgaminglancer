@@ -1,31 +1,85 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://Scripts/UI.gd" type="Script" id=1]
-[ext_resource path="res://Assets/UI_styles/Button_red/Hover_focus.tres" type="StyleBox" id=2]
-[ext_resource path="res://Assets/UI_styles/Button_red/Normal.tres" type="StyleBox" id=3]
-[ext_resource path="res://Assets/UI_styles/Button_red/Pressed.tres" type="StyleBox" id=4]
+[ext_resource path="res://Assets/UI_styles/Button_red/Red_hover_focus.tres" type="StyleBox" id=2]
+[ext_resource path="res://Assets/UI_styles/Button_red/Red_normal.tres" type="StyleBox" id=3]
+[ext_resource path="res://Assets/UI_styles/Button_red/Red_ressed.tres" type="StyleBox" id=4]
 [ext_resource path="res://Assets/Fonts/Ubuntu-Regular.ttf" type="DynamicFontData" id=5]
-
-[sub_resource type="ShaderMaterial" id=1]
+[ext_resource path="res://Assets/UI_styles/Themes/Touchscreen/Theme1/stick.tres" type="StyleBox" id=6]
+[ext_resource path="res://Assets/UI_styles/Themes/Touchscreen/Theme1/pad.tres" type="StyleBox" id=7]
+[ext_resource path="res://Assets/UI_styles/Themes/Touchscreen/Theme1.tres" type="Theme" id=10]
 
 [sub_resource type="ShaderMaterial" id=2]
 
+[sub_resource type="DynamicFont" id=4]
+size = 45
+font_data = ExtResource( 5 )
+
 [sub_resource type="CanvasItemMaterial" id=3]
 
-[sub_resource type="DynamicFont" id=4]
-size = 30
-font_data = ExtResource( 5 )
+[sub_resource type="StyleBoxFlat" id=5]
+bg_color = Color( 0.341176, 0.341176, 0.341176, 0.192157 )
+border_width_left = 17
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color( 0.435294, 0.435294, 0.435294, 0.215686 )
+
+[sub_resource type="StyleBoxFlat" id=7]
+bg_color = Color( 0.109804, 0.109804, 0.109804, 0.341176 )
+border_width_right = 83
+border_color = Color( 0.447059, 0.447059, 0.447059, 0.54902 )
 
 [node name="UI" type="CanvasLayer"]
 script = ExtResource( 1 )
 
-[node name="Main3D" type="Control" parent="."]
-material = SubResource( 1 )
+[node name="GUI_prompt" type="Control" parent="."]
+visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
-mouse_filter = 1
-mouse_default_cursor_shape = 3
 __meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Button_touchscreen_switch" type="Button" parent="GUI_prompt"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -196.0
+margin_top = -108.0
+margin_right = 196.0
+margin_bottom = -44.0
+theme = ExtResource( 10 )
+keep_pressed_outside = true
+text = "Touch GUI"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Button_cumputer_gui_switch" type="Button" parent="GUI_prompt"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -196.0
+margin_top = -20.0
+margin_right = 196.0
+margin_bottom = 44.0
+theme = ExtResource( 10 )
+keep_pressed_outside = true
+text = "Computer GUI"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Main3D" type="Control" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_top = 8.0
+margin_bottom = 8.0
+__meta__ = {
+"_edit_lock_": true,
 "_edit_use_anchors_": false
 }
 
@@ -49,36 +103,40 @@ __meta__ = {
 }
 
 [node name="Current_zoom" type="Label" parent="Main3D/Debug"]
-margin_top = 32.0
-margin_right = 103.0
-margin_bottom = 46.0
+margin_left = 16.0
+margin_top = 96.0
+margin_right = 119.0
+margin_bottom = 110.0
 text = "Current zoom: 0"
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="Mouse_x" type="Label" parent="Main3D/Debug"]
-margin_top = 48.0
-margin_right = 75.0
-margin_bottom = 62.0
-text = "Mouse x: 0"
+margin_left = 16.0
+margin_top = 112.0
+margin_right = 91.0
+margin_bottom = 126.0
+text = "Mouse / Pad x: 0"
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="Mouse_y" type="Label" parent="Main3D/Debug"]
-margin_top = 64.0
-margin_right = 75.0
-margin_bottom = 78.0
-text = "Mouse y: 0"
+margin_left = 16.0
+margin_top = 128.0
+margin_right = 91.0
+margin_bottom = 142.0
+text = "Mouse / Pad y: 0"
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="FPS" type="Label" parent="Main3D/Debug"]
-margin_top = 80.0
-margin_right = 40.0
-margin_bottom = 94.0
+margin_left = 16.0
+margin_top = 72.0
+margin_right = 56.0
+margin_bottom = 86.0
 text = "FPS: 0"
 __meta__ = {
 "_edit_use_anchors_": false
@@ -152,6 +210,7 @@ __meta__ = {
 }
 
 [node name="Text_panel" type="Control" parent="Main3D"]
+visible = false
 anchor_left = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -189,32 +248,72 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Controls" type="Control" parent="."]
-material = SubResource( 3 )
+[node name="Apparent_velocity" type="Label" parent="Main3D"]
+anchor_left = 0.5
 anchor_top = 1.0
-anchor_right = 1.0
+anchor_right = 0.5
 anchor_bottom = 1.0
-margin_top = -80.0
-mouse_filter = 1
-mouse_default_cursor_shape = 2
+margin_left = -192.0
+margin_top = -56.0
+margin_right = -4.0
+margin_bottom = -8.0
+custom_colors/font_color = Color( 0.654902, 0.654902, 0.654902, 1 )
+custom_fonts/font = SubResource( 4 )
+text = "0000"
+align = 2
+valign = 1
+clip_text = true
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="ColorRect" type="ColorRect" parent="Controls"]
+[node name="Apparent_velocity_units" type="Label" parent="Main3D"]
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+margin_top = -56.0
+margin_right = 88.0
+margin_bottom = -8.0
+custom_colors/font_color = Color( 0.517647, 0.517647, 0.517647, 1 )
+custom_fonts/font = SubResource( 4 )
+text = "du/s"
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Controls" type="Control" parent="."]
+visible = false
+material = SubResource( 3 )
 anchor_right = 1.0
 anchor_bottom = 1.0
-mouse_filter = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Mouse_area" type="Control" parent="Controls"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Control_bar" type="ColorRect" parent="Controls"]
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_top = -80.0
 color = Color( 0, 0, 0, 0.113725 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Button_turret" type="Button" parent="Controls"]
+[node name="Button_turret" type="Button" parent="Controls/Control_bar"]
 margin_left = 16.0
 margin_top = 8.0
 margin_right = 72.0
-margin_bottom = 28.0
+margin_bottom = 32.0
 focus_mode = 0
 toggle_mode = true
 keep_pressed_outside = true
@@ -223,7 +322,29 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Button_debug" type="Button" parent="Controls"]
+[node name="Button_accel_plus" type="Button" parent="Controls/Control_bar"]
+margin_left = 88.0
+margin_top = 8.0
+margin_right = 152.0
+margin_bottom = 72.0
+keep_pressed_outside = true
+text = "Accel+"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Button_accel_minus" type="Button" parent="Controls/Control_bar"]
+margin_left = 168.0
+margin_top = 8.0
+margin_right = 232.0
+margin_bottom = 72.0
+keep_pressed_outside = true
+text = "Accel-"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Button_debug" type="Button" parent="Controls/Control_bar"]
 anchor_left = 1.0
 anchor_right = 1.0
 margin_left = -72.0
@@ -238,7 +359,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Button_text_panel" type="Button" parent="Controls"]
+[node name="Button_text_panel" type="Button" parent="Controls/Control_bar"]
 anchor_left = 1.0
 anchor_right = 1.0
 margin_left = -72.0
@@ -253,11 +374,11 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Button_quit" type="Button" parent="Controls"]
+[node name="Button_quit" type="Button" parent="Controls/Control_bar"]
 margin_left = 16.0
-margin_top = 40.0
+margin_top = 48.0
 margin_right = 72.0
-margin_bottom = 60.0
+margin_bottom = 72.0
 focus_mode = 0
 custom_styles/hover = ExtResource( 2 )
 custom_styles/pressed = ExtResource( 4 )
@@ -268,7 +389,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Button_screen_filter" type="Button" parent="Controls"]
+[node name="Button_screen_filter" type="Button" parent="Controls/Control_bar"]
 anchor_left = 1.0
 anchor_right = 1.0
 margin_left = -168.0
@@ -282,10 +403,10 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Slider_screen_res" type="HSlider" parent="Controls"]
+[node name="Slider_screen_res" type="HSlider" parent="Controls/Control_bar"]
 anchor_left = 1.0
 anchor_right = 1.0
-margin_left = -168.0
+margin_left = -320.0
 margin_top = 8.0
 margin_right = -88.0
 margin_bottom = 28.0
@@ -299,20 +420,20 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Label" type="Label" parent="Controls/Slider_screen_res"]
+[node name="Label" type="Label" parent="Controls/Control_bar/Slider_screen_res"]
 margin_left = -57.0
 margin_top = 3.0
 margin_right = -11.0
 margin_bottom = 17.0
 text = "Quality"
 
-[node name="Slider_fov" type="HSlider" parent="Controls"]
+[node name="Slider_fov" type="HSlider" parent="Controls/Control_bar"]
 anchor_left = 1.0
 anchor_right = 1.0
-margin_left = -315.0
-margin_top = 8.0
-margin_right = -235.0
-margin_bottom = 28.0
+margin_left = -320.0
+margin_top = 40.0
+margin_right = -192.0
+margin_bottom = 60.0
 min_value = 40.0
 max_value = 70.0
 value = 55.0
@@ -322,56 +443,349 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Label" type="Label" parent="Controls/Slider_fov"]
+[node name="Label" type="Label" parent="Controls/Control_bar/Slider_fov"]
 margin_left = -57.0
 margin_top = 3.0
 margin_right = -11.0
 margin_bottom = 17.0
 text = "FOV"
 
-[node name="Apparent_velocity" type="Label" parent="Controls"]
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-margin_left = -192.0
-margin_top = -24.0
-margin_right = -4.0
-margin_bottom = 24.0
-custom_colors/font_color = Color( 0.909804, 0.909804, 0.909804, 1 )
-custom_fonts/font = SubResource( 4 )
-text = "0000"
-align = 2
-valign = 1
-clip_text = true
+[node name="Controls_touchscreen" type="Control" parent="."]
+material = SubResource( 3 )
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_lock_": true,
+"_edit_use_anchors_": false
+}
+
+[node name="Options_menu" type="Control" parent="Controls_touchscreen"]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Apparent_velocity_units" type="Label" parent="Controls"]
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-margin_left = 4.0
-margin_top = -24.0
-margin_right = 92.0
-margin_bottom = 24.0
-custom_colors/font_color = Color( 0.517647, 0.517647, 0.517647, 1 )
-custom_fonts/font = SubResource( 4 )
-text = "du/s"
-valign = 1
+[node name="ColorRect" type="ColorRect" parent="Controls_touchscreen/Options_menu"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color( 0.168627, 0.168627, 0.168627, 0.729412 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[connection signal="mouse_entered" from="Main3D" to="." method="_on_Viewport_main_mouse_entered"]
-[connection signal="mouse_exited" from="Main3D" to="." method="_on_Viewport_main_mouse_exited"]
+[node name="Button_debug" type="Button" parent="Controls_touchscreen/Options_menu"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -80.0
+margin_top = -116.0
+margin_right = 18.0
+margin_bottom = -34.0
+theme = ExtResource( 10 )
+toggle_mode = true
+keep_pressed_outside = true
+text = "Debug"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Slider_fov" type="HSlider" parent="Controls_touchscreen/Options_menu"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -352.0
+margin_top = -16.0
+margin_right = 464.0
+margin_bottom = 36.0
+theme = ExtResource( 10 )
+min_value = 40.0
+max_value = 70.0
+value = 55.0
+tick_count = 10
+ticks_on_borders = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="Controls_touchscreen/Options_menu/Slider_fov"]
+margin_left = -96.0
+margin_top = 4.0
+margin_right = -33.0
+margin_bottom = 41.0
+theme = ExtResource( 10 )
+text = "FOV"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Slider_screen_res" type="HSlider" parent="Controls_touchscreen/Options_menu"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -352.0
+margin_top = 44.0
+margin_right = 464.0
+margin_bottom = 92.0
+theme = ExtResource( 10 )
+min_value = 0.1
+max_value = 1.0
+step = 0.1
+value = 0.7
+tick_count = 10
+ticks_on_borders = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="Controls_touchscreen/Options_menu/Slider_screen_res"]
+margin_left = -120.0
+margin_top = 5.0
+margin_right = -14.0
+margin_bottom = 42.0
+theme = ExtResource( 10 )
+text = "Quality"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Button_quit" type="Button" parent="Controls_touchscreen/Options_menu"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -96.0
+margin_top = 116.0
+margin_right = 89.0
+margin_bottom = 192.0
+theme = ExtResource( 10 )
+custom_styles/hover = ExtResource( 2 )
+custom_styles/pressed = ExtResource( 4 )
+custom_styles/normal = ExtResource( 3 )
+keep_pressed_outside = true
+text = "Quit game"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Button_screen_filter" type="Button" parent="Controls_touchscreen/Options_menu"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -280.0
+margin_top = -116.0
+margin_right = -100.0
+margin_bottom = -34.0
+theme = ExtResource( 10 )
+toggle_mode = true
+keep_pressed_outside = true
+text = "Scren filter"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Button_text_panel" type="Button" parent="Controls_touchscreen/Options_menu"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = 40.0
+margin_top = -116.0
+margin_right = 128.0
+margin_bottom = -34.0
+theme = ExtResource( 10 )
+toggle_mode = true
+keep_pressed_outside = true
+text = "Info"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Button_close_options" type="Button" parent="Controls_touchscreen/Options_menu"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = 144.0
+margin_top = -116.0
+margin_right = 272.0
+margin_bottom = -34.0
+theme = ExtResource( 10 )
+keep_pressed_outside = true
+text = "Return"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Main_controls" type="Control" parent="Controls_touchscreen"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_lock_": true,
+"_edit_use_anchors_": false
+}
+
+[node name="Slider_zoom" type="VSlider" parent="Controls_touchscreen/Main_controls"]
+anchor_left = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -48.0
+margin_top = 120.0
+margin_right = -24.0
+margin_bottom = -56.0
+focus_mode = 0
+theme = ExtResource( 10 )
+custom_styles/slider = SubResource( 5 )
+custom_styles/grabber_area = SubResource( 7 )
+max_value = 500.0
+tick_count = 5
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Button_turret" type="Button" parent="Controls_touchscreen/Main_controls"]
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -184.0
+margin_top = -480.0
+margin_right = -72.0
+margin_bottom = -384.0
+focus_mode = 0
+theme = ExtResource( 10 )
+toggle_mode = true
+keep_pressed_outside = true
+text = "Turret"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Button_options" type="Button" parent="Controls_touchscreen/Main_controls"]
+margin_left = 16.0
+margin_top = 16.0
+margin_right = 168.0
+margin_bottom = 56.0
+focus_mode = 0
+theme = ExtResource( 10 )
+keep_pressed_outside = true
+text = "Options"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Button_accel_plus" type="Button" parent="Controls_touchscreen/Main_controls"]
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -184.0
+margin_top = -368.0
+margin_right = -72.0
+margin_bottom = -272.0
+focus_mode = 0
+theme = ExtResource( 10 )
+keep_pressed_outside = true
+text = "Accel+"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Button_accel_minus" type="Button" parent="Controls_touchscreen/Main_controls"]
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -184.0
+margin_top = -256.0
+margin_right = -72.0
+margin_bottom = -160.0
+focus_mode = 0
+theme = ExtResource( 10 )
+keep_pressed_outside = true
+text = "Accel-"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Button_ekill" type="Button" parent="Controls_touchscreen/Main_controls"]
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -184.0
+margin_top = -144.0
+margin_right = -72.0
+margin_bottom = -48.0
+focus_mode = 0
+theme = ExtResource( 10 )
+toggle_mode = true
+keep_pressed_outside = true
+text = "E-Kill"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Pad_base" type="Panel" parent="Controls_touchscreen/Main_controls"]
+anchor_top = 1.0
+anchor_bottom = 1.0
+margin_left = 72.0
+margin_top = -360.0
+margin_right = 372.0
+margin_bottom = -60.0
+custom_styles/panel = ExtResource( 7 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Stick" type="Button" parent="Controls_touchscreen/Main_controls/Pad_base"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -50.0
+margin_top = -50.0
+margin_right = 50.0
+margin_bottom = 50.0
+focus_mode = 0
+custom_styles/hover = ExtResource( 6 )
+custom_styles/pressed = ExtResource( 6 )
+custom_styles/focus = ExtResource( 6 )
+custom_styles/disabled = ExtResource( 6 )
+custom_styles/normal = ExtResource( 6 )
+keep_pressed_outside = true
+
+[connection signal="pressed" from="GUI_prompt/Button_touchscreen_switch" to="." method="_on_Button_touchscreen_switch_pressed"]
+[connection signal="pressed" from="GUI_prompt/Button_cumputer_gui_switch" to="." method="_on_Button_cumputer_gui_switch_pressed"]
 [connection signal="resized" from="Main3D" to="." method="_on_Viewport_main_resized"]
-[connection signal="toggled" from="Controls/Button_turret" to="." method="_on_Button_turret_toggled"]
-[connection signal="toggled" from="Controls/Button_debug" to="." method="_on_Button_debug_toggled"]
-[connection signal="toggled" from="Controls/Button_text_panel" to="." method="_on_Button_text_panel_toggled"]
-[connection signal="pressed" from="Controls/Button_quit" to="." method="_on_Button_quit_pressed"]
-[connection signal="toggled" from="Controls/Button_screen_filter" to="." method="_on_Button_screen_filter_toggled"]
-[connection signal="value_changed" from="Controls/Slider_screen_res" to="." method="_on_Slider_screen_res_value_changed"]
-[connection signal="value_changed" from="Controls/Slider_fov" to="." method="_on_Slider_fov_value_changed"]
+[connection signal="mouse_entered" from="Controls/Mouse_area" to="." method="_on_Mouse_area_mouse_entered"]
+[connection signal="mouse_exited" from="Controls/Mouse_area" to="." method="_on_Mouse_area_mouse_exited"]
+[connection signal="toggled" from="Controls/Control_bar/Button_turret" to="." method="_on_Button_turret_toggled"]
+[connection signal="pressed" from="Controls/Control_bar/Button_accel_plus" to="." method="_on_Button_accel_plus_pressed"]
+[connection signal="pressed" from="Controls/Control_bar/Button_accel_minus" to="." method="_on_Button_accel_minus_pressed"]
+[connection signal="toggled" from="Controls/Control_bar/Button_debug" to="." method="_on_Button_debug_toggled"]
+[connection signal="toggled" from="Controls/Control_bar/Button_text_panel" to="." method="_on_Button_text_panel_toggled"]
+[connection signal="pressed" from="Controls/Control_bar/Button_quit" to="." method="_on_Button_quit_pressed"]
+[connection signal="toggled" from="Controls/Control_bar/Button_screen_filter" to="." method="_on_Button_screen_filter_toggled"]
+[connection signal="value_changed" from="Controls/Control_bar/Slider_screen_res" to="." method="_on_Slider_screen_res_value_changed"]
+[connection signal="value_changed" from="Controls/Control_bar/Slider_fov" to="." method="_on_Slider_fov_value_changed"]
+[connection signal="toggled" from="Controls_touchscreen/Options_menu/Button_debug" to="." method="_on_Button_debug_toggled"]
+[connection signal="value_changed" from="Controls_touchscreen/Options_menu/Slider_fov" to="." method="_on_Slider_fov_value_changed"]
+[connection signal="value_changed" from="Controls_touchscreen/Options_menu/Slider_screen_res" to="." method="_on_Slider_screen_res_value_changed"]
+[connection signal="pressed" from="Controls_touchscreen/Options_menu/Button_quit" to="." method="_on_Button_quit_pressed"]
+[connection signal="toggled" from="Controls_touchscreen/Options_menu/Button_screen_filter" to="." method="_on_Button_screen_filter_toggled"]
+[connection signal="toggled" from="Controls_touchscreen/Options_menu/Button_text_panel" to="." method="_on_Button_text_panel_toggled"]
+[connection signal="pressed" from="Controls_touchscreen/Options_menu/Button_close_options" to="." method="_on_Button_close_options_pressed"]
+[connection signal="value_changed" from="Controls_touchscreen/Main_controls/Slider_zoom" to="." method="_on_Slider_zoom_value_changed"]
+[connection signal="toggled" from="Controls_touchscreen/Main_controls/Button_turret" to="." method="_on_Button_turret_toggled"]
+[connection signal="pressed" from="Controls_touchscreen/Main_controls/Button_options" to="." method="_on_Button_options_pressed"]
+[connection signal="pressed" from="Controls_touchscreen/Main_controls/Button_accel_plus" to="." method="_on_Button_accel_plus_pressed"]
+[connection signal="pressed" from="Controls_touchscreen/Main_controls/Button_accel_minus" to="." method="_on_Button_accel_minus_pressed"]
+[connection signal="toggled" from="Controls_touchscreen/Main_controls/Button_ekill" to="." method="_on_Button_ekill_toggled"]
+[connection signal="button_down" from="Controls_touchscreen/Main_controls/Pad_base/Stick" to="." method="_on_Stick_button_down"]
+[connection signal="button_up" from="Controls_touchscreen/Main_controls/Pad_base/Stick" to="." method="_on_Stick_button_up"]

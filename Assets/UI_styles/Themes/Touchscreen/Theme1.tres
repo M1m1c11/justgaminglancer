@@ -1,0 +1,31 @@
+[gd_resource type="Theme" load_steps=11 format=2]
+
+[ext_resource path="res://Assets/Fonts/Ubuntu-Bold.ttf" type="DynamicFontData" id=1]
+[ext_resource path="res://Assets/UI_styles/Themes/Touchscreen/Theme1/button_normal.tres" type="StyleBox" id=2]
+[ext_resource path="res://Assets/UI_styles/Themes/Touchscreen/Theme1/button_pressed.tres" type="StyleBox" id=3]
+[ext_resource path="res://Assets/Fonts/Ubuntu-Regular.ttf" type="DynamicFontData" id=4]
+[ext_resource path="res://Assets/UI_styles/Themes/Touchscreen/Theme1/slider_area.tres" type="StyleBox" id=5]
+[ext_resource path="res://Assets/UI_styles/Themes/Touchscreen/Theme1/slider_line.tres" type="StyleBox" id=6]
+[ext_resource path="res://Assets/UI_styles/Themes/Touchscreen/Theme1/slider_focus.tres" type="StyleBox" id=7]
+
+[sub_resource type="DynamicFont" id=6]
+size = 29
+font_data = ExtResource( 1 )
+
+[sub_resource type="StyleBoxEmpty" id=7]
+
+[sub_resource type="DynamicFont" id=8]
+size = 32
+font_data = ExtResource( 4 )
+
+[resource]
+Button/fonts/font = SubResource( 6 )
+Button/styles/disabled = ExtResource( 2 )
+Button/styles/focus = SubResource( 7 )
+Button/styles/hover = ExtResource( 2 )
+Button/styles/normal = ExtResource( 2 )
+Button/styles/pressed = ExtResource( 3 )
+HSlider/styles/grabber_area = ExtResource( 6 )
+HSlider/styles/grabber_area_highlight = ExtResource( 7 )
+HSlider/styles/slider = ExtResource( 5 )
+Label/fonts/font = SubResource( 8 )

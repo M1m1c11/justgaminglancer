@@ -7,7 +7,7 @@ var sprite_appearance_distance = 0.0
 
 
 # Nodes.
-var p = Node
+onready var p = get_tree().get_root().get_node("Container/Paths")
 var star = Node
 var sprite_rig = Node
 var sprite = Node
@@ -15,7 +15,7 @@ var sprite = Node
 
 func _ready():
 	# ============================ Initialize nodes ===========================
-	p = get_node("/root/Container/Paths")
+
 	star = p.local_space.get_node("System_Gate/Star_blue")
 	sprite_rig = get_node("../Sprite_rig")
 	sprite = get_node("../Sprite_rig/Sprite")

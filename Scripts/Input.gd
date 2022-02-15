@@ -5,6 +5,8 @@ var mouse_x = 0
 var mouse_y = 0
 var mouse_x_abs = 0
 var mouse_y_abs = 0
+var pad_x_abs = 0
+var pad_y_abs = 0
 # Objects.
 var mouse_vector = Vector2(0,0)
 var viewport_size = Vector2(1,1)
@@ -15,16 +17,12 @@ var LMB_released = true
 var mouse_on_viewport = true
 
 # Paths node.
-var p = Node
-var ui_controls_bar = Node
-var ui_button_turret = Node
+onready var p = get_tree().get_root().get_node("Container/Paths")
+onready var ui_controls_bar = p.ui.get_node("Controls/Control_bar")
+onready var ui_button_turret = p.ui.get_node("Controls/Control_bar/Button_turret")
+onready var ui_mouse_area = p.ui.get_node("Controls/Mouse_area")
 
 func _ready():
-	# ============================ Initialize nodes ===========================
-	p = get_node("/root/Container/Paths")
-	ui_controls_bar = p.ui.get_node("Controls")
-	ui_button_turret = p.ui.get_node("Controls/Button_turret")
-
 	# ============================ Connect signals ============================
 	p.signals.connect("sig_mouse_on_viewport", self, "is_mouse_on_viewport")
 	p.signals.connect("sig_viewport_update", self, "is_viewport_update")
@@ -38,9 +36,10 @@ func _ready():
 # TODO: Link a script for key shortcuts (like options).
 func _input(event):
 
-	# ==================== For events on 3D viewport ==========================
+	# ==================== For events on mouse area (desktop) ==========================
 	# Mouse over 3D viewport.
-	if mouse_on_viewport:
+	if mouse_on_viewport and ui_mouse_area.visible:
+		# TODO: Maybe there is a better way to handle mouse area capture?
 		# =========================== For mouse ===============================
 		# Track the mouse position in +/-1, +/-1 viewport coordinates.
 		if event is InputEventMouseMotion:
@@ -107,21 +106,13 @@ func _input(event):
 				p.signals.emit_signal("sig_accelerate", false)
 			
 			# TODO: sort out acceleration WSAD keys
-			# Accelerate left sgtrafe.
-			if event.pressed and event.scancode == KEY_A:
-				p.signals.emit_signal("sig_accelerate", Vector3(1, 0, 0))
-
-			# Accelerate right strafe.
-			if event.pressed and event.scancode == KEY_D:
-				p.signals.emit_signal("sig_accelerate", Vector3(-1, 0, 0))
-			
 			# Accelerate up strafe.
 			if event.pressed and event.scancode == KEY_W:
-				p.signals.emit_signal("sig_accelerate", Vector3(0, -1, 0))
+				p.signals.emit_signal("sig_accelerate", true)
 
 			# Accelerate down strafe.
 			if event.pressed and event.scancode == KEY_S:
-				p.signals.emit_signal("sig_accelerate", Vector3(0, 1, 0))
+				p.signals.emit_signal("sig_accelerate", false)
 			
 			# Accelerate down strafe.
 			if event.pressed and event.scancode == KEY_Z:
@@ -131,8 +122,30 @@ func _input(event):
 				else: 
 					p.ship_state.engine_kill = false
 					p.signals.emit_signal("sig_engine_kill", false)
-	# =================== For events outside of 3D viewport ===================
-	# Mouse not over 3D viewport.
+	# =================== For events on touchscreen stick held ===================
+	elif p.ui.stick_held:
+		# Track the mouse position in +/-1, +/-1 Pad base coordinates.
+		if event is InputEventMouseMotion:
+			pad_x_abs = event.global_position.x-p.ui.pad_base.rect_position.x
+			pad_y_abs = event.global_position.y-p.ui.pad_base.rect_position.y
+			var pad_x = clamp(((pad_x_abs-p.ui.pad_base.rect_size.x/2) \
+				/ p.ui.pad_base.rect_size.x*2), -1, 1)
+			var pad_y = clamp(((pad_y_abs-p.ui.pad_base.rect_size.y/2) \
+				/ p.ui.pad_base.rect_size.y*2), -1, 1)
+			mouse_vector = Vector2(pad_x, pad_y) 
+			# TODO: rename mouse vector to joystick vector.
+			
+		# Mouse button held check. LMB_released is to reduce calls number.
+		if Input.is_mouse_button_pressed(BUTTON_LEFT) and LMB_released:
+			LMB_released = false
+			LMB_held = true
+		
+		# Mouse button released check. LMB_released is to reduce calls number.
+		if not Input.is_mouse_button_pressed(BUTTON_LEFT) and not LMB_released:
+			LMB_released = true
+			LMB_held = false
+	
+	# =================== For events outside of area (desktop) ===================
 	else:
 		pass
 		

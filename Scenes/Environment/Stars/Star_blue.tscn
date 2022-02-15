@@ -8,7 +8,7 @@
 [ext_resource path="res://Scripts/Mesh_rotation.gd" type="Script" id=6]
 
 [sub_resource type="SphereShape" id=1]
-radius = 500.0
+radius = 0.5
 
 [sub_resource type="ArrayMesh" id=2]
 resource_name = "Cube.002"
@@ -27,18 +27,18 @@ surfaces/0 = {
 [sub_resource type="ShaderMaterial" id=4]
 shader = ExtResource( 4 )
 shader_param/color_surface_hot = Color( 1, 1, 1, 1 )
-shader_param/color_surface_cold = Color( 0.682353, 0.45098, 0.937255, 1 )
+shader_param/color_surface_cold = Color( 0.764706, 0.690196, 1, 1 )
 shader_param/color_details_major = Color( 1, 1, 1, 1 )
 shader_param/color_details_small = Color( 1, 1, 1, 1 )
-shader_param/surface_hot_value = 1.157
-shader_param/surface_cold_value = 0.979
+shader_param/surface_hot_value = 3.846
+shader_param/surface_cold_value = 1.152
 shader_param/surface_noise_scale = 1.0
 shader_param/surface_noise_to_power = 9.091
 shader_param/major_detail_strength = 0.254
 shader_param/major_detail_filter = 0.995
 shader_param/major_detail_scale = 1.222
 shader_param/major_detail_flow = 0.008
-shader_param/small_detail_strength = 0.125
+shader_param/small_detail_strength = 0.312
 shader_param/small_detail_filter = 0.99
 shader_param/small_detail_scale = 4.275
 shader_param/small_detail_flow = 0.07
@@ -62,18 +62,18 @@ surfaces/0 = {
 [sub_resource type="ShaderMaterial" id=7]
 render_priority = -4
 shader = ExtResource( 5 )
-shader_param/albedo = Color( 0.988235, 0.752941, 1, 1 )
-shader_param/rim_strength = 0.145
-shader_param/rim_power = 6.109
+shader_param/albedo = Color( 0.996078, 0.878431, 1, 1 )
+shader_param/rim_strength = 0.404
+shader_param/rim_power = 7.804
 
 [sub_resource type="ShaderMaterial" id=8]
 render_priority = -3
 shader = ExtResource( 2 )
-shader_param/albedo = Color( 0.678431, 0.545098, 1, 1 )
-shader_param/rim_strength = 100.0
-shader_param/inner_rim_power = 4.991
-shader_param/outer_rim_power = 3.004
-shader_param/inner_rim_smoothness = 8.399
+shader_param/albedo = Color( 0.803922, 0.721569, 1, 1 )
+shader_param/rim_strength = 50.0
+shader_param/inner_rim_power = 9.284
+shader_param/outer_rim_power = 4.231
+shader_param/inner_rim_smoothness = 6.417
 shader_param/outter_rim_smoothness = 1.789
 
 [node name="Star_blue" type="StaticBody"]
@@ -86,7 +86,6 @@ transform = Transform( 2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0 )
 shape = SubResource( 1 )
 
 [node name="Surface_3072" type="MeshInstance" parent="."]
-transform = Transform( 1000, 0, 0, 0, 1000, 0, 0, 0, 1000, 0, 0, 0 )
 mesh = SubResource( 2 )
 material/0 = SubResource( 4 )
 script = ExtResource( 6 )
@@ -94,17 +93,17 @@ rotation_speed_y = 0.002
 rotation_speed_z = 0.002
 
 [node name="Halo_inner_1280 (p -4)" type="MeshInstance" parent="."]
-transform = Transform( 1707.11, -292.893, 1000, 1000, 1000, -1414.21, -292.894, 1707.11, 1000, 0, 0, 0 )
+transform = Transform( 1.70711, -0.292891, 0.999999, 0.999998, 0.999999, -1.41422, -0.292894, 1.70711, 0.999999, 0, 0, 0 )
 mesh = SubResource( 5 )
 material/0 = SubResource( 7 )
 
 [node name="Rim_3073 (p -3)" type="MeshInstance" parent="."]
-transform = Transform( 149.375, 870.625, -510, -510, 510, 721.249, 870.625, 149.376, 510, 0, 0, 0 )
+transform = Transform( 0.159626, 0.930373, -0.545, -0.545, 0.545, 0.770746, 0.930373, 0.159628, 0.545, 0, 0, 0 )
 mesh = SubResource( 2 )
 material/0 = SubResource( 8 )
 
 [node name="OmniLight" type="OmniLight" parent="."]
 light_color = Color( 0.839216, 0.337255, 1, 1 )
 light_energy = 20.0
-omni_range = 2e+07
+omni_range = 2e+08
 omni_attenuation = 3.4822

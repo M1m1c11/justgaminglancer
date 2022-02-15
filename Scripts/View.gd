@@ -5,15 +5,15 @@ extends Viewport
 
 # Values.
 # TODO: Throw it into options and sync with slider
-var screen_res_factor = 0.7
+var screen_res_factor = 0.6
 # Objects.
 # Parameters.
 # Nodes.
-var p = Node
+onready var p = get_tree().get_root().get_node("Container/Paths")
 
 func _ready():
 	# ======================Z====== Initialize nodes ===========================
-	p = get_node("/root/Container/Paths")
+
 	# ============================ Connect signals ============================
 	p.signals.connect("sig_screen_filter_on", self, "is_screen_filter_on")
 	p.signals.connect("sig_viewport_update", self, "is_viewport_update")

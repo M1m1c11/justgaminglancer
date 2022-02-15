@@ -15,5 +15,6 @@ background_sky = SubResource( 1 )
 background_sky_orientation = Basis( 0.513608, -0.748734, -0.419051, -0.00874038, 0.483799, -0.875135, 0.85798, 0.453139, 0.241939 )
 background_sky_rotation = Vector3( 1.06572, -1.0472, -0.0180642 )
 background_sky_rotation_degrees = Vector3( 61.061, -60, -1.035 )
+background_color = Color( 0.0823529, 0.0823529, 0.0901961, 1 )
 tonemap_mode = 4
 glow_bicubic_upscale = true

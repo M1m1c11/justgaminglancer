@@ -1,11 +1,7 @@
 extends Position3D
 
 # Nodes.
-var p = Node
-
-func _ready():
-	# ============================ Initialize nodes ===========================
-	p = get_node("/root/Container/Paths")
+onready var p = get_tree().get_root().get_node("Container/Paths")
 
 
 func _process(_delta):

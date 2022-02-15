@@ -17,6 +17,7 @@ signal sig_quit_game
 # =============================== Camera =====================================
 signal sig_turret_mode_on(flag)
 signal sig_mouse_flight_on(flag)
+signal sig_zoom_value_changed(value)
 
 # ================================ Ship =======================================
 signal sig_accelerate(flag)
