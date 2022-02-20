@@ -18,7 +18,7 @@ export var camera_chase_tilt_vert_damp_left = 2 # Can't be zero
 export var camera_chase_tilt_vert_damp_right = 2 # Can't be zero
 # Higher values - more responsive camera.
 export var camera_tilt_velocity_factor = 1
-export var camera_push_velocity_factor = 2
+export var camera_push_velocity_factor = 0.01
 
 
 
