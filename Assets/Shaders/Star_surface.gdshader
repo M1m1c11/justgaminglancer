@@ -13,27 +13,18 @@
 shader_type spatial;
 render_mode unshaded, depth_draw_opaque;
 uniform vec4 color_surface_hot : hint_color = vec4(1.0, 0.9, 0.4, 1.0);
-uniform vec4 color_surface_cold : hint_color = vec4(1.0, 0.7, 0.0, 1.0);
 uniform vec4 color_details_major : hint_color = vec4(0.0, 0.9, 1.0, 1.0);
 uniform vec4 color_details_small : hint_color = vec4(1.0, 1.0, 0.0, 1.0);
 
-uniform sampler2D surface_noise : hint_normal;
-uniform float surface_hot_value = 2.55;
-uniform float surface_cold_value = 1.0;
-uniform float surface_noise_scale = 3.0;
-uniform float surface_noise_to_power = 0.4;
-
 uniform sampler2D major_detail_noise : hint_normal;
-uniform float major_detail_strength = -0.55;
-uniform float major_detail_filter = 0.996;
-uniform float major_detail_scale = 2;
-uniform float major_detail_flow = 0.002;
+uniform float major_detail_phase = 0.996;
+uniform float major_detail_scale = 1;
+uniform float major_detail_flow = 0.02;
 
 uniform sampler2D small_detail_noise : hint_normal;
-uniform float small_detail_strength = -0.55;
-uniform float small_detail_filter = 0.99;
-uniform float small_detail_scale = 5;
-uniform float small_detail_flow = 0.02;
+uniform float small_detail_phase = 0.99;
+uniform float small_detail_scale = 3;
+uniform float small_detail_flow = 0.2;
 
 const float pi = 3.1415926535;
 
@@ -56,34 +47,19 @@ void fragment()
 	// Surface details major.
 	vec2 p = texture(major_detail_noise, -UV*major_detail_scale).xy 
 		-TIME*major_detail_flow;
-		
-	float detail_major = 
-		clamp(
-			(sin(
-				texture(major_detail_noise, p).r * pi) 
-					-major_detail_filter
-				) * 90.0
-			, 0.0, 1.0);
-	
-	// Surface details small.
-	vec2 p_2 = texture(small_detail_noise, -UV*small_detail_scale).xy 
+	vec2 p2 = texture(small_detail_noise, -UV*small_detail_scale).xy 
 		-TIME*small_detail_flow;
-		
-	float detail_small = 
-		clamp((sin(texture(small_detail_noise, p_2).r * pi) 
-			-small_detail_filter)*90.0, 0.0, 1.0);
 	
-	// Surface main colors.
-	float surface = pow(texture(surface_noise, UV*surface_noise_scale).r, 
-		surface_noise_to_power);
+	float detail_major = sin(texture(major_detail_noise, p).r*pi+major_detail_phase);
+	float detail_small = sin(texture(small_detail_noise, p2).r*pi+small_detail_phase);
 
+	
 	// Combine surface colors with details. Not clamping it because it makes
 	// interesting effects when colors overflow.
 	ALBEDO = 
-		surface*color_surface_hot.rgb*surface_hot_value
-		+(1.0-surface)*color_surface_cold.rgb*surface_cold_value
-		+detail_major*color_details_major.rgb*major_detail_strength
-		+detail_small*color_details_small.rgb*small_detail_strength;
+		color_surface_hot.rgb
+		+detail_major*color_details_major.rgb
+		+detail_small*color_details_small.rgb;
 	//ALBEDO = vec3(DEPTH, DEPTH, DEPTH);
 	// This is may be needed by alpha sorting.
 	//ALPHA = 1.0;

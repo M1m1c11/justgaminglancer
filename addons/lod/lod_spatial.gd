@@ -8,14 +8,14 @@ class_name LODSpatial, "lod_spatial.svg"
 export var enable_lod := true
 
 # The maximum LOD 0 (high quality) distance in units.
-export(float, 0.0, 500000.0, 0.1) var lod_0_max_distance := 500000
+export(float, 0.0, 10000000.0, 0.1) var lod_0_max_distance := 1000000
 
 # The maximum LOD 1 (medium quality) distance in units.
-export(float, 0.0, 10000000.0, 0.1) var lod_1_max_distance := 10000000
+export(float, 0.0, 100000000.0, 0.1) var lod_1_max_distance := 10000000
 
 # The maximum LOD 2 (low quality) distance in units.
 # Past this distance, all LOD variants are hidden.
-export(float, 0.0, 500000000.0, 0.1) var lod_2_max_distance := 500000000
+export(float, 0.0, 5000000000.0, 0.1) var lod_2_max_distance := 500000000
 
 # The rate at which LODs will be updated (in seconds). Lower values are more reactive
 # but use more CPU, which is especially noticeable with large amounts of LOD-enabled nodes.

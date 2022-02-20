@@ -1,13 +1,11 @@
-[gd_scene load_steps=16 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://addons/lod/lod_spatial.gd" type="Script" id=1]
-[ext_resource path="res://Assets/Textures/Noise/Noise_4_way_tileable_2048.dds" type="Texture" id=2]
-[ext_resource path="res://Assets/Shaders/Star_surface_old.gdshader" type="Shader" id=3]
-[ext_resource path="res://Assets/Shaders/Star_rim.gdshader" type="Shader" id=4]
+[ext_resource path="res://Assets/Shaders/Star.gdshader" type="Shader" id=2]
 [ext_resource path="res://Assets/Shaders/Star_halo.gdshader" type="Shader" id=5]
 
 [sub_resource type="SphereShape" id=1]
-radius = 0.5
+radius = 0.595698
 
 [sub_resource type="ArrayMesh" id=2]
 resource_name = "Cube.002"
@@ -24,26 +22,14 @@ surfaces/0 = {
 }
 
 [sub_resource type="ShaderMaterial" id=4]
-shader = ExtResource( 3 )
-shader_param/color_surface_hot = Color( 1, 0.470588, 0, 1 )
-shader_param/color_surface_cold = Color( 0.368627, 0.537255, 0.219608, 1 )
-shader_param/color_details_major = Color( 1, 1, 1, 1 )
-shader_param/color_details_small = Color( 1, 1, 0, 1 )
-shader_param/surface_hot_value = 9.494
-shader_param/surface_cold_value = -2.221
-shader_param/surface_noise_scale = 1.0
-shader_param/surface_noise_to_power = 3.811
-shader_param/major_detail_strength = 0.803
-shader_param/major_detail_filter = 0.998
-shader_param/major_detail_scale = 1.0
-shader_param/major_detail_flow = -0.016
-shader_param/small_detail_strength = -0.205
-shader_param/small_detail_filter = 0.994
-shader_param/small_detail_scale = 3.0
-shader_param/small_detail_flow = -0.243
-shader_param/surface_noise = ExtResource( 2 )
-shader_param/major_detail_noise = ExtResource( 2 )
-shader_param/small_detail_noise = ExtResource( 2 )
+shader = ExtResource( 2 )
+shader_param/corona_color = Color( 1, 0, 0.0941176, 1 )
+shader_param/core_color = Color( 1, 0.701961, 0, 1 )
+shader_param/rim_strength = 3.34
+shader_param/rim_power = 5.426
+shader_param/core_strength = 2.287
+shader_param/core_power = 7.494
+shader_param/core_amount = 4.21
 
 [sub_resource type="ArrayMesh" id=5]
 resource_name = "Cube.002"
@@ -88,9 +74,9 @@ surfaces/0 = {
 
 [sub_resource type="ShaderMaterial" id=9]
 shader = ExtResource( 5 )
-shader_param/albedo = Color( 1, 0.282353, 0, 1 )
-shader_param/rim_strength = 0.493
-shader_param/rim_power = 19.934
+shader_param/albedo = Color( 1, 0, 0.258824, 1 )
+shader_param/rim_strength = 0.41
+shader_param/rim_power = 42.753
 
 [sub_resource type="ArrayMesh" id=10]
 resource_name = "Cube.001"
@@ -106,35 +92,20 @@ surfaces/0 = {
 "vertex_count": 75
 }
 
-[sub_resource type="ShaderMaterial" id=12]
-shader = ExtResource( 5 )
-shader_param/albedo = Color( 1, 0.505882, 0.890196, 1 )
-shader_param/rim_strength = 0.027
-shader_param/rim_power = 2.864
-
-[sub_resource type="ShaderMaterial" id=13]
-render_priority = 1
-shader = ExtResource( 4 )
-shader_param/albedo = Color( 1, 0.211765, 0.211765, 1 )
-shader_param/rim_strength = 50.0
-shader_param/inner_rim_power = 13.396
-shader_param/outer_rim_power = 7.142
-shader_param/inner_rim_smoothness = 3.919
-shader_param/outter_rim_smoothness = 3.094
-
-[node name="Star_orange" type="StaticBody"]
+[node name="Star" type="StaticBody"]
 __meta__ = {
 "_edit_group_": true
 }
 
 [node name="OmniLight" type="OmniLight" parent="."]
-light_color = Color( 1, 0.627451, 0.529412, 1 )
-light_energy = 10.0
+light_color = Color( 0.956863, 0.286275, 0.113725, 1 )
+light_energy = 4.593
 light_indirect_energy = 0.5
 omni_range = 2e+07
 omni_attenuation = 3.29877
 
 [node name="CollisionShape" type="CollisionShape" parent="."]
+transform = Transform( 1.001, 0, 0, 0, 1.001, 0, 0, 0, 1.001, 0, 0, 0 )
 shape = SubResource( 1 )
 
 [node name="Surface" type="Spatial" parent="."]
@@ -155,67 +126,19 @@ mesh = SubResource( 6 )
 material/0 = SubResource( 4 )
 
 [node name="Halo_inner" type="Spatial" parent="."]
+transform = Transform( 7, 0, 0, 0, 7, 0, 0, 0, 7, 0, 0, 0 )
 script = ExtResource( 1 )
-lod_0_max_distance = 50000.0
-lod_1_max_distance = 1e+06
-lod_2_max_distance = 5e+07
 
 [node name="Sphere_768-lod0" type="MeshInstance" parent="Halo_inner"]
-transform = Transform( 5, 0, 0, 0, 5, 0, 0, 0, 5, 0, 0, 0 )
 mesh = SubResource( 7 )
 material/0 = SubResource( 9 )
 
 [node name="Sphere_192-lod1" type="MeshInstance" parent="Halo_inner"]
-transform = Transform( 5, 0, 0, 0, 5, 0, 0, 0, 5, 0, 0, 0 )
 visible = false
 mesh = SubResource( 6 )
 material/0 = SubResource( 9 )
 
 [node name="Sphere_96-lod2" type="MeshInstance" parent="Halo_inner"]
-transform = Transform( 5, 0, 0, 0, 5, 0, 0, 0, 5, 0, 0, 0 )
 visible = false
 mesh = SubResource( 10 )
 material/0 = SubResource( 9 )
-
-[node name="Halo_outer" type="Spatial" parent="."]
-script = ExtResource( 1 )
-
-[node name="Sphere_768-lod0" type="MeshInstance" parent="Halo_outer"]
-transform = Transform( 5, 0, 0, 0, 5, 0, 0, 0, 5, 0, 0, 0 )
-mesh = SubResource( 7 )
-material/0 = SubResource( 12 )
-
-[node name="Sphere_192-lod1" type="MeshInstance" parent="Halo_outer"]
-transform = Transform( 5, 0, 0, 0, 5, 0, 0, 0, 5, 0, 0, 0 )
-visible = false
-mesh = SubResource( 6 )
-material/0 = SubResource( 12 )
-
-[node name="Sphere_96-lod2" type="MeshInstance" parent="Halo_outer"]
-transform = Transform( 5, 0, 0, 0, 5, 0, 0, 0, 5, 0, 0, 0 )
-visible = false
-mesh = SubResource( 10 )
-material/0 = SubResource( 12 )
-
-[node name="Rim" type="Spatial" parent="."]
-script = ExtResource( 1 )
-lod_0_max_distance = 50000.0
-lod_1_max_distance = 1e+06
-lod_2_max_distance = 5e+07
-
-[node name="Sphere_768-lod0" type="MeshInstance" parent="Rim"]
-transform = Transform( 1.25, 0, 0, 0, 1.25, 0, 0, 0, 1.25, 0, 0, 0 )
-mesh = SubResource( 7 )
-material/0 = SubResource( 13 )
-
-[node name="Sphere_192-lod1" type="MeshInstance" parent="Rim"]
-transform = Transform( 1.25, 0, 0, 0, 1.25, 0, 0, 0, 1.25, 0, 0, 0 )
-visible = false
-mesh = SubResource( 6 )
-material/0 = SubResource( 13 )
-
-[node name="Sphere_96-lod2" type="MeshInstance" parent="Rim"]
-transform = Transform( 1.25, 0, 0, 0, 1.25, 0, 0, 0, 1.25, 0, 0, 0 )
-visible = false
-mesh = SubResource( 10 )
-material/0 = SubResource( 13 )

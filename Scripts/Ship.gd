@@ -159,14 +159,17 @@ func is_accelerating(flag):
 # TODO: make a button-hold temporary kill.
 func is_engine_kill(flag):
 	if flag:
-		# Enable inertia-less flight.
-		p.ship_state.engine_kill = true
-		p.ship_state.accel_ticks_prev = p.ship_state.accel_ticks
+		p.ship_state.acceleration = 0
 		p.ship_state.accel_ticks = 0
-		self.linear_damp = p.engine_opts.ship_linear_damp_ekill
-	else:
-		# Disable inertia-less flight.
+		# Enable inertia-less flight.
 		p.ship_state.engine_kill = false
-		p.ship_state.accel_ticks = p.ship_state.accel_ticks_prev
-		self.linear_damp = p.engine_opts.ship_linear_damp
+		# p.ship_state.accel_ticks_prev = p.ship_state.accel_ticks
+		# p.ship_state.accel_ticks = 0
+		# self.linear_damp = p.engine_opts.ship_linear_damp_ekill
+	else:
+		p.ship_state.engine_kill = false
+		# Disable inertia-less flight.
+		# p.ship_state.engine_kill = false
+		# p.ship_state.accel_ticks = p.ship_state.accel_ticks_prev
+		# self.linear_damp = p.engine_opts.ship_linear_damp
 	adjust_exhaust()

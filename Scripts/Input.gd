@@ -19,6 +19,7 @@ var mouse_on_viewport = true
 # Paths node.
 onready var p = get_tree().get_root().get_node("Container/Paths")
 onready var ui_controls_bar = p.ui.get_node("Controls/Control_bar")
+onready var ui_main3d = p.ui.get_node("Main3D")
 onready var ui_button_turret = p.ui.get_node("Controls/Control_bar/Button_turret")
 onready var ui_mouse_area = p.ui.get_node("Controls/Mouse_area")
 
@@ -87,6 +88,11 @@ func _input(event):
 					ui_controls_bar.visible = false
 				else:
 					ui_controls_bar.visible = true
+					
+				if ui_main3d.visible:
+					ui_main3d.visible = false
+				else:
+					ui_main3d.visible = true
 					
 			
 			# Turret mode. UI shortcut. Signal is emitted by UI.

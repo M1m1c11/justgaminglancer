@@ -5,7 +5,7 @@ extends Viewport
 
 # Values.
 # TODO: Throw it into options and sync with slider
-var screen_res_factor = 0.6
+var screen_res_factor = 0.7
 # Objects.
 # Parameters.
 # Nodes.
