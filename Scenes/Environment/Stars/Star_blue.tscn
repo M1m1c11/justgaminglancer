@@ -87,6 +87,7 @@ __meta__ = {
 light_color = Color( 0.113725, 0.639216, 0.956863, 1 )
 light_energy = 10.0
 light_indirect_energy = 0.5
+light_cull_mask = 4294443007
 omni_range = 2e+07
 omni_attenuation = 3.29877
 

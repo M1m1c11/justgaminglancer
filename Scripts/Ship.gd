@@ -5,7 +5,7 @@ var limit = 10000
 # TODO check materials and shaders for FX
 # Params.
 export var ship_mass = 2000
-export var accel_factor = 20 # Propulsion force.
+export var accel_factor = 60 # Propulsion force.
 export var accel_ticks_max = 50 # Engine propulsion increments.
 # Turning sensitivity LEFT-RIGHT | UP-DOWN | ROLL
 export var torque_factor = Vector3(1500,700,700)
@@ -95,7 +95,7 @@ func _integrate_forces(state):
 	
 	# Limiting by engine ticks. It is a hard limits.
 	# TODO: move capped velocity to constants.
-	if vel > 1000000:
+	if vel > 2000000:
 		p.signals.emit_signal("sig_accelerate", false)
 
 	

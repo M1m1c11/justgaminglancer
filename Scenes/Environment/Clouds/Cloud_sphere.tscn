@@ -22,7 +22,7 @@ shader_param/albedo = Color( 1, 1, 1, 1 )
 shader_param/rim_strength = 0.05
 shader_param/rim_power = 9.0
 
-[node name="Spatial" type="Spatial"]
+[node name="Cloud_sphere" type="Spatial"]
 
 [node name="Sphere_768" type="MeshInstance" parent="."]
 mesh = SubResource( 1 )
