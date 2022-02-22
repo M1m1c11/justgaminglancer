@@ -1,11 +1,11 @@
 extends RigidBody
 
-var limit = 10000
+var limit = 30000
 
 # TODO check materials and shaders for FX
 # Params.
 export var ship_mass = 2000
-export var accel_factor = 60 # Propulsion force.
+export var accel_factor = 600 # Propulsion force.
 export var accel_ticks_max = 50 # Engine propulsion increments.
 # Turning sensitivity LEFT-RIGHT | UP-DOWN | ROLL
 export var torque_factor = Vector3(1500,700,700)
@@ -60,24 +60,24 @@ func _physics_process(_delta):
 	
 	if self.translation.x > limit:
 		self.translation.x = 0
-		p.local_space.translation.x = p.local_space.translation.x-limit
+		p.global_space.translation.x = p.global_space.translation.x-limit
 	elif self.translation.x < -limit:
 		self.translation.x = 0
-		p.local_space.translation.x = p.local_space.translation.x+limit
+		p.global_space.translation.x = p.global_space.translation.x+limit
 		
 	if self.translation.y > limit:
 		self.translation.y = 0
-		p.local_space.translation.y = p.local_space.translation.y-limit
+		p.global_space.translation.y = p.global_space.translation.y-limit
 	elif self.translation.y < -limit:
 		self.translation.y = 0
-		p.local_space.translation.y = p.local_space.translation.y+limit
+		p.global_space.translation.y = p.global_space.translation.y+limit
 
 	if self.translation.z > limit:
 		self.translation.z = 0
-		p.local_space.translation.z = p.local_space.translation.z-limit
+		p.global_space.translation.z = p.global_space.translation.z-limit
 	elif self.translation.z < -limit:
 		self.translation.z = 0
-		p.local_space.translation.z = p.local_space.translation.z+limit
+		p.global_space.translation.z = p.global_space.translation.z+limit
 
 
 func _integrate_forces(state):
@@ -89,14 +89,14 @@ func _integrate_forces(state):
 	# Since everything is scaled down 10 times, then:
 	p.ship_state.apparent_velocity = vel*10
 	
-	# Limit by origin rebase speed (600000 u/s).
-	if not p.ship_state.engine_kill and vel < limit* p.engine_opts.physics_fps*0.9:
-		state.add_central_force(-global_transform.basis.z* p.ship_state.acceleration* p.ship_state.acceleration)
+	# TODO: Limit by origin rebase speed (600000 u/s)?
+	# if not p.ship_state.engine_kill and vel < limit* p.engine_opts.physics_fps*0.9:
+	state.add_central_force(-global_transform.basis.z* p.ship_state.acceleration* p.ship_state.acceleration)
 	
 	# Limiting by engine ticks. It is a hard limits.
 	# TODO: move capped velocity to constants.
-	if vel > 2000000:
-		p.signals.emit_signal("sig_accelerate", false)
+	#if vel > 2000000:
+	#	p.signals.emit_signal("sig_accelerate", false)
 
 	
 	if not p.ship_state.turret_mode and (p.input.LMB_held or p.ship_state.mouse_flight):

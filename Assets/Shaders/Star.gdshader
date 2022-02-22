@@ -23,7 +23,7 @@ void vertex()
 void fragment()
 {
 	// Logarithmic depth buffer.
-	DEPTH = log2(max(1e-6, 1.0 -gl_Position.z)) * c;
+	// DEPTH = log2(max(1e-6, 1.0 -gl_Position.z)) * c;
 	
 	float rim = clamp(pow( dot( NORMAL, VIEW ), rim_power)*rim_strength, 0.0, 1.0);
 	float core = clamp(pow( dot( NORMAL, VIEW ), core_power)*core_strength, 0.0, 1.0);

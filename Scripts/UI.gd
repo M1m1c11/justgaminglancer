@@ -87,10 +87,14 @@ func _process(_delta):
 		loc_space)/p.viewport.screen_res_factor
 	# TODO: properly align and center on the object.
 	# Adjust displayed distance
+	
+	
+	# TODO: distance_to fails at 1e9 units.
 	var dist_val = round(10*loc.distance_to(loc_space))
 	var result_d = get_magnitude_units(dist_val)
 	marker.get_node("Text").text = "Origin: "\
 			+str(round(result_d[0]))+ " " + result_d[1]
+
 	
 	#marker2.visible = not get_viewport().get_camera().is_position_behind(loc2)
 	#marker2.rect_position = get_viewport().get_camera().unproject_position(loc2)
@@ -122,6 +126,8 @@ func get_magnitude_units(val):
 		return [val/10000, "ku"]
 	elif (val >= 10000000) and (val < 10000000000):
 		return [val/10000000, "Mu"]
+	elif (val >= 10000000000):
+		return [val/10000000000, "Gu"]
 
 # ========================== Signals connections =============================
 # Setting up GUI on start.
