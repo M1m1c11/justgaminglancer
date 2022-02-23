@@ -1,14 +1,12 @@
 # GDTLancer
 ![Progress][Progress]
 
-A space shooter arcade inspired by Freelancer. Developed in Godot 3.
-This is a Godot 3 project source files and assets.
+A space arcade game inspired by Freelancer. Developed in Godot 3 for desktop  
+and mobile (Android) platforms.
 
 [Progress]: Assets/Images/Progress.png "Progress"
 
 ## How to
-You can download one of the pre-compiled binary in the releases section.
+You can download one of the pre-compiled binary in the [releases](https://github.com/roalyr/GDTLancer/releases) section.
 
-You can download Godot Engine (https://godotengine.org/download), download the code of this project in .zip archive, launch the
-engine and import the project, after which you will be able to play it
-inside of the editor. 
+If you want to open it in editor, then you must use a custom Godot build: https://github.com/roalyr/godot-for-3d-open-worlds
