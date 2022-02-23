@@ -1,46 +1,48 @@
 extends RigidBody
 
-var limit = 30000
+var rebase_limit_margin = 5000
+var rebase_lag = 1.1
+
 
 # TODO check materials and shaders for FX
 # Params.
-export var ship_mass = 2000
-export var accel_factor = 600 # Propulsion force.
-export var accel_ticks_max = 50 # Engine propulsion increments.
+var ship_mass = 2000
+var accel_factor = 60 # Propulsion force.
+var accel_ticks_max = 5000 # Engine propulsion increments.
 # Turning sensitivity LEFT-RIGHT | UP-DOWN | ROLL
-export var torque_factor = Vector3(1500,700,700)
-export var camera_vert_offset = 0.2
-export var camera_horiz_offset = 1 
+var torque_factor = Vector3(1500,700,700)
+var camera_vert_offset = 0.2
+var camera_horiz_offset = 1 
 # Higher damp value - more restricted camera motion in given direction.
-export var camera_chase_tilt_horiz_damp_up = 6 # Can't be zero
-export var camera_chase_tilt_horiz_damp_down = 1.8 # Can't be zero
-export var camera_chase_tilt_vert_damp_left = 2 # Can't be zero
-export var camera_chase_tilt_vert_damp_right = 2 # Can't be zero
+var camera_chase_tilt_horiz_damp_up = 6 # Can't be zero
+var camera_chase_tilt_horiz_damp_down = 1.8 # Can't be zero
+var camera_chase_tilt_vert_damp_left = 2 # Can't be zero
+var camera_chase_tilt_vert_damp_right = 2 # Can't be zero
 # Higher values - more responsive camera.
-export var camera_tilt_velocity_factor = 1
-export var camera_push_velocity_factor = 0.01
+var camera_tilt_velocity_factor = 1
 
+var camera_push_velocity_factor = 10
+var camera_push_max_factor = 500.0
 
+var camera_fov_velocity_factor = 0.001
+var camera_fov_max_delta = 100
 
 
 
 # Vars.
 var default_linear_damp = 0
+onready var rebase_limit = rebase_limit_margin
 
 # Objects.
 var torque = Vector3(0,0,0)
 
 # Nodes.
 onready var p = get_tree().get_root().get_node("Container/Paths")
-var engines = Node
+onready var engines =  get_node("Engines")
 
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	# ============================ Initialize nodes ===========================
-
-	engines = get_node("Engines")
-
 	# ============================= Connect signals ===========================
 	p.signals.connect("sig_accelerate", self, "is_accelerating")
 	p.signals.connect("sig_engine_kill", self, "is_engine_kill")
@@ -52,32 +54,36 @@ func _ready():
 	# Initialize the vessel params.
 	init_ship()
 
+func _process(_delta):
+	
+	# Hide ship from view to prevent annoying visuals jitter.
+	if rebase_limit > 1e6:
+		self.hide()
+	else:
+		self.show()
+	
 func _physics_process(_delta):
-	
-	# Testing origin rebase. Start this only at some point.
-	# 10k seems like the optimal.
-	
-	
-	if self.translation.x > limit:
-		self.translation.x = 0
-		p.global_space.translation.x = p.global_space.translation.x-limit
-	elif self.translation.x < -limit:
-		self.translation.x = 0
-		p.global_space.translation.x = p.global_space.translation.x+limit
-		
-	if self.translation.y > limit:
-		self.translation.y = 0
-		p.global_space.translation.y = p.global_space.translation.y-limit
-	elif self.translation.y < -limit:
-		self.translation.y = 0
-		p.global_space.translation.y = p.global_space.translation.y+limit
 
-	if self.translation.z > limit:
+	if self.translation.x > rebase_limit:
+		self.translation.x = 0
+		p.global_space.translation.x = p.global_space.translation.x-rebase_limit
+	elif self.translation.x < -rebase_limit:
+		self.translation.x = 0
+		p.global_space.translation.x = p.global_space.translation.x+rebase_limit
+		
+	if self.translation.y > rebase_limit:
+		self.translation.y = 0
+		p.global_space.translation.y = p.global_space.translation.y-rebase_limit
+	elif self.translation.y < -rebase_limit:
+		self.translation.y = 0
+		p.global_space.translation.y = p.global_space.translation.y+rebase_limit
+
+	if self.translation.z > rebase_limit:
 		self.translation.z = 0
-		p.global_space.translation.z = p.global_space.translation.z-limit
-	elif self.translation.z < -limit:
+		p.global_space.translation.z = p.global_space.translation.z-rebase_limit
+	elif self.translation.z < -rebase_limit:
 		self.translation.z = 0
-		p.global_space.translation.z = p.global_space.translation.z+limit
+		p.global_space.translation.z = p.global_space.translation.z+rebase_limit
 
 
 func _integrate_forces(state):
@@ -89,11 +95,15 @@ func _integrate_forces(state):
 	# Since everything is scaled down 10 times, then:
 	p.ship_state.apparent_velocity = vel*10
 	
-	# TODO: Limit by origin rebase speed (600000 u/s)?
-	# if not p.ship_state.engine_kill and vel < limit* p.engine_opts.physics_fps*0.9:
+	if vel > rebase_limit_margin*rebase_lag:
+		rebase_limit = round(vel*rebase_lag)
+
+	print("V: ", vel, " | L: ", rebase_limit)
+
+	
 	state.add_central_force(-global_transform.basis.z* p.ship_state.acceleration* p.ship_state.acceleration)
 	
-	# Limiting by engine ticks. It is a hard limits.
+	# Limiting by engine ticks. It is a hard rebase_limits.
 	# TODO: move capped velocity to constants.
 	#if vel > 2000000:
 	#	p.signals.emit_signal("sig_accelerate", false)
@@ -127,7 +137,7 @@ func adjust_exhaust():
 		i.get_node("Engine_exhaust_shapes").scale.z = \
 				pow(p.ship_state.accel_ticks, 1.5)*0.1
 
-		var albedo =  pow(p.ship_state.accel_ticks, 1.5)*0.1
+		var albedo =  pow(p.ship_state.accel_ticks, 1.5)
 		# Get and modify sprite intensity.
 		var shapes = i.get_node("Engine_exhaust_shapes")
 		for shape in shapes.get_children():

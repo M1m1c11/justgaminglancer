@@ -8,19 +8,13 @@ var sprite_appearance_distance = 0.0
 
 # Nodes.
 onready var p = get_tree().get_root().get_node("Container/Paths")
-var star = Node
-var sprite_rig = Node
-var sprite = Node
+onready var star = p.local_space.get_node("System_Gate/Star_blue")
+onready var sprite_rig = get_node("../Sprite_rig")
+onready var sprite = get_node("../Sprite_rig/Sprite")
 
 
 func _ready():
-	# ============================ Initialize nodes ===========================
 
-	star = p.local_space.get_node("System_Gate/Star_blue")
-	sprite_rig = get_node("../Sprite_rig")
-	sprite = get_node("../Sprite_rig/Sprite")
-
-	
 	# Distance at which sprite appears at full scale and visibility.
 	sprite_appearance_distance = 0.5* p.cam_opts.camera_far
 	sprite.translation.z = -sprite_appearance_distance

@@ -41,6 +41,14 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="ColorRect2" type="ColorRect" parent="GUI_prompt"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color( 0.168627, 0.168627, 0.168627, 0.729412 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
 [node name="Button_touchscreen_switch" type="Button" parent="GUI_prompt"]
 anchor_left = 0.5
 anchor_top = 0.5
@@ -52,7 +60,7 @@ margin_right = 196.0
 margin_bottom = -44.0
 theme = ExtResource( 10 )
 keep_pressed_outside = true
-text = "Touch GUI"
+text = "Touchscreen"
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -68,7 +76,55 @@ margin_right = 196.0
 margin_bottom = 44.0
 theme = ExtResource( 10 )
 keep_pressed_outside = true
-text = "Computer GUI"
+text = "Keyboard and mouse"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Slider_screen_res" type="HSlider" parent="GUI_prompt"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -360.0
+margin_top = 76.0
+margin_right = 456.0
+margin_bottom = 124.0
+theme = ExtResource( 10 )
+min_value = 0.1
+max_value = 1.0
+step = 0.1
+value = 1.0
+tick_count = 10
+ticks_on_borders = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="GUI_prompt/Slider_screen_res"]
+margin_left = -120.0
+margin_top = 5.0
+margin_right = -14.0
+margin_bottom = 42.0
+theme = ExtResource( 10 )
+text = "Quality"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Button_screen_filter2" type="Button" parent="GUI_prompt"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -96.0
+margin_top = 140.0
+margin_right = 84.0
+margin_bottom = 222.0
+theme = ExtResource( 10 )
+toggle_mode = true
+keep_pressed_outside = true
+text = "Scren filter"
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -102,12 +158,12 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Current_zoom" type="Label" parent="Main3D/Debug"]
+[node name="Accel_ticks" type="Label" parent="Main3D/Debug"]
 margin_left = 16.0
 margin_top = 96.0
 margin_right = 119.0
 margin_bottom = 110.0
-text = "Current zoom: 0"
+text = "Acceleration ticks: 0"
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -413,7 +469,7 @@ margin_bottom = 28.0
 min_value = 0.1
 max_value = 1.0
 step = 0.1
-value = 0.7
+value = 1.0
 tick_count = 10
 ticks_on_borders = true
 __meta__ = {
@@ -427,30 +483,8 @@ margin_right = -11.0
 margin_bottom = 17.0
 text = "Quality"
 
-[node name="Slider_fov" type="HSlider" parent="Controls/Control_bar"]
-anchor_left = 1.0
-anchor_right = 1.0
-margin_left = -320.0
-margin_top = 40.0
-margin_right = -192.0
-margin_bottom = 60.0
-min_value = 40.0
-max_value = 70.0
-value = 55.0
-tick_count = 10
-ticks_on_borders = true
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Label" type="Label" parent="Controls/Control_bar/Slider_fov"]
-margin_left = -57.0
-margin_top = 3.0
-margin_right = -11.0
-margin_bottom = 17.0
-text = "FOV"
-
 [node name="Controls_touchscreen" type="Control" parent="."]
+visible = false
 material = SubResource( 3 )
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -488,67 +522,6 @@ theme = ExtResource( 10 )
 toggle_mode = true
 keep_pressed_outside = true
 text = "Debug"
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Slider_fov" type="HSlider" parent="Controls_touchscreen/Options_menu"]
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-margin_left = -352.0
-margin_top = -16.0
-margin_right = 464.0
-margin_bottom = 36.0
-theme = ExtResource( 10 )
-min_value = 40.0
-max_value = 70.0
-value = 55.0
-tick_count = 10
-ticks_on_borders = true
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Label" type="Label" parent="Controls_touchscreen/Options_menu/Slider_fov"]
-margin_left = -96.0
-margin_top = 4.0
-margin_right = -33.0
-margin_bottom = 41.0
-theme = ExtResource( 10 )
-text = "FOV"
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Slider_screen_res" type="HSlider" parent="Controls_touchscreen/Options_menu"]
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-margin_left = -352.0
-margin_top = 44.0
-margin_right = 464.0
-margin_bottom = 92.0
-theme = ExtResource( 10 )
-min_value = 0.1
-max_value = 1.0
-step = 0.1
-value = 0.7
-tick_count = 10
-ticks_on_borders = true
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Label" type="Label" parent="Controls_touchscreen/Options_menu/Slider_screen_res"]
-margin_left = -120.0
-margin_top = 5.0
-margin_right = -14.0
-margin_bottom = 42.0
-theme = ExtResource( 10 )
-text = "Quality"
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -618,6 +591,37 @@ margin_bottom = -34.0
 theme = ExtResource( 10 )
 keep_pressed_outside = true
 text = "Return"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Slider_screen_res2" type="HSlider" parent="Controls_touchscreen/Options_menu"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -368.0
+margin_top = -4.0
+margin_right = 448.0
+margin_bottom = 44.0
+theme = ExtResource( 10 )
+min_value = 0.1
+max_value = 1.0
+step = 0.1
+value = 1.0
+tick_count = 10
+ticks_on_borders = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="Controls_touchscreen/Options_menu/Slider_screen_res2"]
+margin_left = -120.0
+margin_top = 5.0
+margin_right = -14.0
+margin_bottom = 42.0
+theme = ExtResource( 10 )
+text = "Quality"
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -765,6 +769,8 @@ __meta__ = {
 
 [connection signal="pressed" from="GUI_prompt/Button_touchscreen_switch" to="." method="_on_Button_touchscreen_switch_pressed"]
 [connection signal="pressed" from="GUI_prompt/Button_cumputer_gui_switch" to="." method="_on_Button_cumputer_gui_switch_pressed"]
+[connection signal="value_changed" from="GUI_prompt/Slider_screen_res" to="." method="_on_Slider_screen_res_value_changed"]
+[connection signal="toggled" from="GUI_prompt/Button_screen_filter2" to="." method="_on_Button_screen_filter_toggled"]
 [connection signal="resized" from="Main3D" to="." method="_on_Viewport_main_resized"]
 [connection signal="mouse_entered" from="Controls/Mouse_area" to="." method="_on_Mouse_area_mouse_entered"]
 [connection signal="mouse_exited" from="Controls/Mouse_area" to="." method="_on_Mouse_area_mouse_exited"]
@@ -776,14 +782,12 @@ __meta__ = {
 [connection signal="pressed" from="Controls/Control_bar/Button_quit" to="." method="_on_Button_quit_pressed"]
 [connection signal="toggled" from="Controls/Control_bar/Button_screen_filter" to="." method="_on_Button_screen_filter_toggled"]
 [connection signal="value_changed" from="Controls/Control_bar/Slider_screen_res" to="." method="_on_Slider_screen_res_value_changed"]
-[connection signal="value_changed" from="Controls/Control_bar/Slider_fov" to="." method="_on_Slider_fov_value_changed"]
 [connection signal="toggled" from="Controls_touchscreen/Options_menu/Button_debug" to="." method="_on_Button_debug_toggled"]
-[connection signal="value_changed" from="Controls_touchscreen/Options_menu/Slider_fov" to="." method="_on_Slider_fov_value_changed"]
-[connection signal="value_changed" from="Controls_touchscreen/Options_menu/Slider_screen_res" to="." method="_on_Slider_screen_res_value_changed"]
 [connection signal="pressed" from="Controls_touchscreen/Options_menu/Button_quit" to="." method="_on_Button_quit_pressed"]
 [connection signal="toggled" from="Controls_touchscreen/Options_menu/Button_screen_filter" to="." method="_on_Button_screen_filter_toggled"]
 [connection signal="toggled" from="Controls_touchscreen/Options_menu/Button_text_panel" to="." method="_on_Button_text_panel_toggled"]
 [connection signal="pressed" from="Controls_touchscreen/Options_menu/Button_close_options" to="." method="_on_Button_close_options_pressed"]
+[connection signal="value_changed" from="Controls_touchscreen/Options_menu/Slider_screen_res2" to="." method="_on_Slider_screen_res_value_changed"]
 [connection signal="value_changed" from="Controls_touchscreen/Main_controls/Slider_zoom" to="." method="_on_Slider_zoom_value_changed"]
 [connection signal="toggled" from="Controls_touchscreen/Main_controls/Button_turret" to="." method="_on_Button_turret_toggled"]
 [connection signal="pressed" from="Controls_touchscreen/Main_controls/Button_options" to="." method="_on_Button_options_pressed"]

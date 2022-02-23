@@ -35,6 +35,9 @@ func _ready():
 	p.input.pad_y_abs = pad_base.rect_size.x/2
 	
 	# Initialize windows in switched off mode to match button states.
+	gui_prompt.hide()
+	gui_prompt.show()
+	
 	controls.hide()
 	controls_touchscreen.hide()
 	touchscreen_options.hide()
@@ -43,7 +46,7 @@ func _ready():
 	debug.hide()
 	text_panel.hide()
 	
-	gui_prompt.show()
+	
 	
 
 func _input(event):
@@ -78,19 +81,19 @@ func _process(_delta):
 	# TODO: make a system of spatial markers. Proper ones.
 	# This should be an iterator over objects within proximity.
 	var loc = p.camera_rig.global_transform.origin
-	var loc_space = p.local_space.global_transform.origin
+	var loc_cube = p.cube.global_transform.origin
 	#var loc2 = monolith.global_transform.origin
 	
 	# Origin. Multiply by scale factor of viewport.
-	marker.visible = not p.viewport.get_camera().is_position_behind(loc_space)
+	marker.visible = not p.viewport.get_camera().is_position_behind(loc_cube)
 	marker.rect_position = p.viewport.get_camera().unproject_position(
-		loc_space)/p.viewport.screen_res_factor
+		loc_cube)/p.viewport.screen_res_factor
 	# TODO: properly align and center on the object.
 	# Adjust displayed distance
 	
 	
 	# TODO: distance_to fails at 1e9 units.
-	var dist_val = round(10*loc.distance_to(loc_space))
+	var dist_val = round(10*loc.distance_to(loc_cube))
 	var result_d = get_magnitude_units(dist_val)
 	marker.get_node("Text").text = "Origin: "\
 			+str(round(result_d[0]))+ " " + result_d[1]
@@ -113,21 +116,21 @@ func update_debug_text():
 	debug.get_node("FPS").text = str("FPS: ", p.global_space.fps)
 	debug.get_node("Mouse_x").text = str("Mouse / Pad x: ", p.input.mouse_vector.x)
 	debug.get_node("Mouse_y").text = str("Mouse / Pad y: ", p.input.mouse_vector.y)
-	debug.get_node("Current_zoom").text = str("Current zoom: ", p.camera_rig.current_zoom)
+	debug.get_node("Accel_ticks").text = str("Acceleration ticks: ", p.ship_state.accel_ticks)
 
 func get_magnitude_units(val):
 	# Val MUST BE IN DECIUNITS!
 	# TODO: scale everything back to how it was and switch to units?
 	if val < 10:
-		return [val, "du"]
+		return [round(val), "du"]
 	elif (val >= 10) and (val < 10000):
-		return [val/10, "u"]
+		return [round(val/10), "u"]
 	elif (val >= 10000) and (val < 10000000):
-		return [val/10000, "ku"]
+		return [round(val/10000), "ku"]
 	elif (val >= 10000000) and (val < 10000000000):
-		return [val/10000000, "Mu"]
+		return [round(val/10000000), "Mu"]
 	elif (val >= 10000000000):
-		return [val/10000000000, "Gu"]
+		return [round(val/10000000000), "Gu"]
 
 # ========================== Signals connections =============================
 # Setting up GUI on start.
