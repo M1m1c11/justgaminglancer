@@ -23,7 +23,7 @@ void vertex()
 void fragment()
 {
 	// Logarithmic depth buffer.
-	// DEPTH = log2(max(1e-6, 1.0 -gl_Position.z)) * c;
+	//DEPTH = log2(max(1e-6, 1.0 -gl_Position.z)) * c;
 	
 	
 	ALBEDO = albedo.rgb*COLOR.rgb;

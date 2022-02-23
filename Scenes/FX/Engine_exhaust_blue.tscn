@@ -65,7 +65,7 @@ shader_param/proximity_fade_distance = 0.1
 light_color = Color( 0, 0.976471, 1, 1 )
 light_energy = 0.1
 omni_range = 50.0
-omni_attenuation = 200.0
+omni_attenuation = 25.0
 __meta__ = {
 "_edit_lock_": true
 }

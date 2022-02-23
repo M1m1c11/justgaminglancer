@@ -29,14 +29,14 @@ uniform float small_detail_flow = 0.2;
 const float pi = 3.1415926535;
 
 // For logarithmic depth buffer.
-const float c = 0.001;
-varying vec4 gl_Position;
+//const float c = 0.001;
+//varying vec4 gl_Position;
 
-void vertex()
-{
+//void vertex()
+//{
 	// For logarithmic depth buffer.
-	gl_Position = MODELVIEW_MATRIX*vec4(VERTEX, 1.0);
-}
+	//gl_Position = MODELVIEW_MATRIX*vec4(VERTEX, 1.0);
+//}
 
 void fragment()
 {

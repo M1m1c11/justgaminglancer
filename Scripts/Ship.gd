@@ -6,11 +6,11 @@ var rebase_lag = 1.1
 
 # TODO check materials and shaders for FX
 # Params.
-var ship_mass = 2000
-var accel_factor = 60 # Propulsion force.
+var ship_mass = 20000
+var accel_factor = 600 # Propulsion force.
 var accel_ticks_max = 5000 # Engine propulsion increments.
 # Turning sensitivity LEFT-RIGHT | UP-DOWN | ROLL
-var torque_factor = Vector3(1500,700,700)
+var torque_factor = Vector3(1500000,700000,700000)
 var camera_vert_offset = 0.2
 var camera_horiz_offset = 1 
 # Higher damp value - more restricted camera motion in given direction.
@@ -92,13 +92,10 @@ func _integrate_forces(state):
 	# TODO: arrange for proper signs for accel and torque.
 	var vel = state.linear_velocity.length()
 	p.ship_state.ship_linear_velocity = vel
-	# Since everything is scaled down 10 times, then:
-	p.ship_state.apparent_velocity = vel*10
+	p.ship_state.apparent_velocity = vel
 	
 	if vel > rebase_limit_margin*rebase_lag:
 		rebase_limit = round(vel*rebase_lag)
-
-	print("V: ", vel, " | L: ", rebase_limit)
 
 	
 	state.add_central_force(-global_transform.basis.z* p.ship_state.acceleration* p.ship_state.acceleration)
