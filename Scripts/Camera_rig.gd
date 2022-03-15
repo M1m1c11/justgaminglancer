@@ -35,7 +35,7 @@ func _ready():
 	current_zoom = p.ship.camera_horiz_offset
 	fix_camera()
 	
-func _process(delta):
+func _physics_process(delta):
 	# Track the change in camera mode and update mouse vector when LMB is held.
 	# When the mouse is released proceed with a little of inertia for smoothness.
 	if p.ship_state.turret_mode and \

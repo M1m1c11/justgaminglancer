@@ -517,7 +517,7 @@ script = ExtResource( 6 )
 visible = false
 
 [node name="View" type="Viewport" parent="."]
-size = Vector2( 1024, 600 )
+size = Vector2( 1980, 1020 )
 handle_input_locally = false
 render_target_update_mode = 3
 script = ExtResource( 13 )

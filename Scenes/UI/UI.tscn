@@ -1,13 +1,19 @@
-[gd_scene load_steps=14 format=2]
+[gd_scene load_steps=20 format=2]
 
 [ext_resource path="res://Scripts/UI.gd" type="Script" id=1]
 [ext_resource path="res://Assets/UI_styles/Button_red/Red_hover_focus.tres" type="StyleBox" id=2]
 [ext_resource path="res://Assets/UI_styles/Button_red/Red_normal.tres" type="StyleBox" id=3]
 [ext_resource path="res://Assets/UI_styles/Button_red/Red_ressed.tres" type="StyleBox" id=4]
 [ext_resource path="res://Assets/Fonts/Ubuntu-Regular.ttf" type="DynamicFontData" id=5]
-[ext_resource path="res://Assets/UI_styles/Themes/Touchscreen/Theme1/stick.tres" type="StyleBox" id=6]
+[ext_resource path="res://Assets/UI_images/stick.png" type="Texture" id=6]
 [ext_resource path="res://Assets/UI_styles/Themes/Touchscreen/Theme1/pad.tres" type="StyleBox" id=7]
+[ext_resource path="res://Assets/UI_images/accel.png" type="Texture" id=8]
+[ext_resource path="res://Assets/UI_images/ekill.png" type="Texture" id=9]
 [ext_resource path="res://Assets/UI_styles/Themes/Touchscreen/Theme1.tres" type="Theme" id=10]
+[ext_resource path="res://Assets/UI_images/turret.png" type="Texture" id=11]
+[ext_resource path="res://Assets/UI_images/deccel.png" type="Texture" id=12]
+[ext_resource path="res://Assets/UI_images/hide_ui.png" type="Texture" id=13]
+[ext_resource path="res://Assets/UI_images/options.png" type="Texture" id=14]
 
 [sub_resource type="ShaderMaterial" id=2]
 
@@ -132,14 +138,13 @@ __meta__ = {
 [node name="Main3D" type="Control" parent="."]
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_top = 8.0
-margin_bottom = 8.0
 __meta__ = {
 "_edit_lock_": true,
 "_edit_use_anchors_": false
 }
 
 [node name="Debug" type="Control" parent="Main3D"]
+visible = false
 anchor_bottom = 1.0
 margin_right = 192.0
 margin_bottom = -80.0
@@ -154,16 +159,6 @@ material = SubResource( 2 )
 anchor_right = 1.0
 anchor_bottom = 1.0
 color = Color( 0.443137, 0.588235, 0.439216, 1 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Accel_ticks" type="Label" parent="Main3D/Debug"]
-margin_left = 16.0
-margin_top = 96.0
-margin_right = 119.0
-margin_bottom = 110.0
-text = "Acceleration ticks: 0"
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -309,11 +304,11 @@ anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
-margin_left = -192.0
-margin_top = -56.0
-margin_right = -4.0
-margin_bottom = -8.0
-custom_colors/font_color = Color( 0.654902, 0.654902, 0.654902, 1 )
+margin_left = -342.0
+margin_top = -60.0
+margin_right = -154.0
+margin_bottom = -9.0
+custom_colors/font_color = Color( 0.498039, 0.498039, 0.498039, 1 )
 custom_fonts/font = SubResource( 4 )
 text = "0000"
 align = 2
@@ -328,13 +323,30 @@ anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
-margin_top = -56.0
-margin_right = 88.0
-margin_bottom = -8.0
-custom_colors/font_color = Color( 0.517647, 0.517647, 0.517647, 1 )
+margin_left = -134.0
+margin_top = -60.0
+margin_right = -44.0
+margin_bottom = -9.0
+custom_colors/font_color = Color( 0.498039, 0.498039, 0.498039, 1 )
 custom_fonts/font = SubResource( 4 )
 text = "du/s"
 valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Accel_ticks" type="Label" parent="Main3D"]
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+margin_left = 42.0
+margin_top = -60.0
+margin_right = 447.0
+margin_bottom = -9.0
+custom_colors/font_color = Color( 0.498039, 0.498039, 0.498039, 1 )
+custom_fonts/font = SubResource( 4 )
+text = "Accel. ticks: 0"
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -345,6 +357,7 @@ material = SubResource( 3 )
 anchor_right = 1.0
 anchor_bottom = 1.0
 __meta__ = {
+"_edit_lock_": true,
 "_edit_use_anchors_": false
 }
 
@@ -484,7 +497,6 @@ margin_bottom = 17.0
 text = "Quality"
 
 [node name="Controls_touchscreen" type="Control" parent="."]
-visible = false
 material = SubResource( 3 )
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -653,6 +665,7 @@ __meta__ = {
 }
 
 [node name="Button_turret" type="Button" parent="Controls_touchscreen/Main_controls"]
+visible = false
 anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
@@ -660,30 +673,33 @@ anchor_bottom = 1.0
 margin_left = -208.0
 margin_top = -480.0
 margin_right = -96.0
-margin_bottom = -384.0
+margin_bottom = -380.0
 focus_mode = 0
 theme = ExtResource( 10 )
 toggle_mode = true
 keep_pressed_outside = true
 text = "Turret"
+icon_align = 1
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="Button_options" type="Button" parent="Controls_touchscreen/Main_controls"]
-margin_left = 16.0
-margin_top = 16.0
-margin_right = 192.0
-margin_bottom = 80.0
+margin_left = 216.0
+margin_top = 24.0
+margin_right = 320.0
+margin_bottom = 124.0
 focus_mode = 0
 theme = ExtResource( 10 )
 keep_pressed_outside = true
-text = "Options"
+icon = ExtResource( 14 )
+flat = true
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="Button_accel_plus" type="Button" parent="Controls_touchscreen/Main_controls"]
+visible = false
 anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
@@ -701,6 +717,7 @@ __meta__ = {
 }
 
 [node name="Button_accel_minus" type="Button" parent="Controls_touchscreen/Main_controls"]
+visible = false
 anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
@@ -718,6 +735,7 @@ __meta__ = {
 }
 
 [node name="Button_ekill" type="Button" parent="Controls_touchscreen/Main_controls"]
+visible = false
 anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
@@ -735,6 +753,19 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="Button_hide_ui" type="Button" parent="Controls_touchscreen/Main_controls"]
+margin_left = 72.0
+margin_top = 24.0
+margin_right = 176.0
+margin_bottom = 124.0
+theme = ExtResource( 10 )
+keep_pressed_outside = true
+icon = ExtResource( 13 )
+flat = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
 [node name="Pad_base" type="Panel" parent="Controls_touchscreen/Main_controls"]
 anchor_top = 1.0
 anchor_bottom = 1.0
@@ -747,25 +778,45 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Stick" type="Button" parent="Controls_touchscreen/Main_controls/Pad_base"]
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-margin_left = -50.0
-margin_top = -50.0
-margin_right = 50.0
-margin_bottom = 50.0
-focus_mode = 0
-custom_styles/hover = ExtResource( 6 )
-custom_styles/pressed = ExtResource( 6 )
-custom_styles/focus = ExtResource( 6 )
-custom_styles/disabled = ExtResource( 6 )
-custom_styles/normal = ExtResource( 6 )
-keep_pressed_outside = true
+[node name="Stick" type="TouchScreenButton" parent="Controls_touchscreen/Main_controls/Pad_base"]
+position = Vector2( 105, 105 )
+normal = ExtResource( 6 )
+pressed = ExtResource( 6 )
+
+[node name="Touch_buttons_container" type="Control" parent="Controls_touchscreen/Main_controls"]
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -340.0
+margin_top = -804.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="Touch_ekill" type="TouchScreenButton" parent="Controls_touchscreen/Main_controls/Touch_buttons_container"]
+position = Vector2( 16, 544 )
+scale = Vector2( 1.66667, 2 )
+normal = ExtResource( 9 )
+pressed = ExtResource( 9 )
+
+[node name="Touch_turret" type="TouchScreenButton" parent="Controls_touchscreen/Main_controls/Touch_buttons_container"]
+position = Vector2( 16, -144 )
+scale = Vector2( 2, 2 )
+normal = ExtResource( 11 )
+pressed = ExtResource( 11 )
+
+[node name="Touch_accel_minus" type="TouchScreenButton" parent="Controls_touchscreen/Main_controls/Touch_buttons_container"]
+position = Vector2( 16, 328 )
+scale = Vector2( 2, 2 )
+normal = ExtResource( 12 )
+pressed = ExtResource( 12 )
+
+[node name="Touch_accel_plus" type="TouchScreenButton" parent="Controls_touchscreen/Main_controls/Touch_buttons_container"]
+position = Vector2( 16, 96 )
+scale = Vector2( 2, 2 )
+normal = ExtResource( 8 )
+pressed = ExtResource( 8 )
 
 [connection signal="pressed" from="GUI_prompt/Button_touchscreen_switch" to="." method="_on_Button_touchscreen_switch_pressed"]
 [connection signal="pressed" from="GUI_prompt/Button_cumputer_gui_switch" to="." method="_on_Button_cumputer_gui_switch_pressed"]
@@ -794,5 +845,10 @@ __meta__ = {
 [connection signal="pressed" from="Controls_touchscreen/Main_controls/Button_accel_plus" to="." method="_on_Button_accel_plus_pressed"]
 [connection signal="pressed" from="Controls_touchscreen/Main_controls/Button_accel_minus" to="." method="_on_Button_accel_minus_pressed"]
 [connection signal="toggled" from="Controls_touchscreen/Main_controls/Button_ekill" to="." method="_on_Button_ekill_toggled"]
-[connection signal="button_down" from="Controls_touchscreen/Main_controls/Pad_base/Stick" to="." method="_on_Stick_button_down"]
-[connection signal="button_up" from="Controls_touchscreen/Main_controls/Pad_base/Stick" to="." method="_on_Stick_button_up"]
+[connection signal="pressed" from="Controls_touchscreen/Main_controls/Button_hide_ui" to="." method="_on_Button_hide_ui_pressed"]
+[connection signal="pressed" from="Controls_touchscreen/Main_controls/Pad_base/Stick" to="." method="_on_Stick_pressed"]
+[connection signal="released" from="Controls_touchscreen/Main_controls/Pad_base/Stick" to="." method="_on_Stick_released"]
+[connection signal="pressed" from="Controls_touchscreen/Main_controls/Touch_buttons_container/Touch_ekill" to="." method="_on_Touch_ekill_pressed"]
+[connection signal="pressed" from="Controls_touchscreen/Main_controls/Touch_buttons_container/Touch_turret" to="." method="_on_Touch_turret_pressed"]
+[connection signal="pressed" from="Controls_touchscreen/Main_controls/Touch_buttons_container/Touch_accel_minus" to="." method="_on_Touch_accel_minus_pressed"]
+[connection signal="pressed" from="Controls_touchscreen/Main_controls/Touch_buttons_container/Touch_accel_plus" to="." method="_on_Touch_accel_plus_pressed"]

@@ -5,7 +5,9 @@ extends CanvasLayer
 # Flags.
 var stick_held = false
 var touchscreen_mode = false
+var turret_view = false
 var update_debug_text_on = false
+var ui_hidden = false
 var viewport_size = Vector2(1,1)
 
 
@@ -26,6 +28,7 @@ onready var stick = get_node("Controls_touchscreen/Main_controls/Pad_base/Stick"
 onready var text_panel = get_node("Main3D/Text_panel")
 onready var touchscreen_options = get_node("Controls_touchscreen/Options_menu")
 onready var touchscreen_main = get_node("Controls_touchscreen/Main_controls")
+onready var touchscreen_buttons = get_node("Controls_touchscreen/Main_controls/Touch_buttons_container")
 onready var apparent_velocity = get_node("Main3D/Apparent_velocity")
 onready var apparent_velocity_units = get_node("Main3D/Apparent_velocity_units")
 
@@ -63,14 +66,14 @@ func _process(_delta):
 	# Process virtual stick input.
 	if touchscreen_mode:
 		if stick_held:
-			stick.rect_position.x = p.input.pad_x_abs-stick.rect_size.x/2
-			stick.rect_position.y = p.input.pad_y_abs-stick.rect_size.y/2
+			stick.position.x = p.input.pad_x_abs-90
+			stick.position.y = p.input.pad_y_abs-90
 		else:
 			# Recenter stick.
-			if stick.rect_position != Vector2(70,70):
-				stick.rect_position = Vector2(
-					pad_base.rect_size.x/2-stick.rect_size.x/2,
-					pad_base.rect_size.y/2-stick.rect_size.y/2
+			if stick.position != Vector2(70,70):
+				stick.position = Vector2(
+					pad_base.rect_size.x/2-90,
+					pad_base.rect_size.y/2-90
 				)
 				# Reset stick input coords to prevent jumping.
 				p.input.pad_x_abs = pad_base.rect_size.x/2
@@ -110,13 +113,13 @@ func _process(_delta):
 	var result_s = get_magnitude_units(speed_val)
 	apparent_velocity.text = str(result_s[0])
 	apparent_velocity_units.text = str(result_s[1])+"/s"
+	main3d.get_node("Accel_ticks").text = str("Accel. ticks: ", p.ship_state.accel_ticks)
 
 # ================================== Other ====================================
 func update_debug_text():
 	debug.get_node("FPS").text = str("FPS: ", p.global_space.fps)
 	debug.get_node("Mouse_x").text = str("Mouse / Pad x: ", p.input.mouse_vector.x)
 	debug.get_node("Mouse_y").text = str("Mouse / Pad y: ", p.input.mouse_vector.y)
-	debug.get_node("Accel_ticks").text = str("Acceleration ticks: ", p.ship_state.accel_ticks)
 
 func get_magnitude_units(val):
 	# Val MUST BE IN DECIUNITS!
@@ -215,6 +218,7 @@ func _on_Button_accel_minus_pressed():
 	p.signals.emit_signal("sig_accelerate", false)
 
 func _on_Button_ekill_toggled(button_pressed):
+	# TODO: change to pressed, not toggled.
 	if button_pressed: p.signals.emit_signal("sig_engine_kill", true)
 	else: p.signals.emit_signal("sig_engine_kill", false)
 
@@ -244,9 +248,53 @@ func _on_Slider_zoom_value_changed(value):
 
 
 # Virtual stick.
-func _on_Stick_button_down():
+func _on_Stick_pressed():
 	stick_held = true
 
-func _on_Stick_button_up():
+func _on_Stick_released():
 	stick_held = false
 
+
+
+
+# Touchscreen controls.
+func _on_Touch_accel_plus_pressed():
+	p.signals.emit_signal("sig_accelerate", true)
+
+func _on_Touch_accel_minus_pressed():
+	p.signals.emit_signal("sig_accelerate", false)
+
+func _on_Touch_ekill_pressed():
+	p.signals.emit_signal("sig_engine_kill", true)
+
+
+func _on_Touch_turret_pressed():
+	if not turret_view: 
+		turret_view = true
+		p.signals.emit_signal("sig_turret_mode_on", true)
+		# Show slider in Touch GUI.
+		if controls_touchscreen.visible:
+			controls_touchscreen.get_node("Main_controls/Slider_zoom").show()
+	else: 
+		turret_view = false
+		p.signals.emit_signal("sig_turret_mode_on", false)
+		# Hide slider in Touch GUI.
+		if controls_touchscreen.visible:
+			controls_touchscreen.get_node("Main_controls/Slider_zoom").hide()
+
+
+func _on_Button_hide_ui_pressed():
+	if not ui_hidden:
+		ui_hidden = true
+		pad_base.hide()
+		touchscreen_buttons.hide()
+		main3d.hide()
+		# Dim buttons
+		touchscreen_main.modulate.a = 0.3
+	else:
+		ui_hidden = false
+		pad_base.show()
+		touchscreen_buttons.show()
+		main3d.show()
+		# Dim buttons
+		touchscreen_main.modulate.a = 1
