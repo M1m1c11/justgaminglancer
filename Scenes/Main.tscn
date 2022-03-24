@@ -514,7 +514,6 @@ script = ExtResource( 6 )
 [node name="Ship_state" parent="." instance=ExtResource( 9 )]
 
 [node name="UI" parent="." instance=ExtResource( 3 )]
-visible = false
 
 [node name="View" type="Viewport" parent="."]
 size = Vector2( 1980, 1020 )

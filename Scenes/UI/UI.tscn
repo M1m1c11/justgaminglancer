@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=2]
+[gd_scene load_steps=18 format=2]
 
 [ext_resource path="res://Scripts/UI.gd" type="Script" id=1]
 [ext_resource path="res://Assets/UI_styles/Button_red/Red_hover_focus.tres" type="StyleBox" id=2]
@@ -12,7 +12,7 @@
 [ext_resource path="res://Assets/UI_styles/Themes/Touchscreen/Theme1.tres" type="Theme" id=10]
 [ext_resource path="res://Assets/UI_images/turret.png" type="Texture" id=11]
 [ext_resource path="res://Assets/UI_images/deccel.png" type="Texture" id=12]
-[ext_resource path="res://Assets/UI_images/hide_ui.png" type="Texture" id=13]
+[ext_resource path="res://Assets/UI_images/ui_opacity.png" type="Texture" id=13]
 [ext_resource path="res://Assets/UI_images/options.png" type="Texture" id=14]
 
 [sub_resource type="ShaderMaterial" id=2]
@@ -22,19 +22,6 @@ size = 45
 font_data = ExtResource( 5 )
 
 [sub_resource type="CanvasItemMaterial" id=3]
-
-[sub_resource type="StyleBoxFlat" id=5]
-bg_color = Color( 0.341176, 0.341176, 0.341176, 0.192157 )
-border_width_left = 17
-border_width_top = 1
-border_width_right = 1
-border_width_bottom = 1
-border_color = Color( 0.435294, 0.435294, 0.435294, 0.215686 )
-
-[sub_resource type="StyleBoxFlat" id=7]
-bg_color = Color( 0.109804, 0.109804, 0.109804, 0.341176 )
-border_width_right = 83
-border_color = Color( 0.447059, 0.447059, 0.447059, 0.54902 )
 
 [node name="UI" type="CanvasLayer"]
 script = ExtResource( 1 )
@@ -314,9 +301,6 @@ text = "0000"
 align = 2
 valign = 1
 clip_text = true
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="Apparent_velocity_units" type="Label" parent="Main3D"]
 anchor_left = 0.5
@@ -347,9 +331,6 @@ margin_bottom = -9.0
 custom_colors/font_color = Color( 0.498039, 0.498039, 0.498039, 1 )
 custom_fonts/font = SubResource( 4 )
 text = "Accel. ticks: 0"
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="Controls" type="Control" parent="."]
 visible = false
@@ -646,57 +627,57 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Slider_zoom" type="VSlider" parent="Controls_touchscreen/Main_controls"]
-anchor_left = 1.0
+[node name="_Margin" type="ColorRect" parent="Controls_touchscreen/Main_controls"]
+visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_left = -88.0
-margin_top = 120.0
-margin_right = -24.0
-margin_bottom = -56.0
-focus_mode = 0
-theme = ExtResource( 10 )
-custom_styles/slider = SubResource( 5 )
-custom_styles/grabber_area = SubResource( 7 )
-max_value = 500.0
-tick_count = 5
+margin_left = 64.0
+margin_top = 64.0
+margin_right = -64.0
+margin_bottom = -68.0
 __meta__ = {
-"_edit_use_anchors_": false
+"_edit_lock_": true
 }
 
-[node name="Button_turret" type="Button" parent="Controls_touchscreen/Main_controls"]
-visible = false
-anchor_left = 1.0
+[node name="Slider_zoom" type="HSlider" parent="Controls_touchscreen/Main_controls"]
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_left = -208.0
-margin_top = -480.0
-margin_right = -96.0
-margin_bottom = -380.0
+margin_left = 536.0
+margin_top = -164.0
+margin_right = -540.0
+margin_bottom = -68.0
+focus_mode = 0
+theme = ExtResource( 10 )
+max_value = 500.0
+tick_count = 5
+
+[node name="Button_turret" type="Button" parent="Controls_touchscreen/Main_controls"]
+anchor_left = 1.0
+anchor_right = 1.0
+margin_left = -168.0
+margin_top = 64.0
+margin_right = -64.0
+margin_bottom = 168.0
 focus_mode = 0
 theme = ExtResource( 10 )
 toggle_mode = true
 keep_pressed_outside = true
-text = "Turret"
+icon = ExtResource( 11 )
+flat = true
 icon_align = 1
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="Button_options" type="Button" parent="Controls_touchscreen/Main_controls"]
-margin_left = 216.0
-margin_top = 24.0
-margin_right = 320.0
-margin_bottom = 124.0
+margin_left = 200.0
+margin_top = 64.0
+margin_right = 304.0
+margin_bottom = 168.0
 focus_mode = 0
 theme = ExtResource( 10 )
 keep_pressed_outside = true
 icon = ExtResource( 14 )
 flat = true
-__meta__ = {
-"_edit_use_anchors_": false
-}
+icon_align = 1
 
 [node name="Button_accel_plus" type="Button" parent="Controls_touchscreen/Main_controls"]
 visible = false
@@ -754,29 +735,24 @@ __meta__ = {
 }
 
 [node name="Button_hide_ui" type="Button" parent="Controls_touchscreen/Main_controls"]
-margin_left = 72.0
-margin_top = 24.0
-margin_right = 176.0
-margin_bottom = 124.0
+margin_left = 64.0
+margin_top = 64.0
+margin_right = 168.0
+margin_bottom = 168.0
 theme = ExtResource( 10 )
 keep_pressed_outside = true
 icon = ExtResource( 13 )
 flat = true
-__meta__ = {
-"_edit_use_anchors_": false
-}
+icon_align = 1
 
 [node name="Pad_base" type="Panel" parent="Controls_touchscreen/Main_controls"]
 anchor_top = 1.0
 anchor_bottom = 1.0
-margin_left = 72.0
-margin_top = -464.0
-margin_right = 472.0
-margin_bottom = -64.0
+margin_left = 64.0
+margin_top = -468.0
+margin_right = 464.0
+margin_bottom = -68.0
 custom_styles/panel = ExtResource( 7 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="Stick" type="TouchScreenButton" parent="Controls_touchscreen/Main_controls/Pad_base"]
 position = Vector2( 105, 105 )
@@ -788,33 +764,19 @@ anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_left = -340.0
-margin_top = -804.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="Touch_ekill" type="TouchScreenButton" parent="Controls_touchscreen/Main_controls/Touch_buttons_container"]
-position = Vector2( 16, 544 )
-scale = Vector2( 1.66667, 2 )
+position = Vector2( -476, -372 )
 normal = ExtResource( 9 )
 pressed = ExtResource( 9 )
 
-[node name="Touch_turret" type="TouchScreenButton" parent="Controls_touchscreen/Main_controls/Touch_buttons_container"]
-position = Vector2( 16, -144 )
-scale = Vector2( 2, 2 )
-normal = ExtResource( 11 )
-pressed = ExtResource( 11 )
-
 [node name="Touch_accel_minus" type="TouchScreenButton" parent="Controls_touchscreen/Main_controls/Touch_buttons_container"]
-position = Vector2( 16, 328 )
-scale = Vector2( 2, 2 )
+position = Vector2( -268, -268 )
 normal = ExtResource( 12 )
 pressed = ExtResource( 12 )
 
 [node name="Touch_accel_plus" type="TouchScreenButton" parent="Controls_touchscreen/Main_controls/Touch_buttons_container"]
-position = Vector2( 16, 96 )
-scale = Vector2( 2, 2 )
+position = Vector2( -268, -476 )
 normal = ExtResource( 8 )
 pressed = ExtResource( 8 )
 
@@ -849,6 +811,5 @@ pressed = ExtResource( 8 )
 [connection signal="pressed" from="Controls_touchscreen/Main_controls/Pad_base/Stick" to="." method="_on_Stick_pressed"]
 [connection signal="released" from="Controls_touchscreen/Main_controls/Pad_base/Stick" to="." method="_on_Stick_released"]
 [connection signal="pressed" from="Controls_touchscreen/Main_controls/Touch_buttons_container/Touch_ekill" to="." method="_on_Touch_ekill_pressed"]
-[connection signal="pressed" from="Controls_touchscreen/Main_controls/Touch_buttons_container/Touch_turret" to="." method="_on_Touch_turret_pressed"]
 [connection signal="pressed" from="Controls_touchscreen/Main_controls/Touch_buttons_container/Touch_accel_minus" to="." method="_on_Touch_accel_minus_pressed"]
 [connection signal="pressed" from="Controls_touchscreen/Main_controls/Touch_buttons_container/Touch_accel_plus" to="." method="_on_Touch_accel_plus_pressed"]

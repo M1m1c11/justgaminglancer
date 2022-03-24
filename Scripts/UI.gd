@@ -4,10 +4,11 @@ extends CanvasLayer
 
 # Flags.
 var stick_held = false
-var touchscreen_mode = false
 var turret_view = false
+var touchscreen_mode = false
 var update_debug_text_on = false
 var ui_hidden = false
+var ui_alpha = 1.0
 var viewport_size = Vector2(1,1)
 
 
@@ -66,14 +67,14 @@ func _process(_delta):
 	# Process virtual stick input.
 	if touchscreen_mode:
 		if stick_held:
-			stick.position.x = p.input.pad_x_abs-90
-			stick.position.y = p.input.pad_y_abs-90
+			stick.position.x = p.input.pad_x_abs-100
+			stick.position.y = p.input.pad_y_abs-100
 		else:
 			# Recenter stick.
 			if stick.position != Vector2(70,70):
 				stick.position = Vector2(
-					pad_base.rect_size.x/2-90,
-					pad_base.rect_size.y/2-90
+					pad_base.rect_size.x/2-100,
+					pad_base.rect_size.y/2-100
 				)
 				# Reset stick input coords to prevent jumping.
 				p.input.pad_x_abs = pad_base.rect_size.x/2
@@ -268,33 +269,11 @@ func _on_Touch_ekill_pressed():
 	p.signals.emit_signal("sig_engine_kill", true)
 
 
-func _on_Touch_turret_pressed():
-	if not turret_view: 
-		turret_view = true
-		p.signals.emit_signal("sig_turret_mode_on", true)
-		# Show slider in Touch GUI.
-		if controls_touchscreen.visible:
-			controls_touchscreen.get_node("Main_controls/Slider_zoom").show()
-	else: 
-		turret_view = false
-		p.signals.emit_signal("sig_turret_mode_on", false)
-		# Hide slider in Touch GUI.
-		if controls_touchscreen.visible:
-			controls_touchscreen.get_node("Main_controls/Slider_zoom").hide()
 
 
 func _on_Button_hide_ui_pressed():
-	if not ui_hidden:
-		ui_hidden = true
-		pad_base.hide()
-		touchscreen_buttons.hide()
-		main3d.hide()
-		# Dim buttons
-		touchscreen_main.modulate.a = 0.3
-	else:
-		ui_hidden = false
-		pad_base.show()
-		touchscreen_buttons.show()
-		main3d.show()
-		# Dim buttons
-		touchscreen_main.modulate.a = 1
+	touchscreen_main.modulate.a = ui_alpha
+	main3d.modulate.a = ui_alpha
+	ui_alpha -= 0.25
+	if ui_alpha < 0.0:
+		ui_alpha = 1.0

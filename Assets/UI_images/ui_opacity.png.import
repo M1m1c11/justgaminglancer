@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/hide_ui.png-135331f4064ca62cd5e71be4c0e4c3f4.stex"
+path="res://.import/ui_opacity.png-5ab9c77aecd3b1dbb4ed901a96a715ca.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/UI_images/hide_ui.png"
-dest_files=[ "res://.import/hide_ui.png-135331f4064ca62cd5e71be4c0e4c3f4.stex" ]
+source_file="res://Assets/UI_images/ui_opacity.png"
+dest_files=[ "res://.import/ui_opacity.png-5ab9c77aecd3b1dbb4ed901a96a715ca.stex" ]
 
 [params]
 
