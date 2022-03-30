@@ -1,4 +1,4 @@
-extends Position3D
+extends MeshInstance
 
 # Nodes.
 onready var p = get_tree().get_root().get_node("Container/Paths")

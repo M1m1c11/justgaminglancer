@@ -7,8 +7,8 @@ var rebase_lag = 1.1
 # TODO check materials and shaders for FX
 # Params.
 var ship_mass = 20000
-var accel_factor = 1000 # Propulsion force.
-var accel_ticks_max = 250 # Engine propulsion increments.
+var accel_factor = 100000 # Propulsion force.
+var accel_ticks_max = 5000 # Engine propulsion increments.
 # Turning sensitivity LEFT-RIGHT | UP-DOWN | ROLL
 var torque_factor = Vector3(1500000,700000,700000)
 var camera_vert_offset = 0.2

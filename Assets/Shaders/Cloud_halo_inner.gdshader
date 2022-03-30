@@ -22,6 +22,6 @@ void fragment()
 	// DEPTH = log2(max(1e-6, 1.0 -gl_Position.z)) * c;
 	
 	float rim = clamp(pow( dot( NORMAL, VIEW ), rim_power)*rim_strength, 0.0, 1.0);
-	ALBEDO = albedo.rgb;
+	ALBEDO = albedo.rgb*COLOR.rgb;
 	ALPHA = clamp(1.0-rim, 0.0, 1.0)*alpha_global;
 }
