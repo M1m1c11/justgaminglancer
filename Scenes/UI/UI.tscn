@@ -333,7 +333,6 @@ custom_fonts/font = SubResource( 4 )
 text = "Accel. ticks: 0"
 
 [node name="Controls" type="Control" parent="."]
-visible = false
 material = SubResource( 3 )
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -344,10 +343,8 @@ __meta__ = {
 
 [node name="Mouse_area" type="Control" parent="Controls"]
 anchor_right = 1.0
-anchor_bottom = 1.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
+anchor_bottom = 0.867
+margin_bottom = -0.200012
 
 [node name="Control_bar" type="ColorRect" parent="Controls"]
 anchor_top = 1.0
@@ -478,6 +475,7 @@ margin_bottom = 17.0
 text = "Quality"
 
 [node name="Controls_touchscreen" type="Control" parent="."]
+visible = false
 material = SubResource( 3 )
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -679,7 +677,7 @@ icon = ExtResource( 14 )
 flat = true
 icon_align = 1
 
-[node name="Button_accel_plus" type="Button" parent="Controls_touchscreen/Main_controls"]
+[node name="_Button_accel_plus" type="Button" parent="Controls_touchscreen/Main_controls"]
 visible = false
 anchor_left = 1.0
 anchor_top = 1.0
@@ -697,7 +695,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Button_accel_minus" type="Button" parent="Controls_touchscreen/Main_controls"]
+[node name="_Button_accel_minus" type="Button" parent="Controls_touchscreen/Main_controls"]
 visible = false
 anchor_left = 1.0
 anchor_top = 1.0
@@ -715,7 +713,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Button_ekill" type="Button" parent="Controls_touchscreen/Main_controls"]
+[node name="_Button_ekill" type="Button" parent="Controls_touchscreen/Main_controls"]
 visible = false
 anchor_left = 1.0
 anchor_top = 1.0
@@ -804,9 +802,9 @@ pressed = ExtResource( 8 )
 [connection signal="value_changed" from="Controls_touchscreen/Main_controls/Slider_zoom" to="." method="_on_Slider_zoom_value_changed"]
 [connection signal="toggled" from="Controls_touchscreen/Main_controls/Button_turret" to="." method="_on_Button_turret_toggled"]
 [connection signal="pressed" from="Controls_touchscreen/Main_controls/Button_options" to="." method="_on_Button_options_pressed"]
-[connection signal="pressed" from="Controls_touchscreen/Main_controls/Button_accel_plus" to="." method="_on_Button_accel_plus_pressed"]
-[connection signal="pressed" from="Controls_touchscreen/Main_controls/Button_accel_minus" to="." method="_on_Button_accel_minus_pressed"]
-[connection signal="toggled" from="Controls_touchscreen/Main_controls/Button_ekill" to="." method="_on_Button_ekill_toggled"]
+[connection signal="pressed" from="Controls_touchscreen/Main_controls/_Button_accel_plus" to="." method="_on_Button_accel_plus_pressed"]
+[connection signal="pressed" from="Controls_touchscreen/Main_controls/_Button_accel_minus" to="." method="_on_Button_accel_minus_pressed"]
+[connection signal="pressed" from="Controls_touchscreen/Main_controls/_Button_ekill" to="." method="_on_Button_ekill_pressed"]
 [connection signal="pressed" from="Controls_touchscreen/Main_controls/Button_hide_ui" to="." method="_on_Button_hide_ui_pressed"]
 [connection signal="pressed" from="Controls_touchscreen/Main_controls/Pad_base/Stick" to="." method="_on_Stick_pressed"]
 [connection signal="released" from="Controls_touchscreen/Main_controls/Pad_base/Stick" to="." method="_on_Stick_released"]

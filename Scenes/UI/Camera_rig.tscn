@@ -14,8 +14,6 @@ shader_param/texture_albedo = ExtResource( 2 )
 
 [node name="Camera" type="Camera" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1 )
-near = 0.01
-far = 1e+09
 __meta__ = {
 "_edit_lock_": true
 }

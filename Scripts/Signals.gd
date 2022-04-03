@@ -5,21 +5,23 @@ extends Node
 # Receiving functions should be "is_<name_action>".
 # Respective state vars should be "state_<name>"
 
+# Have to supress warning because they all flare up.
 # warning-ignore-all:unused_signal
-# ============================== Generic =====================================
-signal sig_mouse_on_viewport(flag)
+
+# GENERIC
+signal sig_mouse_on_control_area(flag)
 signal sig_screen_filter_on(flag)
 signal sig_screen_res_value_changed(value)
 signal sig_fov_value_changed(value)
 signal sig_viewport_update
 signal sig_quit_game
 
-# =============================== Camera =====================================
+# CAMERA
 signal sig_turret_mode_on(flag)
 signal sig_mouse_flight_on(flag)
 signal sig_zoom_value_changed(value)
 
-# ================================ Ship =======================================
+# SHIP
 signal sig_accelerate(flag)
-signal sig_engine_kill(flag)
+signal sig_engine_kill
 

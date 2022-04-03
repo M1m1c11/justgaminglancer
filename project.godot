@@ -53,8 +53,6 @@ config/icon="res://Assets/Images/Icon.png"
 
 [display]
 
-window/size/width=1980
-window/size/height=1020
 window/stretch/aspect="keep"
 
 [editor_plugins]

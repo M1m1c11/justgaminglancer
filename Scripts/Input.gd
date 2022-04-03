@@ -1,22 +1,20 @@
 extends Node
 
-# Values.
+# VARIABLES
 var mouse_x = 0
 var mouse_y = 0
 var mouse_x_abs = 0
 var mouse_y_abs = 0
 var pad_x_abs = 0
 var pad_y_abs = 0
-# Objects.
+
 var mouse_vector = Vector2(0,0)
 var viewport_size = Vector2(1,1)
-# Flags.
 
 var LMB_held = false
 var LMB_released = true
 var mouse_on_viewport = true
 
-# Paths node.
 onready var p = get_tree().get_root().get_node("Container/Paths")
 onready var ui_controls_bar = p.ui.get_node("Controls/Control_bar")
 onready var ui_main3d = p.ui.get_node("Main3D")
@@ -34,7 +32,7 @@ func _ready():
 	# Initial value require for the mouse coords.
 	viewport_size = OS.window_size
 	
-# TODO: Link a script for key shortcuts (like options).
+# TODO: Link a script for key shortcuts (like options).??????
 func _input(event):
 
 	# ==================== For events on mouse area (desktop) ==========================

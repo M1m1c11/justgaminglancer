@@ -21,8 +21,9 @@ var camera_chase_tilt_vert_damp_right = 2 # Can't be zero
 # Higher values - more responsive camera.
 var camera_tilt_velocity_factor = 1
 
-var camera_push_velocity_factor = 10
+var camera_push_velocity_factor = 5
 var camera_push_max_factor = 500.0
+const camera_push_visibility_velocity = 1e7
 
 var camera_fov_velocity_factor = 0.001
 var camera_fov_max_delta = 100
@@ -38,7 +39,7 @@ var torque = Vector3(0,0,0)
 
 # Nodes.
 onready var p = get_tree().get_root().get_node("Container/Paths")
-onready var engines =  get_node("Engines")
+onready var engines = get_node("Engines")
 
 
 # Called when the node enters the scene tree for the first time.
@@ -57,7 +58,7 @@ func _ready():
 func _process(_delta):
 	
 	# Hide ship from view to prevent annoying visuals jitter.
-	if rebase_limit > 1e6:
+	if rebase_limit > camera_push_visibility_velocity:
 		self.hide()
 	else:
 		self.show()
@@ -151,32 +152,19 @@ func adjust_exhaust():
 		else:
 			i.get_node("Engine_exhaust_light").light_energy = 0.1
 
-# ============================ Signal processing ==============================
-func is_accelerating(flag):
 
-	# TODO: make engine state readouts.
-	if flag and not p.ship_state.engine_kill and (p.ship_state.accel_ticks < self.accel_ticks_max):
+
+# SIGNAL PROCESSING
+func is_accelerating(flag):
+	if flag and (p.ship_state.accel_ticks < self.accel_ticks_max):
 		p.ship_state.accel_ticks += 1
 		p.ship_state.acceleration += p.ship_state.accel_ticks*self.accel_factor
-	elif not flag and not p.ship_state.engine_kill and (p.ship_state.accel_ticks > 0):
+	elif not flag and (p.ship_state.accel_ticks > 0):
 		p.ship_state.acceleration -= p.ship_state.accel_ticks*self.accel_factor
 		p.ship_state.accel_ticks -= 1
 	adjust_exhaust()
 	
-# TODO: make a button-hold temporary kill.
-func is_engine_kill(flag):
-	if flag:
-		p.ship_state.acceleration = 0
-		p.ship_state.accel_ticks = 0
-		# Enable inertia-less flight.
-		p.ship_state.engine_kill = false
-		# p.ship_state.accel_ticks_prev = p.ship_state.accel_ticks
-		# p.ship_state.accel_ticks = 0
-		# self.linear_damp = p.engine_opts.ship_linear_damp_ekill
-	else:
-		p.ship_state.engine_kill = false
-		# Disable inertia-less flight.
-		# p.ship_state.engine_kill = false
-		# p.ship_state.accel_ticks = p.ship_state.accel_ticks_prev
-		# self.linear_damp = p.engine_opts.ship_linear_damp
+func is_engine_kill():
+	p.ship_state.acceleration = 0
+	p.ship_state.accel_ticks = 0
 	adjust_exhaust()

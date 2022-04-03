@@ -169,7 +169,7 @@ func zoom_camera(mouse_event):
 			zoom_ticks -= 1
 			$Camera.translation.z = current_zoom
 
-# ============================ Signal processing ==============================
+# SIGNAL PROCESSING
 func is_turret_mode_on(flag):
 	if flag:
 		# Reset camera first.
@@ -179,10 +179,13 @@ func is_turret_mode_on(flag):
 		fix_camera()
 
 func is_zoom_value_changed(value):
-	print(camera_min_zoom," | ",  current_zoom, " | ", camera_max_zoom)
+	# print(camera_min_zoom," | ",  current_zoom, " | ", camera_max_zoom)
 	zoom_ticks = value
 	current_zoom = p.cam_opts.camera_zoom_step*zoom_ticks
 	if current_zoom <= camera_max_zoom and \
 	current_zoom >= camera_min_zoom and \
 	zoom_ticks > 0:
 		$Camera.translation.z = current_zoom
+
+func is_fov_value_changed(value):
+	p.camera.fov = value

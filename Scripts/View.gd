@@ -1,37 +1,32 @@
 extends Viewport
 
-# TODO: make a script in top most noce that will initiate all options and values
-# on startup, to ensure that everything is ready at startup.
-
-# Values.
-# TODO: Throw it into options and sync with slider
-var screen_res_factor = 1.0
-# Objects.
-# Parameters.
-# Nodes.
+# VARIABLES
 onready var p = get_tree().get_root().get_node("Container/Paths")
 
 func _ready():
-	# ======================Z====== Initialize nodes ===========================
-
 	# ============================ Connect signals ============================
 	p.signals.connect("sig_screen_filter_on", self, "is_screen_filter_on")
 	p.signals.connect("sig_viewport_update", self, "is_viewport_update")
 	p.signals.connect("sig_screen_res_value_changed", self, "is_screen_res_value_changed")
 	# =========================================================================
 	
-	# Init the screen res and factor
-	self.size = OS.window_size*screen_res_factor
-	self.get_texture().flags = Texture.FLAG_FILTER
+	# Init 
+	# TODO: sync UI elements.
+	is_viewport_update()
+	is_screen_filter_on(p.viewport_opts.render_texture_filter)
 	
-# ============================ Signal processing ==============================	
+# SIGNAL PROCESSING
 func is_screen_filter_on(flag):
-	if flag: self.get_texture().flags = Texture.FLAG_FILTER
-	else: self.get_texture().flags = !Texture.FLAG_FILTER
+	if flag:
+		p.viewport_opts.render_texture_filter = true
+		self.get_texture().flags = Texture.FLAG_FILTER
+	else:
+		p.viewport_opts.render_texture_filter = false
+		self.get_texture().flags = !Texture.FLAG_FILTER
 		
 func is_viewport_update():
-	self.size = OS.window_size*screen_res_factor
+	self.size = OS.window_size * p.viewport_opts.screen_res_factor
 
 func is_screen_res_value_changed(value):
-	screen_res_factor = value
-	self.size = OS.window_size*screen_res_factor
+	p.viewport_opts.screen_res_factor = value
+	is_viewport_update()
