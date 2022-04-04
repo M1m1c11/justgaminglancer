@@ -9,6 +9,8 @@ var current_zoom = 0
 var camera_vert = 0
 var camera_horiz = 0
 var zoom_ticks = 0
+var camera_push_z = 0
+var camera_push_y = 0
 # Chase camera positions.
 var vert = 0
 var horiz = 0
@@ -120,9 +122,19 @@ func chase_camera(mv, delta):
 	# Prevent camera sliding forward
 	# if tmp_push.x < camera_min_zoom:
 	tmp_push.x = camera_min_zoom+tmp_push.x
-	$Camera.translation.z = clamp(tmp_push.x, 0.0, p.ship.camera_push_max_factor)
-	#else:
-	#	$Camera.translation.z = tmp_push.x
+	
+	# Vertical camera push to hide the jitter from the engine trail.
+	# Normalize value here and add it to default offset at 0 speed.
+	camera_push_y = p.ship.camera_vert_offset \
+		+ clamp(3*log(tmp_push.x/p.ship.camera_horiz_offset), 
+			0.0, p.ship.camera_push_max_factor)
+	
+	# Vertical push to hide overall jittering model.
+	camera_push_z = clamp(tmp_push.x, 0.0, p.ship.camera_push_max_factor)
+	
+	
+	$Camera.translation.z = camera_push_z
+	$Camera.translation.y = camera_push_y
 	
 	p.camera.fov = camera_fov_default + clamp(tmp_fov.x, 0.0, p.ship.camera_fov_max_delta)
 	

@@ -6,13 +6,13 @@ var rebase_lag = 1.1
 
 # TODO check materials and shaders for FX
 # Params.
-var ship_mass = 20000
-var accel_factor = 100000 # Propulsion force.
-var accel_ticks_max = 5000 # Engine propulsion increments.
+var ship_mass = 1e6
+var accel_factor = 1e3 # Propulsion force.
+var accel_ticks_max = pow(2,28) # Engine propulsion increments. Pow 2.
 # Turning sensitivity LEFT-RIGHT | UP-DOWN | ROLL
-var torque_factor = Vector3(1500000,700000,700000)
-var camera_vert_offset = 0.2
-var camera_horiz_offset = 1 
+var torque_factor = Vector3(15e8,7e8,7e8)
+var camera_vert_offset = 1
+var camera_horiz_offset = 6
 # Higher damp value - more restricted camera motion in given direction.
 var camera_chase_tilt_horiz_damp_up = 6 # Can't be zero
 var camera_chase_tilt_horiz_damp_down = 1.8 # Can't be zero
@@ -22,8 +22,8 @@ var camera_chase_tilt_vert_damp_right = 2 # Can't be zero
 var camera_tilt_velocity_factor = 1
 
 var camera_push_velocity_factor = 5
-var camera_push_max_factor = 500.0
-const camera_push_visibility_velocity = 1e7
+var camera_push_max_factor = 1000.0
+const camera_push_visibility_velocity = 1e8
 
 var camera_fov_velocity_factor = 0.001
 var camera_fov_max_delta = 100
@@ -58,6 +58,8 @@ func _ready():
 func _process(_delta):
 	
 	# Hide ship from view to prevent annoying visuals jitter.
+	# TODO: add a sprite for the value above which is projected.
+	# TODO: 
 	if rebase_limit > camera_push_visibility_velocity:
 		self.hide()
 	else:
@@ -133,9 +135,10 @@ func adjust_exhaust():
 		
 		# Adjust shape size.
 		i.get_node("Engine_exhaust_shapes").scale.z = \
-				pow(p.ship_state.accel_ticks, 1.5)*0.1
+				pow(p.ship_state.accel_ticks, 1.05)*0.1
 
-		var albedo =  pow(p.ship_state.accel_ticks, 1.5)
+		var albedo =  log(p.ship_state.accel_ticks)
+
 		# Get and modify sprite intensity.
 		var shapes = i.get_node("Engine_exhaust_shapes")
 		for shape in shapes.get_children():
@@ -148,7 +151,7 @@ func adjust_exhaust():
 		# Adjust light intensity
 		if p.ship_state.accel_ticks > 0:
 			i.get_node("Engine_exhaust_light").light_energy = \
-					p.ship_state.accel_ticks * 0.1
+					p.ship_state.accel_ticks * 0.05
 		else:
 			i.get_node("Engine_exhaust_light").light_energy = 0.1
 
@@ -157,11 +160,15 @@ func adjust_exhaust():
 # SIGNAL PROCESSING
 func is_accelerating(flag):
 	if flag and (p.ship_state.accel_ticks < self.accel_ticks_max):
-		p.ship_state.accel_ticks += 1
+		if p.ship_state.accel_ticks == 0:
+			p.ship_state.accel_ticks = 1
+		p.ship_state.accel_ticks *= 2
 		p.ship_state.acceleration += p.ship_state.accel_ticks*self.accel_factor
 	elif not flag and (p.ship_state.accel_ticks > 0):
 		p.ship_state.acceleration -= p.ship_state.accel_ticks*self.accel_factor
-		p.ship_state.accel_ticks -= 1
+		p.ship_state.accel_ticks /= 2
+		if p.ship_state.accel_ticks == 1:
+			p.ship_state.accel_ticks = 0
 	adjust_exhaust()
 	
 func is_engine_kill():

@@ -62,10 +62,10 @@ shader_param/proximity_fade_distance = 0.1
 [node name="Engine_exhaust_blue" type="Position3D"]
 
 [node name="Engine_exhaust_light" type="OmniLight" parent="."]
-light_color = Color( 0, 0.976471, 1, 1 )
-light_energy = 0.1
-omni_range = 50.0
-omni_attenuation = 25.0
+light_color = Color( 0.968627, 0.6, 1, 1 )
+light_energy = 0.05
+omni_range = 500.0
+omni_attenuation = 50.0
 __meta__ = {
 "_edit_lock_": true
 }
@@ -84,12 +84,9 @@ __meta__ = {
 }
 
 [node name="Exhaust_cylindrical" type="MeshInstance" parent="Engine_exhaust_shapes"]
-transform = Transform( 1, 0, 0, 0, -2.18557e-08, -1, 0, 0.5, -4.37114e-08, 0, 0, 0 )
+transform = Transform( 0.551418, 0, 0, 0, -1.20516e-08, -0.551418, 0, 0.039396, -3.44411e-09, 0, 0, 0 )
 mesh = SubResource( 2 )
 material/0 = SubResource( 7 )
-__meta__ = {
-"_edit_lock_": true
-}
 
 [node name="Cone" type="MeshInstance" parent="Engine_exhaust_shapes"]
 transform = Transform( 1, 0, 0, 0, -4.37114e-11, -1, 0, 0.001, -4.37114e-08, 0, 0, 0 )
