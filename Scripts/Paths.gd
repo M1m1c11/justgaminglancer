@@ -39,5 +39,4 @@ onready var viewport = get_node("/root/Container/View")
 # MISC
 onready var ship = get_node("/root/Container/View/Ship")
 onready var global_space = get_node("/root/Container/View/Global_space")
-onready var local_space2 = get_node("/root/Container/View/Global_space/Local_space2")
-onready var cube = get_node("/root/Container/View/Global_space/Planet_local/Cube")
+onready var cube = get_node("/root/Container/View/Global_space/Local_space1/Planet_local/Cube")

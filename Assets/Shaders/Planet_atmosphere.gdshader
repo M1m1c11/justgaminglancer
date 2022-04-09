@@ -1,5 +1,5 @@
 shader_type spatial;
-render_mode depth_draw_opaque, blend_add, cull_front, unshaded;
+render_mode depth_draw_opaque, blend_add, cull_back;
 
 uniform vec4 albedo : hint_color;
 uniform float rim_strength = 0.05;
@@ -20,9 +20,7 @@ void fragment()
 	// Logarithmic depth buffer.
 	// DEPTH = log2(max(1e-6, 1.0 -gl_Position.z)) * c;
 	
-	float rim = clamp(pow( 
-			clamp(dot( NORMAL, VIEW ), 0.0, 1.0)
-		, rim_power)*rim_strength, 0.0, 1.0);
+	float rim = clamp(pow( dot( NORMAL, VIEW ), rim_power)*rim_strength, 0.0, 1.0);
 	ALBEDO = albedo.rgb*COLOR.rgb;
 	ALPHA = rim;
 }

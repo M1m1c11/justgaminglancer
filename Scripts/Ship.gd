@@ -135,7 +135,7 @@ func adjust_exhaust():
 		
 		# Adjust shape size.
 		i.get_node("Engine_exhaust_shapes").scale.z = \
-				pow(p.ship_state.accel_ticks, 1.05)*0.1
+				pow(p.ship_state.accel_ticks, 1.2)*0.05
 
 		var albedo =  log(p.ship_state.accel_ticks)
 

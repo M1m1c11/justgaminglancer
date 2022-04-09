@@ -169,7 +169,7 @@ func fix_camera():
 	
 func zoom_camera(mouse_event):
 	if mouse_event.is_pressed():
-		print(camera_min_zoom," | ",  current_zoom, " | ", camera_max_zoom)
+		# print(camera_min_zoom," | ",  current_zoom, " | ", camera_max_zoom)
 		if mouse_event.button_index == BUTTON_WHEEL_UP and \
 		current_zoom <= camera_max_zoom:
 			zoom_ticks += 1
