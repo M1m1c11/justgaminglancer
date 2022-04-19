@@ -7,7 +7,7 @@ var pad_y_abs = 0
 var LMB_held = false
 var LMB_released = true
 
-onready var p = get_tree().get_root().get_node("Container/Paths")
+onready var p = get_tree().get_root().get_node("Main/Paths")
 
 func _ready():
 	pass # Replace with function body.

@@ -1,10 +1,10 @@
 extends Node
 
 # VARIABLES
-onready var p = get_tree().get_root().get_node("Container/Paths")
+onready var p = get_tree().get_root().get_node("Main/Paths")
 onready var ui_controls_bar = p.ui.get_node("Controls/Control_bar")
 onready var ui_button_turret = p.ui.get_node("Controls/Control_bar/Button_turret")
-onready var ui_main3d = p.ui.get_node("Main3D")
+onready var ui_gameplay = p.ui.get_node("Gameplay")
 
 func _ready():
 	# ============================ Connect signals ============================
@@ -34,10 +34,10 @@ func handle_input(event):
 			else:
 				ui_controls_bar.visible = true
 				
-			if ui_main3d.visible:
-				ui_main3d.visible = false
+			if ui_gameplay.visible:
+				ui_gameplay.visible = false
 			else:
-				ui_main3d.visible = true
+				ui_gameplay.visible = true
 				
 		# Turret mode.
 		if event.pressed and event.scancode == KEY_H:

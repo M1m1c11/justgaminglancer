@@ -1,9 +1,5 @@
 extends RigidBody
 
-var rebase_limit_margin = 5000
-var rebase_lag = 1.1
-
-
 # TODO check materials and shaders for FX
 # Params.
 var ship_mass = 1e6
@@ -21,24 +17,20 @@ var camera_chase_tilt_vert_damp_right = 2 # Can't be zero
 # Higher values - more responsive camera.
 var camera_tilt_velocity_factor = 1
 
-var camera_push_velocity_factor = 5
+var camera_push_velocity_factor = 2.5
 var camera_push_max_factor = 1000.0
 const camera_push_visibility_velocity = 1e8
-
-var camera_fov_velocity_factor = 0.001
-var camera_fov_max_delta = 100
 
 
 
 # Vars.
 var default_linear_damp = 0
-onready var rebase_limit = rebase_limit_margin
 
 # Objects.
 var torque = Vector3(0,0,0)
 
 # Nodes.
-onready var p = get_tree().get_root().get_node("Container/Paths")
+onready var p = get_tree().get_root().get_node("Main/Paths")
 onready var engines = get_node("Engines")
 
 
@@ -54,39 +46,7 @@ func _ready():
 	
 	# Initialize the vessel params.
 	init_ship()
-
-func _process(_delta):
 	
-	# Hide ship from view to prevent annoying visuals jitter.
-	# TODO: add a sprite for the value above which is projected.
-	# TODO: 
-	if rebase_limit > camera_push_visibility_velocity:
-		self.hide()
-	else:
-		self.show()
-	
-func _physics_process(_delta):
-
-	if self.translation.x > rebase_limit:
-		self.translation.x = 0
-		p.global_space.translation.x = p.global_space.translation.x-rebase_limit
-	elif self.translation.x < -rebase_limit:
-		self.translation.x = 0
-		p.global_space.translation.x = p.global_space.translation.x+rebase_limit
-		
-	if self.translation.y > rebase_limit:
-		self.translation.y = 0
-		p.global_space.translation.y = p.global_space.translation.y-rebase_limit
-	elif self.translation.y < -rebase_limit:
-		self.translation.y = 0
-		p.global_space.translation.y = p.global_space.translation.y+rebase_limit
-
-	if self.translation.z > rebase_limit:
-		self.translation.z = 0
-		p.global_space.translation.z = p.global_space.translation.z-rebase_limit
-	elif self.translation.z < -rebase_limit:
-		self.translation.z = 0
-		p.global_space.translation.z = p.global_space.translation.z+rebase_limit
 
 
 func _integrate_forces(state):
@@ -97,9 +57,9 @@ func _integrate_forces(state):
 	p.ship_state.ship_linear_velocity = vel
 	p.ship_state.apparent_velocity = vel
 	
-	if vel > rebase_limit_margin*rebase_lag:
-		rebase_limit = round(vel*rebase_lag)
-
+	# Modify origin rebase limit.
+	if vel > p.engine_opts.rebase_limit_margin*p.engine_opts.rebase_lag:
+		p.global_space.rebase_limit = round(vel*p.engine_opts.rebase_lag)
 	
 	state.add_central_force(-global_transform.basis.z* p.ship_state.acceleration* p.ship_state.acceleration)
 	
@@ -175,3 +135,5 @@ func is_engine_kill():
 	p.ship_state.acceleration = 0
 	p.ship_state.accel_ticks = 0
 	adjust_exhaust()
+
+

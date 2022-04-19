@@ -1,5 +1,5 @@
 extends Node
 
 # VARIABLES
-onready var screen_res_factor = 0.8
+onready var render_res_factor = 1.0
 onready var render_texture_filter = true

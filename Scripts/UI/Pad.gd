@@ -1,7 +1,7 @@
 extends Node
 
 # VARIABLES
-onready var p = get_tree().get_root().get_node("Container/Paths")
+onready var p = get_tree().get_root().get_node("Main/Paths")
 onready var pad_base = p.ui.get_node("Controls_touchscreen/Main_controls/Pad_base")
 onready var stick = p.ui.get_node("Controls_touchscreen/Main_controls/Pad_base/Stick")
 

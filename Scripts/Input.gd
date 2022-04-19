@@ -15,7 +15,7 @@ var LMB_held = false
 var LMB_released = true
 var mouse_on_viewport = true
 
-onready var p = get_tree().get_root().get_node("Container/Paths")
+onready var p = get_tree().get_root().get_node("Main/Paths")
 onready var ui_controls_bar = p.ui.get_node("Controls/Control_bar")
 onready var ui_main3d = p.ui.get_node("Main3D")
 onready var ui_button_turret = p.ui.get_node("Controls/Control_bar/Button_turret")

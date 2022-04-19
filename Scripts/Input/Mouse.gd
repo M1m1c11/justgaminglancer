@@ -8,7 +8,7 @@ var mouse_y_abs = 0
 
 var mouse_on_control_area = true
 
-onready var p = get_tree().get_root().get_node("Container/Paths")
+onready var p = get_tree().get_root().get_node("Main/Paths")
 onready var ui_mouse_area = p.ui.get_node("Controls/Mouse_area")
 
 func _ready():

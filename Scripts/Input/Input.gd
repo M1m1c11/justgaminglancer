@@ -9,7 +9,7 @@ var viewport_size = Vector2(1,1)
 onready var mouse = get_node("Mouse")
 onready var keyboard = get_node("Keyboard")
 onready var pad = get_node("Pad")
-onready var p = get_tree().get_root().get_node("Container/Paths")
+onready var p = get_tree().get_root().get_node("Main/Paths")
 
 func _ready():
 	# ============================ Connect signals ============================

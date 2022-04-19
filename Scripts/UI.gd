@@ -11,23 +11,21 @@ var ui_hidden = false
 var ui_alpha = 1.0
 var viewport_size = Vector2(1,1)
 
-onready var p = get_tree().get_root().get_node("Container/Paths")
+onready var p = get_tree().get_root().get_node("Main/Paths")
 
-onready var mouse_vector_debug = p.ui.get_node("Main3D/Debug/Mouse_vector")
+onready var mouse_vector_debug = p.ui.get_node("Gameplay/Debug/Mouse_vector")
 
 onready var touchscreen_buttons = p.ui.get_node("Controls_touchscreen/Main_controls/Touch_buttons_container")
-onready var apparent_velocity = p.ui.get_node("Main3D/Apparent_velocity")
-onready var apparent_velocity_units = p.ui.get_node("Main3D/Apparent_velocity_units")
+onready var apparent_velocity = p.ui.get_node("Gameplay/Apparent_velocity")
+onready var apparent_velocity_units = p.ui.get_node("Gameplay/Apparent_velocity_units")
 
 
 onready var pad_base = p.ui.get_node("Controls_touchscreen/Main_controls/Pad_base")
 onready var stick = p.ui.get_node("Controls_touchscreen/Main_controls/Pad_base/Stick")
 
 func _ready():
-
 	p.ui_pad.pad_recenter_stick()
 	p.ui_windows.init_gui()
-	
 
 	
 	
@@ -46,7 +44,6 @@ func _input(event):
 	
 func _process(_delta):
 	p.ui_pad.pad_handle_stick()
-	p.ui_markers.update_markers()
 	
 	# DEBUG
 	if update_debug_text_on: update_debug_text()
@@ -57,12 +54,12 @@ func _process(_delta):
 	var result_s = p.ui_readouts.get_magnitude_units(speed_val)
 	apparent_velocity.text = str(result_s[0])
 	apparent_velocity_units.text = str(result_s[1])+"/s"
-	p.ui_windows.main3d.get_node("Accel_ticks").text = str("Accel. ticks: ", p.ship_state.accel_ticks)
+	p.ui_windows.gameplay.get_node("Accel_ticks").text = str("Accel. ticks: ", p.ship_state.accel_ticks)
 
 # ================================== Other ====================================
 # DEBUG
 func update_debug_text():
-	p.ui_windows.debug.get_node("FPS").text = str("FPS: ", p.global_space.fps)
+	p.ui_windows.debug.get_node("FPS").text = str("FPS: ", p.main.fps)
 	p.ui_windows.debug.get_node("Mouse_x").text = str("Mouse / Pad x: ", p.input.mouse_vector.x)
 	p.ui_windows.debug.get_node("Mouse_y").text = str("Mouse / Pad y: ", p.input.mouse_vector.y)
 
@@ -78,7 +75,7 @@ func update_debug_text():
 func _on_Button_touchscreen_switch_pressed():
 	touchscreen_mode = true
 	# Main GUI elements.
-	p.ui_windows.main3d.show()
+	p.ui_windows.gameplay.show()
 	# Controls.
 	p.ui_windows.controls_touchscreen.show()
 	p.ui_windows.controls_touchscreen.get_node("Main_controls").show()
@@ -93,7 +90,7 @@ func _on_Button_touchscreen_switch_pressed():
 func _on_Button_cumputer_gui_switch_pressed():
 	touchscreen_mode = false
 	# Main GUI elements.
-	p.ui_windows.main3d.show()
+	p.ui_windows.gameplay.show()
 	# Controls.
 	p.ui_windows.controls.show()
 	p.ui_windows.mouse_area.show() # TODO: Maybe not the best approach?
@@ -107,7 +104,7 @@ func _on_Button_cumputer_gui_switch_pressed():
 # Keep here
 func _on_Viewport_main_resized():
 	# Has to be called manually bc "Paths/Signals" doesn't initiate at start.
-	get_node("/root/Container/Signals").emit_signal("sig_viewport_update")
+	get_node("/root/Main/Signals").emit_signal("sig_viewport_update")
 	viewport_size = OS.window_size
 
 # DESKTOP / MOBILE GUI
@@ -148,11 +145,7 @@ func _on_Button_screen_filter_toggled(button_pressed):
 
 # DESKTOP / MOBILE GUI
 func _on_Slider_screen_res_value_changed(value):
-	p.signals.emit_signal("sig_screen_res_value_changed", value)
-
-# DESKTOP / MOBILE GUI
-func _on_Slider_fov_value_changed(value):
-	p.signals.emit_signal("sig_fov_value_changed", value)
+	p.signals.emit_signal("sig_render_res_value_changed", value)
 
 
 # DESKTOP / MOBILE GUI
@@ -214,7 +207,7 @@ func _on_Touch_ekill_pressed():
 # DESKTOP / MOBILE GUI
 func _on_Button_hide_ui_pressed():
 	p.ui_windows.touchscreen_main.modulate.a = ui_alpha
-	p.ui_windows.main3d.modulate.a = ui_alpha
+	p.ui_windows.gameplay.modulate.a = ui_alpha
 	ui_alpha -= 0.25
 	if ui_alpha < 0.0:
 		ui_alpha = 1.0

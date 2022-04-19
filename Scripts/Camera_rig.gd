@@ -18,8 +18,11 @@ var velocity_factor = 0
 # Objects.
 var mouse_vector = Vector2(0,0)
 
+var camera_fov_velocity_factor = 1e-5
+var camera_fov_max_delta = 100
+
 # Paths node.
-onready var p = get_tree().get_root().get_node("Container/Paths")
+onready var p = get_tree().get_root().get_node("Main/Paths")
 onready var camera_fov_default = p.camera.fov
 
 func _ready():
@@ -106,7 +109,7 @@ func chase_camera(mv, delta):
 			)/(p.ship.camera_chase_tilt_vert_damp_right)
 			
 	# FORWARD - velocity_factor
-	velocity_factor = p.ship_state.ship_linear_velocity*0.1
+	velocity_factor = p.ship_state.ship_linear_velocity
 	
 	var fin_tilt = Vector2(vert, horiz)
 	var fin_push = Vector2(velocity_factor, 0.0)
@@ -117,7 +120,7 @@ func chase_camera(mv, delta):
 	var tmp_push = init_push.linear_interpolate(fin_push, pow(delta
 		*p.ship.camera_push_velocity_factor,3))
 	var tmp_fov = init_fov.linear_interpolate(fin_fov, delta
-		* p.ship.camera_fov_velocity_factor)
+		* camera_fov_velocity_factor)
 		
 	# Prevent camera sliding forward
 	# if tmp_push.x < camera_min_zoom:
@@ -136,8 +139,9 @@ func chase_camera(mv, delta):
 	$Camera.translation.z = camera_push_z
 	$Camera.translation.y = camera_push_y
 	
-	p.camera.fov = camera_fov_default + clamp(tmp_fov.x, 0.0, p.ship.camera_fov_max_delta)
-	
+	p.camera.fov = camera_fov_default \
+		+ clamp(5*log(tmp_fov.x), 0.0, camera_fov_max_delta)
+	# print(p.camera.fov)
 	
 	# Tilt motion
 	$Camera.rotation.x = tmp_tilt.x

@@ -122,7 +122,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Main3D" type="Control" parent="."]
+[node name="Gameplay" type="Control" parent="."]
 anchor_right = 1.0
 anchor_bottom = 1.0
 __meta__ = {
@@ -130,7 +130,11 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Debug" type="Control" parent="Main3D"]
+[node name="Markers" type="Control" parent="Gameplay"]
+margin_right = 40.0
+margin_bottom = 40.0
+
+[node name="Debug" type="Control" parent="Gameplay"]
 visible = false
 anchor_bottom = 1.0
 margin_right = 192.0
@@ -140,7 +144,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="_ColorRect" type="ColorRect" parent="Main3D/Debug"]
+[node name="_ColorRect" type="ColorRect" parent="Gameplay/Debug"]
 visible = false
 material = SubResource( 2 )
 anchor_right = 1.0
@@ -150,7 +154,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Mouse_x" type="Label" parent="Main3D/Debug"]
+[node name="Mouse_x" type="Label" parent="Gameplay/Debug"]
 margin_left = 16.0
 margin_top = 112.0
 margin_right = 91.0
@@ -160,7 +164,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Mouse_y" type="Label" parent="Main3D/Debug"]
+[node name="Mouse_y" type="Label" parent="Gameplay/Debug"]
 margin_left = 16.0
 margin_top = 128.0
 margin_right = 91.0
@@ -170,7 +174,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="FPS" type="Label" parent="Main3D/Debug"]
+[node name="FPS" type="Label" parent="Gameplay/Debug"]
 margin_left = 16.0
 margin_top = 72.0
 margin_right = 56.0
@@ -180,74 +184,12 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Mouse_vector" type="Line2D" parent="Main3D/Debug"]
+[node name="Mouse_vector" type="Line2D" parent="Gameplay/Debug"]
 points = PoolVector2Array( 0, 0, 0, 0 )
 width = 1.0
 default_color = Color( 0.596078, 0, 0, 1 )
 
-[node name="Marker" type="Control" parent="Main3D/Debug"]
-
-[node name="Text" type="Label" parent="Main3D/Debug/Marker"]
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-margin_left = -25.0
-margin_top = -10.0
-margin_right = 25.0
-margin_bottom = 10.0
-text = "Origin"
-align = 1
-valign = 1
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="ColorRect2" type="ColorRect" parent="Main3D/Debug/Marker"]
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-margin_left = -1.0
-margin_top = 10.0
-margin_right = 1.0
-margin_bottom = 18.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="ColorRect" type="ColorRect" parent="Main3D/Debug/Marker"]
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-margin_left = -1.0
-margin_top = -18.0
-margin_right = 1.0
-margin_bottom = -10.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Marker2" type="Label" parent="Main3D/Debug"]
-visible = false
-margin_right = 57.0
-margin_bottom = 14.0
-text = "Monolith"
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Marker3" type="Label" parent="Main3D/Debug"]
-visible = false
-margin_right = 57.0
-margin_bottom = 14.0
-text = "Monolith2"
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Text_panel" type="Control" parent="Main3D"]
+[node name="Text_panel" type="Control" parent="Gameplay"]
 visible = false
 anchor_left = 1.0
 anchor_right = 1.0
@@ -260,7 +202,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="_ColorRect" type="ColorRect" parent="Main3D/Text_panel"]
+[node name="_ColorRect" type="ColorRect" parent="Gameplay/Text_panel"]
 visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -269,7 +211,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Text" type="Label" parent="Main3D/Text_panel"]
+[node name="Text" type="Label" parent="Gameplay/Text_panel"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 text = "Mouse left - turret rotate / steer.
@@ -286,7 +228,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Apparent_velocity" type="Label" parent="Main3D"]
+[node name="Apparent_velocity" type="Label" parent="Gameplay"]
 anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
@@ -302,7 +244,7 @@ align = 2
 valign = 1
 clip_text = true
 
-[node name="Apparent_velocity_units" type="Label" parent="Main3D"]
+[node name="Apparent_velocity_units" type="Label" parent="Gameplay"]
 anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
@@ -319,7 +261,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Accel_ticks" type="Label" parent="Main3D"]
+[node name="Accel_ticks" type="Label" parent="Gameplay"]
 anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
@@ -782,7 +724,7 @@ pressed = ExtResource( 8 )
 [connection signal="pressed" from="GUI_prompt/Button_cumputer_gui_switch" to="." method="_on_Button_cumputer_gui_switch_pressed"]
 [connection signal="value_changed" from="GUI_prompt/Slider_screen_res" to="." method="_on_Slider_screen_res_value_changed"]
 [connection signal="toggled" from="GUI_prompt/Button_screen_filter2" to="." method="_on_Button_screen_filter_toggled"]
-[connection signal="resized" from="Main3D" to="." method="_on_Viewport_main_resized"]
+[connection signal="resized" from="Gameplay" to="." method="_on_Viewport_main_resized"]
 [connection signal="mouse_entered" from="Controls/Mouse_area" to="." method="_on_Mouse_area_mouse_entered"]
 [connection signal="mouse_exited" from="Controls/Mouse_area" to="." method="_on_Mouse_area_mouse_exited"]
 [connection signal="toggled" from="Controls/Control_bar/Button_turret" to="." method="_on_Button_turret_toggled"]

@@ -7,7 +7,7 @@ var sprite_appearance_distance = 0.0
 
 
 # Nodes.
-onready var p = get_tree().get_root().get_node("Container/Paths")
+onready var p = get_tree().get_root().get_node("Main/Paths")
 onready var star = p.local_space.get_node("System_Gate/Star_blue")
 onready var sprite_rig = get_node("../Sprite_rig")
 onready var sprite = get_node("../Sprite_rig/Sprite")
