@@ -1,9 +1,8 @@
 extends Position3D
 
 onready var p = get_tree().get_root().get_node("Main/Paths")
-onready var scene = preload("res://Scenes/Systems/Local_space1.tscn").instance()
 
-onready var rebase_limit = p.engine_opts.rebase_limit_margin
+onready var rebase_limit = p.common_engine.rebase_limit_margin
 var rebase_local = false
 
 func _physics_process(_delta):

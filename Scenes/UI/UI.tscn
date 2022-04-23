@@ -392,6 +392,18 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="Button_hide_ui" type="Button" parent="Controls/Control_bar"]
+margin_left = 246.348
+margin_top = 15.6593
+margin_right = 346.348
+margin_bottom = 115.659
+rect_scale = Vector2( 0.5, 0.5 )
+theme = ExtResource( 10 )
+keep_pressed_outside = true
+icon = ExtResource( 13 )
+flat = true
+icon_align = 1
+
 [node name="Slider_screen_res" type="HSlider" parent="Controls/Control_bar"]
 anchor_left = 1.0
 anchor_right = 1.0
@@ -734,6 +746,7 @@ pressed = ExtResource( 8 )
 [connection signal="toggled" from="Controls/Control_bar/Button_text_panel" to="." method="_on_Button_text_panel_toggled"]
 [connection signal="pressed" from="Controls/Control_bar/Button_quit" to="." method="_on_Button_quit_pressed"]
 [connection signal="toggled" from="Controls/Control_bar/Button_screen_filter" to="." method="_on_Button_screen_filter_toggled"]
+[connection signal="pressed" from="Controls/Control_bar/Button_hide_ui" to="." method="_on_Button_hide_ui_pressed"]
 [connection signal="value_changed" from="Controls/Control_bar/Slider_screen_res" to="." method="_on_Slider_screen_res_value_changed"]
 [connection signal="toggled" from="Controls_touchscreen/Options_menu/Button_debug" to="." method="_on_Button_debug_toggled"]
 [connection signal="pressed" from="Controls_touchscreen/Options_menu/Button_quit" to="." method="_on_Button_quit_pressed"]

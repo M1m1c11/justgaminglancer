@@ -15,6 +15,8 @@ https://en.wikipedia.org/wiki/Metric_prefix.
 - Updated velocity increment mechanism, it is now exponential, which allows to 
 accelerate rapidly.
 - Space markers are removed from `Debug` overlay.
+- Switched to custom LOD script which is based on zones.
+- Refaxtored stellar objects and their hierarchy for clarity.
 
 - Further refactoring and tweaks.
 

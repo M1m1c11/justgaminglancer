@@ -3,19 +3,24 @@
 extends Spatial
 class_name LODSpatial, "lod_spatial.svg"
 
+
+# TODO: rework in such a way it can later be translated into Godot4
+# TODO: use zones and siggnals instead of distances?
+
+
 # If `false`, LOD won't update anymore. This can be used for performance comparison
 # purposes.
 export var enable_lod := true
 
 # The maximum LOD 0 (high quality) distance in units.
-export(float, 0.0, 1e15, 0.1) var lod_0_max_distance := 1e9
+export(float, 0.0, 1e19, 0.1) var lod_0_max_distance := 1e9
 
 # The maximum LOD 1 (medium quality) distance in units.
-export(float, 0.0, 1e15, 0.1) var lod_1_max_distance := 1e10
+export(float, 0.0, 1e19, 0.1) var lod_1_max_distance := 1e10
 
 # The maximum LOD 2 (low quality) distance in units.
 # Past this distance, all LOD variants are hidden.
-export(float, 0.0, 1e15, 0.1) var lod_2_max_distance := 1e15
+export(float, 0.0, 1e19, 0.1) var lod_2_max_distance := 1e15
 
 # The rate at which LODs will be updated (in seconds). Lower values are more reactive
 # but use more CPU, which is especially noticeable with large amounts of LOD-enabled nodes.
@@ -68,13 +73,17 @@ func _physics_process(delta: float) -> void:
 	var lod: int
 	if distance < lod_0_max_distance:
 		lod = 0
+		#print("Object visible LOD0: ", self)
 	elif distance < lod_1_max_distance:
 		lod = 1
+		#print("Object visible LOD1: ", self)
 	elif distance < lod_2_max_distance:
 		lod = 2
+		#print("Object visible LOD2: ", self)
 	else:
 		# Hide the LOD object entirely.
 		lod = 3
+		#print("Object hidden (LOD3): ", self)
 
 	for node in get_children():
 		# `-lod` also matches `-lod0`, `-lod1`, `-lod2`, …

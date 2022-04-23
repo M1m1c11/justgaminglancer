@@ -1,6 +1,7 @@
 extends CanvasLayer
 
-#TODO: Scalable UI (control panel, texts, buttons, etc).
+# TODO: Scalable UI (control panel, texts, buttons, etc).
+# TODO: Grouping for overlapping markers.
 
 # VARIABLES
 var stick_held = false

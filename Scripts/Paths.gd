@@ -6,13 +6,13 @@ extends Node
 onready var main = get_node("/root/Main")
 
 # CAMERA
-onready var camera = get_node("/root/Main/Container/View/Ship/Camera_rig/Camera")
-onready var camera_rig = get_node("/root/Main/Container/View/Ship/Camera_rig")
+onready var camera = get_node("/root/Main/Container/View/Ship_space/Ship/Camera_rig/Camera")
+onready var camera_rig = get_node("/root/Main/Container/View/Ship_space/Ship/Camera_rig")
 
 # OPTIONS
-onready var cam_opts = get_node("/root/Main/Options/Camera")
-onready var engine_opts = get_node("/root/Main/Options/Engine")
-onready var viewport_opts = get_node("/root/Main/Options/Viewport")
+onready var common_camera = get_node("/root/Main/Common/Camera")
+onready var common_engine = get_node("/root/Main/Common/Engine")
+onready var common_viewport = get_node("/root/Main/Common/Viewport")
 
 # INPUT
 onready var input = get_node("/root/Main/Input")
@@ -41,6 +41,6 @@ onready var ui_windows = get_node("/root/Main/Container/UI/Windows")
 onready var viewport = get_node("/root/Main/Container/View")
 
 # MISC
-onready var ship = get_node("/root/Main/Container/View/Ship")
+onready var ship = get_node("/root/Main/Container/View/Ship_space/Ship")
 onready var global_space = get_node("/root/Main/Container/View/Global_space")
 onready var local_spaces = get_node("/root/Main/Container/View/Local_spaces")

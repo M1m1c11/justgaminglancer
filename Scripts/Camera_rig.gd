@@ -35,7 +35,7 @@ func _ready():
 	
 	# Safeguards to prevent clipping.
 	camera_min_zoom = p.ship.camera_horiz_offset
-	camera_max_zoom = camera_min_zoom * p.cam_opts.camera_zoom_out_times
+	camera_max_zoom = camera_min_zoom * p.common_camera.camera_zoom_out_times
 	# Puts camera at proper distance from the model at start.
 	current_zoom = p.ship.camera_horiz_offset
 	fix_camera()
@@ -51,7 +51,7 @@ func _physics_process(delta):
 	(not p.input.LMB_held or not p.ship_state.mouse_flight):
 		# Stop inertia at small value of the vector.
 		if abs(mouse_vector.x) > 0.01:
-			mouse_vector /= p.cam_opts.camera_inertia_factor
+			mouse_vector /= p.common_camera.camera_inertia_factor
 			yield(get_tree().create_timer(delta), "timeout")
 			orbit_camera(mouse_vector)
 	
@@ -70,14 +70,14 @@ func _physics_process(delta):
 func orbit_camera(mv):
 	# Compensate camera roll speed by camera altitude.
 	var phi = abs(cos(self.rotation.x))
-	var roll_vert = -mv.y * p.cam_opts.camera_sensitivity
-	var roll_horiz = -mv.x * p.cam_opts.camera_sensitivity*phi
+	var roll_vert = -mv.y * p.common_camera.camera_sensitivity
+	var roll_horiz = -mv.x * p.common_camera.camera_sensitivity*phi
 	camera_vert = self.rotation_degrees.x
 	camera_horiz = self.rotation_degrees.y
-	if camera_vert + roll_vert >= p.cam_opts.camera_turret_roll_vert_limit:
-		self.rotation_degrees.x = p.cam_opts.camera_turret_roll_vert_limit
-	elif camera_vert + roll_vert <= -p.cam_opts.camera_turret_roll_vert_limit:
-		self.rotation_degrees.x = -p.cam_opts.camera_turret_roll_vert_limit
+	if camera_vert + roll_vert >= p.common_camera.camera_turret_roll_vert_limit:
+		self.rotation_degrees.x = p.common_camera.camera_turret_roll_vert_limit
+	elif camera_vert + roll_vert <= -p.common_camera.camera_turret_roll_vert_limit:
+		self.rotation_degrees.x = -p.common_camera.camera_turret_roll_vert_limit
 	else:
 		self.rotate_object_local(Vector3(1,0,0), deg2rad(roll_vert))
 	self.rotate_object_local(Vector3(0,1,0), deg2rad(roll_horiz))
@@ -177,11 +177,11 @@ func zoom_camera(mouse_event):
 		if mouse_event.button_index == BUTTON_WHEEL_UP and \
 		current_zoom <= camera_max_zoom:
 			zoom_ticks += 1
-			current_zoom += p.cam_opts.camera_zoom_step*zoom_ticks
+			current_zoom += p.common_camera.camera_zoom_step*zoom_ticks
 			$Camera.translation.z = current_zoom
 		elif mouse_event.button_index == BUTTON_WHEEL_DOWN and \
 		current_zoom >= camera_min_zoom and zoom_ticks > 0:
-			current_zoom -= p.cam_opts.camera_zoom_step*zoom_ticks
+			current_zoom -= p.common_camera.camera_zoom_step*zoom_ticks
 			zoom_ticks -= 1
 			$Camera.translation.z = current_zoom
 
@@ -197,7 +197,7 @@ func is_turret_mode_on(flag):
 func is_zoom_value_changed(value):
 	# print(camera_min_zoom," | ",  current_zoom, " | ", camera_max_zoom)
 	zoom_ticks = value
-	current_zoom = p.cam_opts.camera_zoom_step*zoom_ticks
+	current_zoom = p.common_camera.camera_zoom_step*zoom_ticks
 	if current_zoom <= camera_max_zoom and \
 	current_zoom >= camera_min_zoom and \
 	zoom_ticks > 0:

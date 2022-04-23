@@ -42,7 +42,7 @@ func _ready():
 	# =========================================================================
 	
 	# Get default values.
-	default_linear_damp = p.engine_opts.ship_linear_damp
+	default_linear_damp = p.common_engine.ship_linear_damp
 	
 	# Initialize the vessel params.
 	init_ship()
@@ -58,8 +58,8 @@ func _integrate_forces(state):
 	p.ship_state.apparent_velocity = vel
 	
 	# Modify origin rebase limit.
-	if vel > p.engine_opts.rebase_limit_margin*p.engine_opts.rebase_lag:
-		p.global_space.rebase_limit = round(vel*p.engine_opts.rebase_lag)
+	if vel > p.common_engine.rebase_limit_margin*p.common_engine.rebase_lag:
+		p.global_space.rebase_limit = round(vel*p.common_engine.rebase_lag)
 	
 	state.add_central_force(-global_transform.basis.z* p.ship_state.acceleration* p.ship_state.acceleration)
 	
@@ -86,8 +86,8 @@ func init_ship():
 	self.custom_integrator = true
 	self.can_sleep = false
 	self.mass = self.ship_mass
-	self.linear_damp = p.engine_opts.ship_linear_damp
-	self.angular_damp = p.engine_opts.ship_angular_damp
+	self.linear_damp = p.common_engine.ship_linear_damp
+	self.angular_damp = p.common_engine.ship_angular_damp
 	adjust_exhaust()
 
 func adjust_exhaust():

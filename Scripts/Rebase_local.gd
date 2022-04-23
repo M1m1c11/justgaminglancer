@@ -20,10 +20,7 @@ func _ready():
 # SIGNAL PROCESSING
 
 
-# TODO: make realtime origin remapping.
-
-
-
+# TODO: make local space objects re-focusing when new ones enter the local space.
 
 
 func is_entered_local_space(zone):
