@@ -25,14 +25,10 @@ signal sig_zoom_value_changed(value)
 signal sig_accelerate(flag)
 signal sig_engine_kill
 
-# REBASE
-signal rebase_x_plus
-signal rebase_x_minus
-signal rebase_y_plus
-signal rebase_y_minus
-signal rebase_z_plus
-signal rebase_z_minus
-
 # LOCAL SPACE TRIGGERS
-signal sig_entered_local_space(zone)
-signal sig_exited_local_space(zone)
+signal sig_entered_local_space_galaxy(zone)
+signal sig_exited_local_space_galaxy(zone)
+signal sig_entered_local_space_system(zone)
+signal sig_exited_local_space_system(zone)
+signal sig_entered_local_space_stellar(zone)
+signal sig_exited_local_space_stellar(zone)

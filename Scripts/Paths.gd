@@ -21,10 +21,11 @@ onready var input_mouse = get_node("/root/Main/Input/Mouse")
 onready var input_pad = get_node("/root/Main/Input/Pad")
 
 # SIGNALS
-onready var signals = get_node("/root/Main/Signals")
+onready var signals = get_node("/root/Main/Common/Signals")
 
 #STATES
-onready var ship_state = get_node("/root/Main/Ship_state")
+onready var ship_state = get_node("/root/Main/Common/Ship_state")
+onready var space_state = get_node("/root/Main/Common/Space_state")
 
 # UI
 onready var ui = get_node("/root/Main/Container/UI")
@@ -43,4 +44,6 @@ onready var viewport = get_node("/root/Main/Container/View")
 # MISC
 onready var ship = get_node("/root/Main/Container/View/Ship_space/Ship")
 onready var global_space = get_node("/root/Main/Container/View/Global_space")
-onready var local_spaces = get_node("/root/Main/Container/View/Local_spaces")
+onready var local_space_galaxy = get_node("/root/Main/Container/View/Local_space_galaxy")
+onready var local_space_system = get_node("/root/Main/Container/View/Local_space_system")
+onready var local_space_stellar = get_node("/root/Main/Container/View/Local_space_stellar")

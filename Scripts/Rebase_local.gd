@@ -18,25 +18,15 @@ func _ready():
 	# =========================================================================
 
 # SIGNAL PROCESSING
-
-
-# TODO: make local space objects re-focusing when new ones enter the local space.
-
-
 func is_entered_local_space(zone):
 	
+	# Get a child scene.
 	print("Entered zone: ", zone)
-	scene = zone.get_child(1)
+	scene = zone.get_node("Scenes")
 
-	# Add a new local space instance to the batch (duplicate or no?)	
-	# p.local_spaces.add_child(local_space)
-	
-	# Re-center local space on the zone origin.
-	#local_space.global_transform.origin = zone.global_transform.origin
-	
 	# Reparent scene from global to local space.
 	zone.remove_child(scene)
-	p.local_spaces.add_child(scene)
+	p.local_space.add_child(scene)
 	scene.global_transform.origin = zone.global_transform.origin
 	
 	# Enable local space rebase in order to "anchor" it in global space.
@@ -47,34 +37,34 @@ func is_exited_local_space(zone):
 	print("Exited zone: ", zone)
 	
 	# Reparent scene from local to global space (back to zone).
-	p.local_spaces.remove_child(scene)
+	p.local_space.remove_child(scene)
 	zone.add_child(scene)
 	scene.global_transform.origin = zone.global_transform.origin
 	
 	# Remove local space?
 	# TODO: check for overlaps.
-	# p.local_spaces.remove_child(local_space)
+	# p.local_space.remove_child(local_space)
 		
 	# Disable local space rebase.
 	p.global_space.rebase_local = false
 	
 # REBASE
 func is_rebase_x_plus():
-	p.local_spaces.translation.x = p.local_spaces.translation.x-p.global_space.rebase_limit
+	p.local_space.translation.x = p.local_space.translation.x-p.global_space.rebase_limit
 	
 func is_rebase_x_minus():
-	p.local_spaces.translation.x = p.local_spaces.translation.x+p.global_space.rebase_limit
+	p.local_space.translation.x = p.local_space.translation.x+p.global_space.rebase_limit
 
 func is_rebase_y_plus():
-	p.local_spaces.translation.y = p.local_spaces.translation.y-p.global_space.rebase_limit
+	p.local_space.translation.y = p.local_space.translation.y-p.global_space.rebase_limit
 
 func is_rebase_y_minus():
-	p.local_spaces.translation.y = p.local_spaces.translation.y+p.global_space.rebase_limit
+	p.local_space.translation.y = p.local_space.translation.y+p.global_space.rebase_limit
 
 func is_rebase_z_plus():
-	p.local_spaces.translation.z = p.local_spaces.translation.z-p.global_space.rebase_limit
+	p.local_space.translation.z = p.local_space.translation.z-p.global_space.rebase_limit
 	
 func is_rebase_z_minus():
-	p.local_spaces.translation.z = p.local_spaces.translation.z+p.global_space.rebase_limit
+	p.local_space.translation.z = p.local_space.translation.z+p.global_space.rebase_limit
 
 

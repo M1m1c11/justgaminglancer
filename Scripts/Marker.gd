@@ -4,7 +4,7 @@ onready var p = get_tree().get_root().get_node("Main/Paths")
 onready var marker = preload("res://Scenes/UI/Marker.tscn").instance()
 onready var object_name = self.name
 
-enum MarkerRange {GALAXY, SYSTEM, STAR, PLANET}
+enum MarkerRange {GALAXY, SYSTEM, STAR, PLANET, STRUCTURE}
 export(MarkerRange) var marker_range
 
 var marker_added = false
@@ -32,6 +32,10 @@ func _ready():
 			# print("Planet range for object: ", self)
 			marker_visible_min_distance = 0
 			marker_visible_max_distance = 1e13
+		MarkerRange.STRUCTURE:
+			# print("Planet range for object: ", self)
+			marker_visible_min_distance = 0
+			marker_visible_max_distance = 1e8
 
 
 func _physics_process(_delta):

@@ -1,8 +1,9 @@
-[gd_scene load_steps=13 format=2]
+[gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://Assets/Shaders/Solid.gdshader" type="Shader" id=1]
 [ext_resource path="res://Scenes/Environment/Planets/Planet_blue.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Scenes/Environment/Stars/Star_blue.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Scenes/Zones/Local_space_stellar.tscn" type="PackedScene" id=4]
 [ext_resource path="res://Assets/Shaders/Cloud.gdshader" type="Shader" id=6]
 [ext_resource path="res://Scripts/Marker.gd" type="Script" id=7]
 [ext_resource path="res://Scripts/Editor_object.gd" type="Script" id=8]
@@ -83,9 +84,22 @@ transform = Transform( 3.00568, 0, 0, 0, 1.22308, 0, 0, 0, 1.22308, -0.147841, -
 mesh = SubResource( 29 )
 material/0 = SubResource( 15 )
 
-[node name="Planet blue" parent="." instance=ExtResource( 2 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 3.32261e+11, -3.28616e+10, 7.31541e+09 )
+[node name="Planet local" parent="." instance=ExtResource( 4 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2.82763e+11, 0, 1.32519e+11 )
+
+[node name="Shape (must be above all)" parent="Planet local" index="1"]
+transform = Transform( 1e+08, 0, 0, 0, 1e+08, 0, 0, 0, 1e+08, 0, 0, 0 )
+
+[node name="Planet blue" parent="Planet local/Scenes" index="0" instance=ExtResource( 2 )]
 script = ExtResource( 7 )
 marker_range = 3
 
-[node name="Blue star" parent="." instance=ExtResource( 3 )]
+[node name="Star local" parent="." instance=ExtResource( 4 )]
+
+[node name="Shape (must be above all)" parent="Star local" index="1"]
+transform = Transform( 2e+11, 0, 0, 0, 2e+11, 0, 0, 0, 2e+11, 0, 0, 0 )
+
+[node name="Blue star" parent="Star local/Scenes" index="0" instance=ExtResource( 3 )]
+
+[editable path="Planet local"]
+[editable path="Star local"]

@@ -105,7 +105,7 @@ func _on_Button_cumputer_gui_switch_pressed():
 # Keep here
 func _on_Viewport_main_resized():
 	# Has to be called manually bc "Paths/Signals" doesn't initiate at start.
-	get_node("/root/Main/Signals").emit_signal("sig_viewport_update")
+	get_node("/root/Main/Common/Signals").emit_signal("sig_viewport_update")
 	viewport_size = OS.window_size
 
 # DESKTOP / MOBILE GUI

@@ -1,4 +1,4 @@
-[gd_scene load_steps=32 format=2]
+[gd_scene load_steps=36 format=2]
 
 [ext_resource path="res://Scripts/Main.gd" type="Script" id=1]
 [ext_resource path="res://Scenes/Ships/Phoenix_heavy.tscn" type="PackedScene" id=2]
@@ -17,12 +17,16 @@
 [ext_resource path="res://Assets/Shaders/Starsphere_background.gdshader" type="Shader" id=15]
 [ext_resource path="res://Scripts/Paths.gd" type="Script" id=16]
 [ext_resource path="res://Scripts/Marker.gd" type="Script" id=17]
-[ext_resource path="res://Scenes/Zones/Local_space_trigger_zone.tscn" type="PackedScene" id=18]
+[ext_resource path="res://Scenes/Zones/Local_space_galaxy.tscn" type="PackedScene" id=18]
 [ext_resource path="res://Scenes/Environment/Galaxies/Galaxy.tscn" type="PackedScene" id=19]
-[ext_resource path="res://Scripts/Rebase_local.gd" type="Script" id=20]
+[ext_resource path="res://Scripts/Origin_rebase/Rebase_local_galaxy.gd" type="Script" id=20]
+[ext_resource path="res://Scripts/State/Space_state.gd" type="Script" id=21]
+[ext_resource path="res://Scenes/Zones/Local_space_system.tscn" type="PackedScene" id=22]
 [ext_resource path="res://Scripts/Input/Mouse.gd" type="Script" id=23]
 [ext_resource path="res://Scripts/Input/Pad.gd" type="Script" id=24]
+[ext_resource path="res://Scripts/Origin_rebase/Rebase_local_system.gd" type="Script" id=25]
 [ext_resource path="res://Scripts/Common/Viewport.gd" type="Script" id=26]
+[ext_resource path="res://Scripts/Origin_rebase/Rebase_local_stellar.gd" type="Script" id=27]
 [ext_resource path="res://Scripts/UI/Pad.gd" type="Script" id=28]
 [ext_resource path="res://Scripts/UI/Windows.gd" type="Script" id=29]
 [ext_resource path="res://Scripts/UI/Readouts.gd" type="Script" id=30]
@@ -82,9 +86,6 @@ script = ExtResource( 1 )
 [node name="Paths" type="Node" parent="."]
 script = ExtResource( 16 )
 
-[node name="Signals" type="Node" parent="."]
-script = ExtResource( 10 )
-
 [node name="Common" type="Node" parent="."]
 
 [node name="Engine" type="Node" parent="Common"]
@@ -95,6 +96,15 @@ script = ExtResource( 8 )
 
 [node name="Viewport" type="Node" parent="Common"]
 script = ExtResource( 26 )
+
+[node name="Signals" type="Node" parent="Common"]
+script = ExtResource( 10 )
+
+[node name="Ship_state" type="Node" parent="Common"]
+script = ExtResource( 9 )
+
+[node name="Space_state" type="Node" parent="Common"]
+script = ExtResource( 21 )
 
 [node name="Input" type="Node" parent="."]
 script = ExtResource( 6 )
@@ -107,9 +117,6 @@ script = ExtResource( 23 )
 
 [node name="Pad" type="Node" parent="Input"]
 script = ExtResource( 24 )
-
-[node name="Ship_state" type="Node" parent="."]
-script = ExtResource( 9 )
 
 [node name="Container" type="ViewportContainer" parent="."]
 anchor_right = 1.0
@@ -160,30 +167,44 @@ script = ExtResource( 5 )
 
 [node name="Do not translate" type="Node" parent="Container/View/Global_space"]
 
-[node name="Galaxy local space" parent="Container/View/Global_space" instance=ExtResource( 18 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 8.36794e+17, 9.6702e+14, -8.80558e+17 )
+[node name="Galaxy local" parent="Container/View/Global_space" instance=ExtResource( 18 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1.26104e+17, 9.6702e+14, -1.23182e+18 )
 
-[node name="Shape (must be above all)" parent="Container/View/Global_space/Galaxy local space" index="0"]
+[node name="Shape (must be above all)" parent="Container/View/Global_space/Galaxy local" index="1"]
 transform = Transform( 1.20147e+18, 0, 0, 0, 2.00245e+17, 0, 0, 0, 1.20147e+18, 0, 0, 0 )
 
-[node name="Galaxy" parent="Container/View/Global_space/Galaxy local space" instance=ExtResource( 19 )]
+[node name="Galaxy" parent="Container/View/Global_space/Galaxy local/Scenes" index="0" instance=ExtResource( 19 )]
 
-[node name="Star system local space" parent="Container/View/Global_space/Galaxy local space" instance=ExtResource( 18 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -5.18152e+17, -1.90371e+14, -1.77522e+17 )
+[node name="System local" parent="Container/View/Global_space/Galaxy local" instance=ExtResource( 22 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -4.34936e+17, 1.26617e+17, -2.23928e+17 )
 
-[node name="Shape (must be above all)" parent="Container/View/Global_space/Galaxy local space/Star system local space" index="0"]
-transform = Transform( 1e+15, 0, 0, 0, 1e+15, 0, 0, 0, 1e+15, 0, 0, 0 )
+[node name="Shape (must be above all)" parent="Container/View/Global_space/Galaxy local/System local" index="1"]
+transform = Transform( 1e+14, 0, 0, 0, 1e+14, 0, 0, 0, 1e+14, 0, 0, 0 )
 
-[node name="Star system" parent="Container/View/Global_space/Galaxy local space/Star system local space" instance=ExtResource( 7 )]
+[node name="Star system" parent="Container/View/Global_space/Galaxy local/System local/Scenes" index="0" instance=ExtResource( 7 )]
 script = ExtResource( 17 )
 marker_range = 1
 
-[node name="Local_spaces" type="Position3D" parent="Container/View"]
+[node name="Local_space_galaxy" type="Position3D" parent="Container/View"]
 script = ExtResource( 20 )
 
-[node name="Do not translate" type="Node" parent="Container/View/Local_spaces"]
+[node name="Do not translate" type="Node" parent="Container/View/Local_space_galaxy"]
 
-[node name="Do not remove" type="Node" parent="Container/View/Local_spaces"]
+[node name="Do not remove" type="Node" parent="Container/View/Local_space_galaxy"]
+
+[node name="Local_space_system" type="Position3D" parent="Container/View"]
+script = ExtResource( 25 )
+
+[node name="Do not translate" type="Node" parent="Container/View/Local_space_system"]
+
+[node name="Do not remove" type="Node" parent="Container/View/Local_space_system"]
+
+[node name="Local_space_stellar" type="Position3D" parent="Container/View"]
+script = ExtResource( 27 )
+
+[node name="Do not translate" type="Node" parent="Container/View/Local_space_stellar"]
+
+[node name="Do not remove" type="Node" parent="Container/View/Local_space_stellar"]
 
 [node name="Ship_space" type="Position3D" parent="Container/View"]
 
@@ -201,5 +222,8 @@ script = ExtResource( 14 )
 
 [node name="Ship" parent="Container/View/Ship_space" instance=ExtResource( 2 )]
 
-[editable path="Container/View/Global_space/Galaxy local space"]
-[editable path="Container/View/Global_space/Galaxy local space/Star system local space"]
+[editable path="Container/View/Global_space/Galaxy local"]
+[editable path="Container/View/Global_space/Galaxy local/System local"]
+[editable path="Container/View/Global_space/Galaxy local/System local/Scenes/Star system"]
+[editable path="Container/View/Global_space/Galaxy local/System local/Scenes/Star system/Planet local"]
+[editable path="Container/View/Global_space/Galaxy local/System local/Scenes/Star system/Star local"]

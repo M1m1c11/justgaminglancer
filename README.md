@@ -16,7 +16,8 @@ https://en.wikipedia.org/wiki/Metric_prefix.
 accelerate rapidly.
 - Space markers are removed from `Debug` overlay.
 - Switched to custom LOD script which is based on zones.
-- Refaxtored stellar objects and their hierarchy for clarity.
+- Refactored stellar objects and their hierarchy for clarity.
+- Implemented multilayer local space, which tackles precision errors in object positioning.
 
 - Further refactoring and tweaks.
 
