@@ -4,9 +4,9 @@
 A space arcade game inspired by Freelancer. Developed in Godot 3 for desktop  
 and mobile (Android) platforms.
 
-[Progress]: Assets/Images/Progress.png "Progress"
+[Progress]: Doc/Images/Progress.png "Progress"
 
-## Recent changelog
+## Recent changelog (since last release)
 - Switched to full-scale stellar bodies (stars and planets are up to scale now).
 - Using `meters` instead of `units` now. Updated distance prefixes according to 
 https://en.wikipedia.org/wiki/Metric_prefix.
@@ -18,11 +18,13 @@ accelerate rapidly.
 - Switched to custom LOD script which is based on zones.
 - Refactored stellar objects and their hierarchy for clarity.
 - Implemented multilayer local space, which tackles precision errors in object positioning.
-
-- Further refactoring and tweaks.
+- Adjusted camera decorations to act as a boundary zone a size of 9e18 to prevent flickering.
+(9e18 seems to be a sort of safe margin for transforms?)
+- Fixed OmniLight and camera flickering (workarounds but robust).
+- Removed unrelated files from within project scope.
+- Removed Calinou's LOD plugin files.
 
 
 ## How to
 You can download one of the pre-compiled binary in the [releases](https://github.com/roalyr/GDTLancer/releases) section.
-
 If you want to open it in editor, then you must use a custom Godot build: https://github.com/roalyr/godot-for-3d-open-worlds

@@ -18,7 +18,7 @@ func is_entered_local_space_galaxy(zone):
 	scenes = zone.get_node("Scenes")
 
 	# Recenter local space origin onto zone for best precision.
-	p.local_space_galaxy.global_transform.origin = zone.global_transform.origin
+	p.local_space_galaxy.global_transform = zone.global_transform
 
 	# Reparent scenes from global to local space.
 	zone.remove_child(scenes)
@@ -31,4 +31,4 @@ func is_exited_local_space_galaxy(zone):
 	# Reparent scenes from local to global space (back to zone).
 	p.local_space_galaxy.remove_child(scenes)
 	zone.add_child(scenes)
-	scenes.global_transform.origin = zone.global_transform.origin
+	scenes.global_transform = zone.global_transform

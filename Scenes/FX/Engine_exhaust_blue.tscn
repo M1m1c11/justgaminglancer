@@ -62,13 +62,9 @@ shader_param/proximity_fade_distance = 0.1
 [node name="Engine_exhaust_blue" type="Position3D"]
 
 [node name="Engine_exhaust_light" type="OmniLight" parent="."]
-light_color = Color( 0.968627, 0.6, 1, 1 )
-light_energy = 0.05
-omni_range = 500.0
-omni_attenuation = 50.0
-__meta__ = {
-"_edit_lock_": true
-}
+light_color = Color( 1, 0.321569, 0.447059, 1 )
+omni_range = 30.0
+omni_attenuation = 4.0
 
 [node name="Engine_exhaust_shapes" type="Spatial" parent="."]
 __meta__ = {

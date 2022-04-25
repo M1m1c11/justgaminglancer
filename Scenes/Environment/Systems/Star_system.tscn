@@ -97,7 +97,7 @@ marker_range = 3
 [node name="Star local" parent="." instance=ExtResource( 4 )]
 
 [node name="Shape (must be above all)" parent="Star local" index="1"]
-transform = Transform( 2e+11, 0, 0, 0, 2e+11, 0, 0, 0, 2e+11, 0, 0, 0 )
+transform = Transform( 1e+11, 0, 0, 0, 1e+11, 0, 0, 0, 1e+11, 0, 0, 0 )
 
 [node name="Blue star" parent="Star local/Scenes" index="0" instance=ExtResource( 3 )]
 

@@ -1,8 +1,8 @@
 extends Node
 
 # CONSTANTS
-const camera_far = 1e20 # Engine hard cap.
-const camera_near = 0.01 # Engine hard cap.
+const camera_far = 9e18 # 9e18 is a safe cap.
+const camera_near = 0.01 # base value.
 const camera_fov = 60 # Initial value.
 const camera_inertia_factor = 1.1 # 1.05 ... 1.5 Affects camera inertia.
 const camera_sensitivity = 3

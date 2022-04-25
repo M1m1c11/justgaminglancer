@@ -1,7 +1,6 @@
-[gd_scene load_steps=19 format=2]
+[gd_scene load_steps=18 format=2]
 
 [ext_resource path="res://Assets/Models_for_importing/Ships/Phoenix_heavy.glb" type="PackedScene" id=1]
-[ext_resource path="res://Scripts/Camera_rig.gd" type="Script" id=2]
 [ext_resource path="res://Scripts/Ship.gd" type="Script" id=3]
 [ext_resource path="res://Scenes/FX/Engine_exhaust_blue.tscn" type="PackedScene" id=4]
 [ext_resource path="res://Scenes/UI/Camera_rig.tscn" type="PackedScene" id=5]
@@ -110,7 +109,6 @@ script = ExtResource( 7 )
 
 [node name="Camera_rig" parent="." instance=ExtResource( 5 )]
 transform = Transform( 10, 0, 0, 0, 10, 0, 0, 0, 10, 0, 0, 0 )
-script = ExtResource( 2 )
 
 [node name="Engines" type="Spatial" parent="."]
 

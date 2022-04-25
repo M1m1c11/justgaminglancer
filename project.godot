@@ -8,60 +8,27 @@
 
 config_version=4
 
-_global_script_classes=[ {
-"base": "CPUParticles",
-"class": "LODCPUParticles",
-"language": "GDScript",
-"path": "res://addons/lod/lod_cpu_particles.gd"
-}, {
-"base": "OmniLight",
-"class": "LODOmniLight",
-"language": "GDScript",
-"path": "res://addons/lod/lod_omni_light.gd"
-}, {
-"base": "Particles",
-"class": "LODParticles",
-"language": "GDScript",
-"path": "res://addons/lod/lod_particles.gd"
-}, {
-"base": "Spatial",
-"class": "LODSpatial",
-"language": "GDScript",
-"path": "res://addons/lod/lod_spatial.gd"
-}, {
-"base": "SpotLight",
-"class": "LODSpotLight",
-"language": "GDScript",
-"path": "res://addons/lod/lod_spot_light.gd"
-} ]
-_global_script_class_icons={
-"LODCPUParticles": "res://addons/lod/lod_cpu_particles.svg",
-"LODOmniLight": "res://addons/lod/lod_omni_light.svg",
-"LODParticles": "res://addons/lod/lod_particles.svg",
-"LODSpatial": "res://addons/lod/lod_spatial.svg",
-"LODSpotLight": "res://addons/lod/lod_spot_light.svg"
-}
-
 [application]
 
 config/name="GDTLancer"
-config/description="A space shooter arcade inspired by Freelancer."
+config/description="A space game."
 run/main_scene="res://Scenes/Main.tscn"
 run/delta_smoothing=false
 boot_splash/image="res://Assets/Images/Splash.png"
 config/icon="res://Assets/Images/Icon.png"
+config/windows_native_icon="res://Assets/Images/Icon.ico"
 
 [display]
 
 window/stretch/aspect="keep"
 
-[editor_plugins]
-
-enabled=PoolStringArray( "res://addons/lod/plugin.cfg" )
-
 [global]
 
 touch=false
+
+[input_devices]
+
+pointing/emulate_touch_from_mouse=true
 
 [physics]
 
@@ -74,6 +41,7 @@ common/enable_pause_aware_picking=true
 
 [rendering]
 
+misc/lossless_compression/force_png=true
 quality/directional_shadow/size=2048
 quality/shadow_atlas/size=2048
 quality/reflections/texture_array_reflections=false
@@ -81,7 +49,8 @@ quality/reflections/high_quality_ggx=false
 quality/reflections/irradiance_max_size=64
 quality/shading/force_vertex_shading.mobile=false
 quality/shading/force_lambert_over_burley.mobile=false
-gles3/shaders/shader_compilation_mode=1
+quality/shading/force_blinn_over_ggx.mobile=false
+quality/filters/anisotropic_filter_level=1
 cpu_lightmapper/quality/low_quality_ray_count=32
 cpu_lightmapper/quality/medium_quality_ray_count=64
 cpu_lightmapper/quality/high_quality_ray_count=128

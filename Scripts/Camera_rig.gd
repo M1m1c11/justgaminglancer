@@ -14,16 +14,18 @@ var camera_push_y = 0
 # Chase camera positions.
 var vert = 0
 var horiz = 0
-var velocity_factor = 0
+
 # Objects.
 var mouse_vector = Vector2(0,0)
 
+# TODO: move to common?
 var camera_fov_velocity_factor = 1e-5
 var camera_fov_max_delta = 100
 
+var camera_z_near_velocity_factor = 1e-5
+
 # Paths node.
 onready var p = get_tree().get_root().get_node("Main/Paths")
-onready var camera_fov_default = p.camera.fov
 
 func _ready():
 	# ============================ Initialize nodes ===========================
@@ -88,6 +90,7 @@ func chase_camera(mv, delta):
 	var init_tilt = Vector2($Camera.rotation.x, $Camera.rotation.y)
 	var init_push = Vector2(0.0, 0.0)
 	var init_fov = Vector2(0.0, 0.0)
+	var init_near = Vector2(0.0, 0.0)
 	# $Camera.rotation.x - vertical, $Camera.rotation.y - horizontal
 	# UP - DOWN
 	if mv.y < 0:
@@ -108,19 +111,20 @@ func chase_camera(mv, delta):
 			$Camera.rotation.y
 			)/(p.ship.camera_chase_tilt_vert_damp_right)
 			
-	# FORWARD - velocity_factor
-	velocity_factor = p.ship_state.ship_linear_velocity
 	
 	var fin_tilt = Vector2(vert, horiz)
-	var fin_push = Vector2(velocity_factor, 0.0)
-	var fin_fov = Vector2(velocity_factor, 0.0)
-	
+	var fin_push = Vector2(p.ship_state.ship_linear_velocity, 0.0)
+	var fin_fov = Vector2(p.ship_state.ship_linear_velocity, 0.0)
+	var fin_near = Vector2(p.ship_state.ship_linear_velocity, 0.0)
+		
 	var tmp_tilt = init_tilt.linear_interpolate(fin_tilt, delta
 		* p.ship.camera_tilt_velocity_factor)
 	var tmp_push = init_push.linear_interpolate(fin_push, pow(delta
 		*p.ship.camera_push_velocity_factor,3))
 	var tmp_fov = init_fov.linear_interpolate(fin_fov, delta
 		* camera_fov_velocity_factor)
+	var tmp_near = init_near.linear_interpolate(fin_near, delta
+		* camera_z_near_velocity_factor)
 		
 	# Prevent camera sliding forward
 	# if tmp_push.x < camera_min_zoom:
@@ -139,9 +143,14 @@ func chase_camera(mv, delta):
 	$Camera.translation.z = camera_push_z
 	$Camera.translation.y = camera_push_y
 	
-	p.camera.fov = camera_fov_default \
+	# This simulates warp effect and hides ship model.
+	p.camera.fov = p.common_camera.camera_fov \
 		+ clamp(5*log(tmp_fov.x), 0.0, camera_fov_max_delta)
-	# print(p.camera.fov)
+	
+	# Increasing camera Z near value prevents flickering.
+	p.camera.near = p.common_camera.camera_near + tmp_near.x
+	
+	# print(p.camera.near)
 	
 	# Tilt motion
 	$Camera.rotation.x = tmp_tilt.x

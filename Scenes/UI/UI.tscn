@@ -439,7 +439,6 @@ __meta__ = {
 }
 
 [node name="Options_menu" type="Control" parent="Controls_touchscreen"]
-visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 __meta__ = {
@@ -507,23 +506,6 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Button_text_panel" type="Button" parent="Controls_touchscreen/Options_menu"]
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-margin_left = 40.0
-margin_top = -116.0
-margin_right = 128.0
-margin_bottom = -34.0
-theme = ExtResource( 10 )
-toggle_mode = true
-keep_pressed_outside = true
-text = "Info"
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
 [node name="Button_close_options" type="Button" parent="Controls_touchscreen/Options_menu"]
 anchor_left = 0.5
 anchor_top = 0.5
@@ -572,6 +554,7 @@ __meta__ = {
 }
 
 [node name="Main_controls" type="Control" parent="Controls_touchscreen"]
+visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 __meta__ = {
@@ -751,7 +734,6 @@ pressed = ExtResource( 8 )
 [connection signal="toggled" from="Controls_touchscreen/Options_menu/Button_debug" to="." method="_on_Button_debug_toggled"]
 [connection signal="pressed" from="Controls_touchscreen/Options_menu/Button_quit" to="." method="_on_Button_quit_pressed"]
 [connection signal="toggled" from="Controls_touchscreen/Options_menu/Button_screen_filter" to="." method="_on_Button_screen_filter_toggled"]
-[connection signal="toggled" from="Controls_touchscreen/Options_menu/Button_text_panel" to="." method="_on_Button_text_panel_toggled"]
 [connection signal="pressed" from="Controls_touchscreen/Options_menu/Button_close_options" to="." method="_on_Button_close_options_pressed"]
 [connection signal="value_changed" from="Controls_touchscreen/Options_menu/Slider_screen_res2" to="." method="_on_Slider_screen_res_value_changed"]
 [connection signal="value_changed" from="Controls_touchscreen/Main_controls/Slider_zoom" to="." method="_on_Slider_zoom_value_changed"]
