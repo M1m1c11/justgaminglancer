@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/stick.png-4571900ebdd1f5aca2de2c9971ec7b69.stex"
+path="res://.import/galaxy.svg-d5390d451e67260a01468a33847bddc2.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/UI_images/stick.png"
-dest_files=[ "res://.import/stick.png-4571900ebdd1f5aca2de2c9971ec7b69.stex" ]
+source_file="res://Assets/UI_images/svg/icons/galaxy.svg"
+dest_files=[ "res://.import/galaxy.svg-d5390d451e67260a01468a33847bddc2.stex" ]
 
 [params]
 

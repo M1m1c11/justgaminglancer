@@ -41,9 +41,12 @@ onready var ui_windows = get_node("/root/Main/Container/UI/Windows")
 # VIEWPORT
 onready var viewport = get_node("/root/Main/Container/View")
 
-# MISC
+# SHIP
 onready var ship = get_node("/root/Main/Container/View/Ship_space/Ship")
+
+# SPACE
 onready var global_space = get_node("/root/Main/Container/View/Global_space")
 onready var local_space_galaxy = get_node("/root/Main/Container/View/Local_space_galaxy")
 onready var local_space_system = get_node("/root/Main/Container/View/Local_space_system")
 onready var local_space_stellar = get_node("/root/Main/Container/View/Local_space_stellar")
+onready var local_space_planetary = get_node("/root/Main/Container/View/Local_space_planetary")

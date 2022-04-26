@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/ekill.png-e7c5212d77ed0647c7f08df143a0f9a9.stex"
+path="res://.import/options.png-789ca28e3b2456756f3f62f3b8f9d7e1.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/UI_images/ekill.png"
-dest_files=[ "res://.import/ekill.png-e7c5212d77ed0647c7f08df143a0f9a9.stex" ]
+source_file="res://Assets/UI_images/png/buttons/options.png"
+dest_files=[ "res://.import/options.png-789ca28e3b2456756f3f62f3b8f9d7e1.stex" ]
 
 [params]
 

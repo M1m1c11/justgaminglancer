@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/options.png-460ae2263b446907863c87202f7eceea.stex"
+path="res://.import/stick.png-7f2eaaa1577e63c951e92e367f88c5a1.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/UI_images/options.png"
-dest_files=[ "res://.import/options.png-460ae2263b446907863c87202f7eceea.stex" ]
+source_file="res://Assets/UI_images/png/buttons/stick.png"
+dest_files=[ "res://.import/stick.png-7f2eaaa1577e63c951e92e367f88c5a1.stex" ]
 
 [params]
 

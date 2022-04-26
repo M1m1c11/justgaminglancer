@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/deccel.png-7c3dde92f2a46828c0696fcd1785d09f.stex"
+path="res://.import/ui_opacity.png-b8c52256ba84afa982cb23d07268c174.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/UI_images/deccel.png"
-dest_files=[ "res://.import/deccel.png-7c3dde92f2a46828c0696fcd1785d09f.stex" ]
+source_file="res://Assets/UI_images/png/buttons/ui_opacity.png"
+dest_files=[ "res://.import/ui_opacity.png-b8c52256ba84afa982cb23d07268c174.stex" ]
 
 [params]
 

@@ -1,5 +1,5 @@
 extends Area
-class_name StellarLocalSpace, "res://Assets/UI_images/svg/icons/star.svg"
+class_name PlanetLocalSpace, "res://Assets/UI_images/svg/icons/planet_rings.svg"
 
 onready var p = get_tree().get_root().get_node("Main/Paths")
 
@@ -8,8 +8,8 @@ onready var p = get_tree().get_root().get_node("Main/Paths")
 # Which should be used later on.
 func _on_Local_space_trigger_zone_body_entered(_body):
 	if _body == p.ship: 
-		p.signals.emit_signal("sig_entered_local_space_stellar", self)
+		p.signals.emit_signal("sig_entered_local_space_planetary", self)
 
 func _on_Local_space_trigger_zone_body_exited(_body):
 	if _body == p.ship: 
-		p.signals.emit_signal("sig_exited_local_space_stellar", self)
+		p.signals.emit_signal("sig_exited_local_space_planetary", self)

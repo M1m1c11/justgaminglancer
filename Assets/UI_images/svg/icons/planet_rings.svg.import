@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/ui_opacity.png-5ab9c77aecd3b1dbb4ed901a96a715ca.stex"
+path="res://.import/planet_rings.svg-519996d9f9194d640416abd5b1a0195d.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/UI_images/ui_opacity.png"
-dest_files=[ "res://.import/ui_opacity.png-5ab9c77aecd3b1dbb4ed901a96a715ca.stex" ]
+source_file="res://Assets/UI_images/svg/icons/planet_rings.svg"
+dest_files=[ "res://.import/planet_rings.svg-519996d9f9194d640416abd5b1a0195d.stex" ]
 
 [params]
 

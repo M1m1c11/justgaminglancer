@@ -23,6 +23,8 @@ accelerate rapidly.
 - Fixed OmniLight and camera flickering (workarounds but robust).
 - Removed unrelated files from within project scope.
 - Removed Calinou's LOD plugin files.
+- New dynamic star shader. Stars are much less in polycount now.
+- Added icons for custom zone nodes.
 
 
 ## How to

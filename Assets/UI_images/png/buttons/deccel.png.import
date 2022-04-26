@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/accel.png-cf6ab6c82b65643b72a25f8d36af48e0.stex"
+path="res://.import/deccel.png-b6d5396ca46f31de70e8cda45673d78c.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/UI_images/accel.png"
-dest_files=[ "res://.import/accel.png-cf6ab6c82b65643b72a25f8d36af48e0.stex" ]
+source_file="res://Assets/UI_images/png/buttons/deccel.png"
+dest_files=[ "res://.import/deccel.png-b6d5396ca46f31de70e8cda45673d78c.stex" ]
 
 [params]
 
