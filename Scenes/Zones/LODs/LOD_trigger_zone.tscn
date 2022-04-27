@@ -4,7 +4,7 @@
 
 [sub_resource type="SphereShape" id=79]
 
-[node name="LODs" type="Spatial"]
+[node name="LOD_trigger_zone" type="Spatial"]
 script = ExtResource( 1 )
 
 [node name="Do not rename or edit the shape or area nodes" type="Node" parent="."]

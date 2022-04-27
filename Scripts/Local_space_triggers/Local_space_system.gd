@@ -1,5 +1,6 @@
 extends Area
-class_name SystemLocalSpace, "res://Assets/UI_images/svg/icons/system.svg"
+class_name SystemLocalSpace, "res://Assets/UI_images/SVG/icons/system.svg"
+
 onready var p = get_tree().get_root().get_node("Main/Paths")
 
 		

@@ -1,6 +1,6 @@
 [gd_scene load_steps=19 format=2]
 
-[ext_resource path="res://Assets/Shaders/Solid.gdshader" type="Shader" id=1]
+[ext_resource path="res://Assets/Shaders/Solid/Solid.gdshader" type="Shader" id=1]
 [ext_resource path="res://Scripts/Ship.gd" type="Script" id=2]
 [ext_resource path="res://Scenes/FX/Engine_exhaust_blue.tscn" type="PackedScene" id=3]
 

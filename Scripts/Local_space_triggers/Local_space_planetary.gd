@@ -1,5 +1,5 @@
 extends Area
-class_name PlanetLocalSpace, "res://Assets/UI_images/svg/icons/planet_rings.svg"
+class_name PlanetLocalSpace, "res://Assets/UI_images/SVG/icons/planet_rings.svg"
 
 onready var p = get_tree().get_root().get_node("Main/Paths")
 

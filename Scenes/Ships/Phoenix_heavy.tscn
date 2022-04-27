@@ -1,10 +1,11 @@
 [gd_scene load_steps=18 format=2]
 
-[ext_resource path="res://Assets/Models_for_importing/Ships/Phoenix_heavy.glb" type="PackedScene" id=1]
+[ext_resource path="res://Assets/Models/Ships/Phoenix_heavy.glb" type="PackedScene" id=1]
+[ext_resource path="res://Scenes/Materials/Radiator.tres" type="Material" id=2]
 [ext_resource path="res://Scripts/Ship.gd" type="Script" id=3]
 [ext_resource path="res://Scenes/FX/Engine_exhaust_blue.tscn" type="PackedScene" id=4]
-[ext_resource path="res://Scenes/UI/Camera_rig.tscn" type="PackedScene" id=5]
-[ext_resource path="res://Assets/Shaders/Solid.gdshader" type="Shader" id=6]
+[ext_resource path="res://Scenes/Camera_rig.tscn" type="PackedScene" id=5]
+[ext_resource path="res://Assets/Shaders/Solid/Solid.gdshader" type="Shader" id=6]
 [ext_resource path="res://Scripts/Editor_object.gd" type="Script" id=7]
 
 [sub_resource type="PhysicsMaterial" id=76]
@@ -63,16 +64,6 @@ shader_param/emission = Color( 0, 0, 0, 1 )
 shader_param/specular = 0.5
 shader_param/metallic = 0.0
 shader_param/roughness = 0.5
-shader_param/rim = 0.01
-shader_param/rim_tint = 0.0
-
-[sub_resource type="ShaderMaterial" id=91]
-shader = ExtResource( 6 )
-shader_param/albedo = Color( 0, 0, 0, 1 )
-shader_param/emission = Color( 0.34902, 0, 0, 1 )
-shader_param/specular = 0.0
-shader_param/metallic = 0.0
-shader_param/roughness = 0.97
 shader_param/rim = 0.01
 shader_param/rim_tint = 0.0
 
@@ -137,7 +128,7 @@ material/1 = SubResource( 87 )
 material/2 = SubResource( 88 )
 material/3 = SubResource( 89 )
 material/4 = SubResource( 90 )
-material/5 = SubResource( 91 )
+material/5 = ExtResource( 2 )
 material/6 = SubResource( 92 )
 material/7 = SubResource( 93 )
 

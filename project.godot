@@ -30,10 +30,10 @@ _global_script_classes=[ {
 "path": "res://Scripts/Local_space_triggers/Local_space_system.gd"
 } ]
 _global_script_class_icons={
-"GalaxyLocalSpace": "res://Assets/UI_images/svg/icons/galaxy.svg",
-"PlanetLocalSpace": "res://Assets/UI_images/svg/icons/planet_rings.svg",
-"StellarLocalSpace": "res://Assets/UI_images/svg/icons/star.svg",
-"SystemLocalSpace": "res://Assets/UI_images/svg/icons/system.svg"
+"GalaxyLocalSpace": "res://Assets/UI_images/SVG/icons/galaxy.svg",
+"PlanetLocalSpace": "res://Assets/UI_images/SVG/icons/planet_rings.svg",
+"StellarLocalSpace": "res://Assets/UI_images/SVG/icons/star.svg",
+"SystemLocalSpace": "res://Assets/UI_images/SVG/icons/system.svg"
 }
 
 [application]

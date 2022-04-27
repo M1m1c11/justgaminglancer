@@ -1,5 +1,5 @@
 extends Area
-class_name StellarLocalSpace, "res://Assets/UI_images/svg/icons/star.svg"
+class_name StellarLocalSpace, "res://Assets/UI_images/SVG/icons/star.svg"
 
 onready var p = get_tree().get_root().get_node("Main/Paths")
 

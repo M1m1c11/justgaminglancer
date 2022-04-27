@@ -19,5 +19,7 @@ shape = SubResource( 79 )
 
 [node name="Scenes" type="Spatial" parent="."]
 
+[node name="Add marker to scene (set level)" type="Node" parent="Scenes"]
+
 [connection signal="body_entered" from="." to="." method="_on_Local_space_trigger_zone_body_entered"]
 [connection signal="body_exited" from="." to="." method="_on_Local_space_trigger_zone_body_exited"]

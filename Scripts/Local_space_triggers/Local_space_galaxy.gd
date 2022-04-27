@@ -1,5 +1,5 @@
 extends Area
-class_name GalaxyLocalSpace, "res://Assets/UI_images/svg/icons/galaxy.svg"
+class_name GalaxyLocalSpace, "res://Assets/UI_images/SVG/icons/galaxy.svg"
 
 onready var p = get_tree().get_root().get_node("Main/Paths")
 
