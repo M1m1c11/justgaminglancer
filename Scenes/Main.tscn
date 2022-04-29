@@ -1,4 +1,4 @@
-[gd_scene load_steps=37 format=2]
+[gd_scene load_steps=34 format=2]
 
 [ext_resource path="res://Scripts/Main.gd" type="Script" id=1]
 [ext_resource path="res://Scenes/Ships/Phoenix_heavy.tscn" type="PackedScene" id=2]
@@ -27,9 +27,6 @@
 [ext_resource path="res://Scripts/Origin_rebase/Rebase_local_system.gd" type="Script" id=25]
 [ext_resource path="res://Scripts/Common/Viewport.gd" type="Script" id=26]
 [ext_resource path="res://Scripts/Origin_rebase/Rebase_local_stellar.gd" type="Script" id=27]
-[ext_resource path="res://Scripts/UI/Pad.gd" type="Script" id=28]
-[ext_resource path="res://Scripts/UI/Windows.gd" type="Script" id=29]
-[ext_resource path="res://Scripts/UI/Readouts.gd" type="Script" id=30]
 [ext_resource path="res://Scripts/Origin_rebase/Rebase_local_planetary.gd" type="Script" id=31]
 [ext_resource path="res://Scenes/Environment/Systems/Star_system_red.tscn" type="PackedScene" id=32]
 
@@ -126,93 +123,94 @@ stretch = true
 
 [node name="UI" parent="Container" instance=ExtResource( 3 )]
 
-[node name="Debug" type="Node" parent="Container/UI"]
-
-[node name="Readouts" type="Node" parent="Container/UI"]
-script = ExtResource( 30 )
-
-[node name="Desktop_buttons" type="Node" parent="Container/UI"]
-
-[node name="Mobile_buttons" type="Node" parent="Container/UI"]
-
-[node name="Pad" type="Node" parent="Container/UI/Mobile_buttons"]
-script = ExtResource( 28 )
-
-[node name="Windows" type="Node" parent="Container/UI"]
-script = ExtResource( 29 )
-
-[node name="View" type="Viewport" parent="Container"]
+[node name="Viewport" type="Viewport" parent="Container"]
 size = Vector2( 1024, 600 )
 handle_input_locally = false
 render_target_update_mode = 3
 script = ExtResource( 13 )
 
-[node name="Environment" type="WorldEnvironment" parent="Container/View"]
+[node name="Environment" type="WorldEnvironment" parent="Container/Viewport"]
 environment = ExtResource( 11 )
 
-[node name="Global_space" type="Position3D" parent="Container/View"]
+[node name="Global_space" type="Position3D" parent="Container/Viewport"]
 script = ExtResource( 5 )
+__meta__ = {
+"_edit_lock_": true
+}
 
-[node name="Do not translate" type="Node" parent="Container/View/Global_space"]
+[node name="Do not translate, do not remove" type="Node" parent="Container/Viewport/Global_space"]
 
-[node name="Galaxy local" parent="Container/View/Global_space" instance=ExtResource( 18 )]
-transform = Transform( 1, -3.07301e-08, 1.26253e-08, 3.07301e-08, 0.711168, -0.703022, 1.26253e-08, 0.703022, 0.711168, 0, 2.77657e+17, -3.17322e+17 )
+[node name="Galaxy local" parent="Container/Viewport/Global_space" instance=ExtResource( 18 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 7.47879e+17, 2.73504e+14, -3.38627e+17 )
 
-[node name="Zone shape" parent="Container/View/Global_space/Galaxy local" index="1"]
+[node name="Zone shape" parent="Container/Viewport/Global_space/Galaxy local" index="1"]
 transform = Transform( 1.44e+18, 0, 0, 0, 2.88e+17, 0, 0, 0, 1.44e+18, 0, 0, 0 )
 
-[node name="Galaxy" parent="Container/View/Global_space/Galaxy local/Scenes" index="0" instance=ExtResource( 19 )]
+[node name="Galaxy" parent="Container/Viewport/Global_space/Galaxy local/Scenes" index="0" instance=ExtResource( 19 )]
+transform = Transform( 1, 6.21725e-15, -3.55271e-15, -2.66454e-15, 1, 0, -1.77636e-15, 0, 1, 0, 0, 0 )
 
-[node name="System blue" parent="Container/View/Global_space/Galaxy local/Scenes" index="1" instance=ExtResource( 22 )]
-transform = Transform( 1, 4.44089e-15, -1.77636e-15, -8.88178e-16, 1, 0, -8.88178e-16, 0, 1, -4.34936e+17, 1.26617e+17, -2.23928e+17 )
+[node name="System blue" parent="Container/Viewport/Global_space/Galaxy local/Scenes" index="1" instance=ExtResource( 22 )]
+transform = Transform( 1, 9.76996e-15, -5.32907e-15, -5.32907e-15, 1, 0, 8.88178e-16, 0, 1, -4.05644e+17, 5.12474e+10, 4.78997e+17 )
 
-[node name="Star system Blue" parent="Container/View/Global_space/Galaxy local/Scenes/System blue/Scenes" index="0" instance=ExtResource( 7 )]
+[node name="Star system Blue" parent="Container/Viewport/Global_space/Galaxy local/Scenes/System blue/Scenes" index="0" instance=ExtResource( 7 )]
 script = ExtResource( 17 )
 marker_range = 1
 
-[node name="System red" parent="Container/View/Global_space/Galaxy local/Scenes" index="2" instance=ExtResource( 22 )]
-transform = Transform( 1, 3.37508e-14, -9.76996e-15, -7.10543e-15, 1, 8.9407e-08, -1.77636e-15, -8.9407e-08, 1, 9.92206e+17, 1.2673e+16, -4.3131e+17 )
+[node name="System red" parent="Container/Viewport/Global_space/Galaxy local/Scenes" index="2" instance=ExtResource( 22 )]
+transform = Transform( 1, 4.35207e-14, -1.42109e-14, -7.10543e-15, 1, 8.9407e-08, -1.77636e-15, -8.9407e-08, 1, 9.92206e+17, 1.2673e+16, -4.3131e+17 )
 
-[node name="Zone shape" parent="Container/View/Global_space/Galaxy local/Scenes/System red" index="1"]
+[node name="Zone shape" parent="Container/Viewport/Global_space/Galaxy local/Scenes/System red" index="1"]
 transform = Transform( 1e+13, 0, 0, 0, 1e+13, 0, 0, 0, 1e+13, 0, 0, 0 )
 
-[node name="Star system Red" parent="Container/View/Global_space/Galaxy local/Scenes/System red/Scenes" index="0" instance=ExtResource( 32 )]
+[node name="Star system Red" parent="Container/Viewport/Global_space/Galaxy local/Scenes/System red/Scenes" index="0" instance=ExtResource( 32 )]
 script = ExtResource( 17 )
 marker_range = 1
 
-[node name="Local_space_galaxy" type="Position3D" parent="Container/View"]
+[node name="Local_space_galaxy" type="Position3D" parent="Container/Viewport"]
 script = ExtResource( 20 )
+__meta__ = {
+"_edit_lock_": true
+}
 
-[node name="Do not translate" type="Node" parent="Container/View/Local_space_galaxy"]
+[node name="Do not translate and do not remove" type="Node" parent="Container/Viewport/Local_space_galaxy"]
 
-[node name="Do not remove" type="Node" parent="Container/View/Local_space_galaxy"]
-
-[node name="Local_space_system" type="Position3D" parent="Container/View"]
+[node name="Local_space_system" type="Position3D" parent="Container/Viewport"]
 script = ExtResource( 25 )
+__meta__ = {
+"_edit_lock_": true
+}
 
-[node name="Do not translate" type="Node" parent="Container/View/Local_space_system"]
+[node name="Do not translate and do not remove" type="Node" parent="Container/Viewport/Local_space_system"]
 
-[node name="Do not remove" type="Node" parent="Container/View/Local_space_system"]
-
-[node name="Local_space_stellar" type="Position3D" parent="Container/View"]
+[node name="Local_space_stellar" type="Position3D" parent="Container/Viewport"]
 script = ExtResource( 27 )
+__meta__ = {
+"_edit_lock_": true
+}
 
-[node name="Do not translate" type="Node" parent="Container/View/Local_space_stellar"]
+[node name="Do not translate and do not remove" type="Node" parent="Container/Viewport/Local_space_stellar"]
 
-[node name="Do not remove" type="Node" parent="Container/View/Local_space_stellar"]
-
-[node name="Local_space_planetary" type="Position3D" parent="Container/View"]
+[node name="Local_space_planetary" type="Position3D" parent="Container/Viewport"]
 script = ExtResource( 31 )
+__meta__ = {
+"_edit_lock_": true
+}
 
-[node name="Do not translate" type="Node" parent="Container/View/Local_space_planetary"]
+[node name="Do not translate and do not remove" type="Node" parent="Container/Viewport/Local_space_planetary"]
 
-[node name="Do not remove" type="Node" parent="Container/View/Local_space_planetary"]
+[node name="Ship_space" type="Position3D" parent="Container/Viewport"]
+__meta__ = {
+"_edit_lock_": true
+}
 
-[node name="Ship_space" type="Position3D" parent="Container/View"]
+[node name="Do not translate and do not remove" type="Node" parent="Container/Viewport/Ship_space"]
 
-[node name="Camera_decorations" type="Spatial" parent="Container/View/Ship_space"]
+[node name="Camera_decorations" type="Spatial" parent="Container/Viewport/Ship_space"]
+__meta__ = {
+"_edit_lock_": true
+}
 
-[node name="Background lights 1500 9e18" type="MeshInstance" parent="Container/View/Ship_space/Camera_decorations"]
+[node name="Background lights 1500 9e18" type="MeshInstance" parent="Container/Viewport/Ship_space/Camera_decorations"]
 transform = Transform( 9.22337e+18, 0, 0, 0, 9.22337e+18, 0, 0, 0, 9.22337e+18, 0, 0, 0 )
 mesh = SubResource( 34 )
 skeleton = NodePath("../../../Global_space")
@@ -220,17 +218,24 @@ material/0 = SubResource( 35 )
 material/1 = SubResource( 36 )
 material/2 = SubResource( 37 )
 script = ExtResource( 14 )
+__meta__ = {
+"_edit_lock_": true
+}
 
-[node name="OmniLight 9e18 (anti-flicker)" type="OmniLight" parent="Container/View/Ship_space/Camera_decorations"]
+[node name="OmniLight 9e18 (anti-flicker)" type="OmniLight" parent="Container/Viewport/Ship_space/Camera_decorations"]
 layers = 0
 light_color = Color( 0, 0, 0, 1 )
 light_bake_mode = 0
 omni_range = 9e+18
+__meta__ = {
+"_edit_lock_": true
+}
 
-[node name="Do not translate" type="Node" parent="Container/View/Ship_space"]
+[node name="Ship" parent="Container/Viewport/Ship_space" instance=ExtResource( 2 )]
+__meta__ = {
+"_edit_lock_": true
+}
 
-[node name="Ship" parent="Container/View/Ship_space" instance=ExtResource( 2 )]
-
-[editable path="Container/View/Global_space/Galaxy local"]
-[editable path="Container/View/Global_space/Galaxy local/Scenes/System blue"]
-[editable path="Container/View/Global_space/Galaxy local/Scenes/System red"]
+[editable path="Container/Viewport/Global_space/Galaxy local"]
+[editable path="Container/Viewport/Global_space/Galaxy local/Scenes/System blue"]
+[editable path="Container/Viewport/Global_space/Galaxy local/Scenes/System red"]

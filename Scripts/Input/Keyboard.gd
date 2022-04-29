@@ -2,9 +2,6 @@ extends Node
 
 # VARIABLES
 onready var p = get_tree().get_root().get_node("Main/Paths")
-onready var ui_controls_bar = p.ui.get_node("Controls/Control_bar")
-onready var ui_button_turret = p.ui.get_node("Controls/Control_bar/Button_turret")
-onready var ui_gameplay = p.ui.get_node("Gameplay")
 
 func _ready():
 	# ============================ Connect signals ============================
@@ -26,24 +23,13 @@ func handle_input(event):
 			else:
 				p.ship_state.mouse_flight = true
 				p.signals.emit_signal("sig_mouse_flight_on", true)
-		
-		# Show toolbar.
-		if event.pressed and event.scancode == KEY_BACKSPACE:
-			if ui_controls_bar.visible:
-				ui_controls_bar.visible = false
-			else:
-				ui_controls_bar.visible = true
-				
-			if ui_gameplay.visible:
-				ui_gameplay.visible = false
-			else:
-				ui_gameplay.visible = true
+
 				
 		# Turret mode.
 		if event.pressed and event.scancode == KEY_H:
 			if not p.ship_state.turret_mode: 
-				ui_button_turret.pressed = true
-			else: ui_button_turret.pressed = false
+				p.ship_state.turret_mode = true
+			else: p.ship_state.turret_mode = false
 		
 		# Quit the game.
 		# TODO: remove keyboard mapping later on.

@@ -16,17 +16,13 @@ onready var p = get_tree().get_root().get_node("Main/Paths")
 
 onready var mouse_vector_debug = p.ui.get_node("Gameplay/Debug/Mouse_vector")
 
-onready var touchscreen_buttons = p.ui.get_node("Controls_touchscreen/Main_controls/Touch_buttons_container")
 onready var apparent_velocity = p.ui.get_node("Gameplay/Apparent_velocity")
 onready var apparent_velocity_units = p.ui.get_node("Gameplay/Apparent_velocity_units")
 
 
-onready var pad_base = p.ui.get_node("Controls_touchscreen/Main_controls/Pad_base")
-onready var stick = p.ui.get_node("Controls_touchscreen/Main_controls/Pad_base/Stick")
-
 func _ready():
-	p.ui_pad.pad_recenter_stick()
-	p.ui_windows.init_gui()
+	p.ui_paths.common_mobile_buttons_pad.pad_recenter_stick()
+	p.ui_paths.init_gui()
 
 	
 	
@@ -35,7 +31,7 @@ func _ready():
 func _input(event):
 
 	# Duplicated input listening function for the sake of mouse vector drawing.
-	if event is InputEventMouseMotion and p.ui_windows.debug.visible:
+	if event is InputEventMouseMotion and p.ui_paths.debug.visible:
 		# Mouse vector positions.
 		mouse_vector_debug.points[0] = Vector2(viewport_size.x/2, viewport_size.y/2)
 		mouse_vector_debug.points[1] = Vector2(
@@ -44,7 +40,7 @@ func _input(event):
 			)
 	
 func _process(_delta):
-	p.ui_pad.pad_handle_stick()
+	p.ui_paths.common_mobile_buttons_pad.pad_handle_stick()
 	
 	# DEBUG
 	if update_debug_text_on: update_debug_text()
@@ -52,17 +48,17 @@ func _process(_delta):
 	# READOUTS
 	# Adjust displayed speed
 	var speed_val = round(p.ship_state.apparent_velocity)
-	var result_s = p.ui_readouts.get_magnitude_units(speed_val)
+	var result_s = p.ui_paths.common_readouts.get_magnitude_units(speed_val)
 	apparent_velocity.text = str(result_s[0])
 	apparent_velocity_units.text = str(result_s[1])+"/s"
-	p.ui_windows.gameplay.get_node("Accel_ticks").text = str("Accel. ticks: ", p.ship_state.accel_ticks)
+	p.ui_paths.gameplay.get_node("Accel_ticks").text = str("Accel: ", p.ship_state.accel_ticks)
 
 # ================================== Other ====================================
 # DEBUG
 func update_debug_text():
-	p.ui_windows.debug.get_node("FPS").text = str("FPS: ", p.main.fps)
-	p.ui_windows.debug.get_node("Mouse_x").text = str("Mouse / Pad x: ", p.input.mouse_vector.x)
-	p.ui_windows.debug.get_node("Mouse_y").text = str("Mouse / Pad y: ", p.input.mouse_vector.y)
+	p.ui_paths.debug.get_node("FPS").text = str("FPS: ", p.main.fps)
+	p.ui_paths.debug.get_node("Mouse_x").text = str("Mouse / Pad x: ", p.input.mouse_vector.x)
+	p.ui_paths.debug.get_node("Mouse_y").text = str("Mouse / Pad y: ", p.input.mouse_vector.y)
 
 
 
@@ -76,28 +72,27 @@ func update_debug_text():
 func _on_Button_touchscreen_switch_pressed():
 	touchscreen_mode = true
 	# Main GUI elements.
-	p.ui_windows.gameplay.show()
+	p.ui_paths.gameplay.show()
 	# Controls.
-	p.ui_windows.controls_touchscreen.show()
-	p.ui_windows.controls_touchscreen.get_node("Main_controls").show()
-	p.ui_windows.controls_touchscreen.get_node("Main_controls/Slider_zoom").hide()
+	p.ui_paths.controls_touchscreen.show()
+	p.ui_paths.touchscreen_main.show()
 	# Hide prompt and disable irrelevant scheme.
-	p.ui_windows.controls.hide()
-	p.ui_windows.gui_prompt.hide()
-	p.ui_windows.mouse_area.hide() # TODO: Maybe not the best approach?
+	p.ui_paths.controls_desktop.hide()
+	p.ui_paths.gui_prompt.hide()
+	p.ui_paths.mouse_area.hide() # TODO: Maybe not the best approach?
 
 # DESKTOP
 # UI SWITCHING
 func _on_Button_cumputer_gui_switch_pressed():
 	touchscreen_mode = false
 	# Main GUI elements.
-	p.ui_windows.gameplay.show()
+	p.ui_paths.gameplay.show()
 	# Controls.
-	p.ui_windows.controls.show()
-	p.ui_windows.mouse_area.show() # TODO: Maybe not the best approach?
+	p.ui_paths.controls_desktop.show()
+	p.ui_paths.mouse_area.show() # TODO: Maybe not the best approach?
 	# Hide prompt and disable irrelevant scheme.
-	p.ui_windows.controls_touchscreen.hide()
-	p.ui_windows.gui_prompt.hide()
+	p.ui_paths.controls_touchscreen.hide()
+	p.ui_paths.gui_prompt.hide()
 
 
 
@@ -117,27 +112,27 @@ func _on_Button_turret_toggled(button_pressed):
 	if button_pressed: 
 		p.signals.emit_signal("sig_turret_mode_on", true)
 		# Show slider in Touch GUI.
-		if p.ui_windows.controls_touchscreen.visible:
-			p.ui_windows.controls_touchscreen.get_node("Main_controls/Slider_zoom").show()
+		# TODO: make two buttons instead
+		
 	else: 
 		p.signals.emit_signal("sig_turret_mode_on", false)
 		# Hide slider in Touch GUI.
-		if p.ui_windows.controls_touchscreen.visible:
-			p.ui_windows.controls_touchscreen.get_node("Main_controls/Slider_zoom").hide()
+		# TODO: make two buttons instead
+
 
 # DESKTOP / MOBILE GUI
 func _on_Button_debug_toggled(button_pressed):
 	if button_pressed: 
-		p.ui_windows.debug.show()
+		p.ui_paths.debug.show()
 		update_debug_text_on = true
 	else:
-		p.ui_windows.debug.hide()
+		p.ui_paths.debug.hide()
 		update_debug_text_on = false
 
 # DESKTOP / MOBILE GUI
 func _on_Button_text_panel_toggled(button_pressed):
-	if button_pressed: p.ui_windows.text_panel.show()
-	else: p.ui_windows.text_panel.hide()
+	if button_pressed: p.ui_paths.text_panel.show()
+	else: p.ui_paths.text_panel.hide()
 
 # DESKTOP / MOBILE GUI
 func _on_Button_screen_filter_toggled(button_pressed):
@@ -161,13 +156,16 @@ func _on_Button_accel_minus_pressed():
 # DESKTOP / MOBILE GUI
 # Other buttons
 func _on_Button_options_pressed():
-	p.ui_windows.touchscreen_main.hide()
-	p.ui_windows.touchscreen_options.show()
+	p.ui_paths.touchscreen_main.hide()
+	p.ui_paths.touchscreen_options.show()
+	p.ui_paths.desktop_main.hide()
+	p.ui_paths.desktop_options.show()
 	
 func _on_Button_close_options_pressed():
-	p.ui_windows.touchscreen_main.show()
-	p.ui_windows.touchscreen_options.hide()
-
+	p.ui_paths.touchscreen_main.show()
+	p.ui_paths.touchscreen_options.hide()
+	p.ui_paths.desktop_main.show()
+	p.ui_paths.desktop_options.hide()
 
 
 # Mouse capturing for desktop.
@@ -207,8 +205,9 @@ func _on_Touch_ekill_pressed():
 
 # DESKTOP / MOBILE GUI
 func _on_Button_hide_ui_pressed():
-	p.ui_windows.touchscreen_main.modulate.a = ui_alpha
-	p.ui_windows.gameplay.modulate.a = ui_alpha
+	p.ui_paths.touchscreen_main.modulate.a = ui_alpha
+	p.ui_paths.desktop_main.modulate.a = ui_alpha
+	p.ui_paths.gameplay.modulate.a = ui_alpha
 	ui_alpha -= 0.25
 	if ui_alpha < 0.0:
 		ui_alpha = 1.0

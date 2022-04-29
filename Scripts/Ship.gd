@@ -21,7 +21,7 @@ var camera_push_velocity_factor = 2.5
 var camera_push_max_factor = 1000.0
 const camera_push_visibility_velocity = 1e8
 
-
+var spawned = false
 
 # Vars.
 var default_linear_damp = 0
@@ -49,7 +49,8 @@ func _ready():
 	
 
 
-func _integrate_forces(state):
+
+func _integrate_forces(state):	
 	
 	#print("L: ", state.total_linear_damp, "   A: ", state.total_angular_damp)
 	# TODO: arrange for proper signs for accel and torque.
@@ -89,6 +90,7 @@ func init_ship():
 	self.linear_damp = p.common_engine.ship_linear_damp
 	self.angular_damp = p.common_engine.ship_angular_damp
 	adjust_exhaust()
+
 
 func adjust_exhaust():
 	for i in engines.get_children():
@@ -135,5 +137,3 @@ func is_engine_kill():
 	p.ship_state.acceleration = 0
 	p.ship_state.accel_ticks = 0
 	adjust_exhaust()
-
-

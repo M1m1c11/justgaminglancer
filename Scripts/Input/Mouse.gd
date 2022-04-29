@@ -9,7 +9,6 @@ var mouse_y_abs = 0
 var mouse_on_control_area = true
 
 onready var p = get_tree().get_root().get_node("Main/Paths")
-onready var ui_mouse_area = p.ui.get_node("Controls/Mouse_area")
 
 func _ready():
 	# ============================ Connect signals ============================
@@ -20,7 +19,7 @@ func handle_input(event, viewport_size):
 	
 	# This ensures that desktop UI is enabled and mouse is on control area, not UI
 	# (TODO: Overlay UI pads on top of the control area to reserve those areas?)
-	if mouse_on_control_area and ui_mouse_area.visible:
+	if mouse_on_control_area and p.ui_paths.mouse_area.visible:
 		
 		# Track mouse position.
 		if event is InputEventMouseMotion:

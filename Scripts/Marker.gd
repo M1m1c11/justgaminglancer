@@ -38,6 +38,12 @@ func _ready():
 			marker_visible_max_distance = 1e8
 
 
+	# TODO: handle markers disappearance properly!
+
+	# Insert marker into the global marker list (and keep it there)
+	p.common_space_state.markers.append(self)
+	#print(p.common_space_state.markers)
+
 func _physics_process(_delta):
 	# Get coordinates and distance.
 	var player = p.camera_rig.global_transform.origin
@@ -50,7 +56,7 @@ func _physics_process(_delta):
 		# Instance marker in the gameplay UI if not done so before.
 		if !marker_added:
 			#print("Adding marker for: ", self)
-			p.ui_markers.add_child(marker)
+			p.ui_paths.markers.add_child(marker)
 			marker_added = true
 		
 		# Multiply by scale factor of viewport to position properly.
@@ -59,13 +65,13 @@ func _physics_process(_delta):
 			object)/p.common_viewport.render_res_factor
 		
 		# Update marker.
-		var result_d = p.ui_readouts.get_magnitude_units(dist_val)
+		var result_d = p.ui_paths.common_readouts.get_magnitude_units(dist_val)
 		marker.get_node("Text").text = object_name + ": "\
 				+str(result_d[0])+ " " + result_d[1]
 	
 	else: 
-		if marker_added:
+		if marker and marker_added:
 			# If object is hidden then remove marker.
 			#print("Removing marker for: ", self)
-			p.ui_markers.remove_child(marker)
+			p.ui_paths.markers.remove_child(marker)
 			marker_added = false
