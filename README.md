@@ -1,12 +1,13 @@
 # GDTLancer
 ![Progress][Progress]
 
-A space arcade game inspired by Freelancer. Developed in Godot 3 for desktop  
-and mobile (Android) platforms.
+A space arcade game inspired by Freelancer, Orbiter and EVE Online. 
+Developed in Godot 3 for desktop and mobile (Android) platforms.
 
 [Progress]: Doc/Images/Progress.png "Progress"
 
-## Recent changelog (since last release)
+## Recent changelog
+### Since v0.7-alpha
 - A new star system!
 - Switched to full-scale stellar bodies (stars and planets are up to scale now).
 - Using `meters` instead of `units` now. Updated distance prefixes according to 
@@ -39,7 +40,10 @@ accelerate rapidly.
 - Due to space being a complex sandwich got to figure out how to just teleport and spawn at will.
 
 
-
 ## How to
 You can download one of the pre-compiled binary in the [releases](https://github.com/roalyr/GDTLancer/releases) section.
 If you want to open it in editor, then you must use a custom Godot build: https://github.com/roalyr/godot-for-3d-open-worlds
+
+
+## Support
+[![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/U7U0BNQX5)
