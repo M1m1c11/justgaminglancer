@@ -1,7 +1,7 @@
 # GDTLancer
 ![Progress][Progress]
 
-A space arcade game inspired by Freelancer, Orbiter and EVE Online. 
+A space game inspired by Freelancer, Orbiter and EVE Online. 
 Developed in Godot 3 for desktop and mobile (Android) platforms.
 
 [Progress]: Doc/Images/Progress.png "Progress"
