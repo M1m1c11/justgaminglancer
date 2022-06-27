@@ -25,6 +25,9 @@ var spawned = false
 
 # Vars.
 var default_linear_damp = 0
+var tx = 0
+var ty = 0
+var tz = 0
 
 # Objects.
 var torque = Vector3(0,0,0)
@@ -49,7 +52,6 @@ func _ready():
 	
 
 
-
 func _integrate_forces(state):	
 	
 	#print("L: ", state.total_linear_damp, "   A: ", state.total_angular_damp)
@@ -68,6 +70,44 @@ func _integrate_forces(state):
 	# TODO: move capped velocity to constants.
 	#if vel > 2000000:
 	#	p.signals.emit_signal("sig_accelerate", false)
+
+
+	# AUTOPILOT
+
+	var target = p.common_space_state.markers[0]
+	
+	var target_origin = target.global_transform.origin
+	var ship_origin = self.global_transform.origin
+	var ship_forward = -self.global_transform.basis.z
+	var dir_vector = ship_origin.direction_to(target_origin)
+
+	var steering_vector = ship_forward.cross(dir_vector)
+	
+	# Get deltas (multiply and clamp):
+	var autopilot_torque_factor = 10
+	
+	var autopilot_factor_x = clamp(autopilot_torque_factor*steering_vector.x, -1.0, 1.0)
+	var autopilot_factor_y = clamp(autopilot_torque_factor*steering_vector.y, -1.0, 1.0)
+	var autopilot_factor_z = clamp(autopilot_torque_factor*steering_vector.z, -1.0, 1.0)
+
+	if not (p.input.LMB_held or p.ship_state.mouse_flight):
+
+		# Fix directions being flipped
+
+		tx = self.torque_factor.x* autopilot_factor_x
+		ty = self.torque_factor.y* autopilot_factor_y
+		tz = self.torque_factor.z* autopilot_factor_z
+
+		state.add_torque(Vector3(tx, ty, tz))
+	
+	
+	
+	
+	
+	# AUTOPILOT
+
+
+
 
 	
 	if not p.ship_state.turret_mode and (p.input.LMB_held or p.ship_state.mouse_flight):

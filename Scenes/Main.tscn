@@ -157,7 +157,7 @@ script = ExtResource( 17 )
 marker_range = 1
 
 [node name="System red" parent="Container/Viewport/Global_space/Galaxy local/Scenes" index="2" instance=ExtResource( 22 )]
-transform = Transform( 1, 4.35207e-14, -1.42109e-14, -7.10543e-15, 1, 8.9407e-08, -1.77636e-15, -8.9407e-08, 1, 9.92206e+17, 1.2673e+16, -4.3131e+17 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 9.92206e+17, 1.2673e+16, -4.3131e+17 )
 
 [node name="Zone shape" parent="Container/Viewport/Global_space/Galaxy local/Scenes/System red" index="1"]
 transform = Transform( 1e+13, 0, 0, 0, 1e+13, 0, 0, 0, 1e+13, 0, 0, 0 )
