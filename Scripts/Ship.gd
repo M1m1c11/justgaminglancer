@@ -21,13 +21,22 @@ var camera_push_velocity_factor = 2.5
 var camera_push_max_factor = 1000.0
 const camera_push_visibility_velocity = 1e8
 
-var spawned = false
+var engine_step_delay = 0.2
+
+var autopilot_angle_deviation = 0.9
+
+# Lesser is more precise, aim at ration 1:2 for decel being larger
+# Higher numbers mean more agressive AP velocity handling.
+var autopilot_accel_factor = 0.3
+var autopilot_deccel_factor = 0.6
 
 # Vars.
 var default_linear_damp = 0
 var tx = 0
 var ty = 0
 var tz = 0
+var engine_delay = false
+var autopilot = true
 
 # Objects.
 var torque = Vector3(0,0,0)
@@ -35,6 +44,15 @@ var torque = Vector3(0,0,0)
 # Nodes.
 onready var p = get_tree().get_root().get_node("Main/Paths")
 onready var engines = get_node("Engines")
+
+
+
+
+# AUTOPILOT
+onready var target = p.common_space_state.markers[3]
+onready var target_area = target.get_parent().get_parent().get_node("Zone shape").scale.x
+
+
 
 
 # Called when the node enters the scene tree for the first time.
@@ -49,7 +67,6 @@ func _ready():
 	
 	# Initialize the vessel params.
 	init_ship()
-	
 
 
 func _integrate_forces(state):	
@@ -74,15 +91,31 @@ func _integrate_forces(state):
 
 	# AUTOPILOT
 
-	var target = p.common_space_state.markers[0]
-	
+
+
 	var target_origin = target.global_transform.origin
 	var ship_origin = self.global_transform.origin
+	var dist_val = round(ship_origin.distance_to(target_origin))
 	var ship_forward = -self.global_transform.basis.z
 	var dir_vector = ship_origin.direction_to(target_origin)
+	var dot_product = ship_forward.dot(dir_vector)
 
 	var steering_vector = ship_forward.cross(dir_vector)
 	
+	# Acceleration control.
+	if autopilot:
+		if (vel < dist_val*autopilot_accel_factor) and (dot_product > autopilot_angle_deviation)\
+			and (dist_val > target_area):
+			is_accelerating(true)
+		elif (vel > dist_val*autopilot_deccel_factor) or (dot_product < autopilot_angle_deviation)\
+			or (dist_val < target_area): 
+			is_accelerating(false)
+	
+	if autopilot and dist_val < target_area:
+		is_engine_kill()
+		autopilot = false
+	
+	# Steering.
 	# Get deltas (multiply and clamp):
 	var autopilot_torque_factor = 10
 	
@@ -90,7 +123,7 @@ func _integrate_forces(state):
 	var autopilot_factor_y = clamp(autopilot_torque_factor*steering_vector.y, -1.0, 1.0)
 	var autopilot_factor_z = clamp(autopilot_torque_factor*steering_vector.z, -1.0, 1.0)
 
-	if not (p.input.LMB_held or p.ship_state.mouse_flight):
+	if not (p.input.LMB_held or p.ship_state.mouse_flight) and autopilot:
 
 		# Fix directions being flipped
 
@@ -130,9 +163,13 @@ func init_ship():
 	self.linear_damp = p.common_engine.ship_linear_damp
 	self.angular_damp = p.common_engine.ship_angular_damp
 	adjust_exhaust()
-
+	engine_cooldown()
+	
+func engine_cooldown():
+	get_tree().create_timer(engine_step_delay).connect("timeout", self, "set_timing", [false])
 
 func adjust_exhaust():
+	
 	for i in engines.get_children():
 		
 		# Adjust shape size.
@@ -160,19 +197,43 @@ func adjust_exhaust():
 
 
 # SIGNAL PROCESSING
-func is_accelerating(flag):
-	if flag and (p.ship_state.accel_ticks < self.accel_ticks_max):
+func is_accelerating_old(flag):
+	if flag and (p.ship_state.accel_ticks < accel_ticks_max) and not engine_delay:
 		if p.ship_state.accel_ticks == 0:
 			p.ship_state.accel_ticks = 1
 		p.ship_state.accel_ticks *= 2
-		p.ship_state.acceleration += p.ship_state.accel_ticks*self.accel_factor
-	elif not flag and (p.ship_state.accel_ticks > 0):
-		p.ship_state.acceleration -= p.ship_state.accel_ticks*self.accel_factor
+		p.ship_state.acceleration += p.ship_state.accel_ticks*accel_factor
+		engine_delay = true
+	elif not flag and (p.ship_state.accel_ticks > 0) and not engine_delay:
+		p.ship_state.acceleration -= p.ship_state.accel_ticks*accel_factor
 		p.ship_state.accel_ticks /= 2
 		if p.ship_state.accel_ticks == 1:
 			p.ship_state.accel_ticks = 0
+		engine_delay = true
 	adjust_exhaust()
 	
+func is_accelerating(flag):
+	if flag and (p.ship_state.accel_ticks < accel_ticks_max) and not engine_delay:
+		if p.ship_state.accel_ticks == 0:
+			p.ship_state.accel_ticks = 1
+		p.ship_state.accel_ticks *= 2
+		p.ship_state.acceleration += p.ship_state.accel_ticks*accel_factor
+		engine_delay = true
+	elif not flag and (p.ship_state.accel_ticks > 0) and not engine_delay:
+		p.ship_state.acceleration -= p.ship_state.accel_ticks*accel_factor
+		p.ship_state.accel_ticks /= 2
+		if p.ship_state.accel_ticks == 1:
+			p.ship_state.accel_ticks = 0
+		engine_delay = true
+	adjust_exhaust()
+
+func set_timing(value: bool):
+	#print("time")
+	engine_delay = value
+	# Reset timer
+	engine_cooldown()
+
+
 func is_engine_kill():
 	p.ship_state.acceleration = 0
 	p.ship_state.accel_ticks = 0
