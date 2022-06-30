@@ -130,17 +130,24 @@ transform = Transform( 1.99694e+10, 0, 0, 0, 1.99694e+10, 0, 0, 0, 1.99694e+10, 
 mesh = SubResource( 70 )
 material/0 = SubResource( 71 )
 
-[node name="Local_space_stellar" parent="." instance=ExtResource( 4 )]
+[node name="Star Red" parent="." instance=ExtResource( 4 )]
 
-[node name="Star red" parent="Local_space_stellar/Scenes" index="0" instance=ExtResource( 2 )]
+[node name="Zone shape" parent="Star Red" index="1"]
+transform = Transform( 1e+11, 0, 0, 0, 1e+11, 0, 0, 0, 1e+11, 0, 0, 0 )
 
-[node name="Local_space_planetary" parent="." instance=ExtResource( 5 )]
+[node name="Star Red" parent="Star Red/Scenes" index="0" instance=ExtResource( 2 )]
+autopilot_range = 2e+09
+
+[node name="Planetoid Molten Shell" parent="." instance=ExtResource( 5 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -8.14294e+09, -4.34422e+08, 4.13553e+09 )
 
-[node name="Molten shell" parent="Local_space_planetary/Scenes" index="0" instance=ExtResource( 6 )]
+[node name="Zone shape" parent="Planetoid Molten Shell" index="1"]
+transform = Transform( 1e+07, 0, 0, 0, 1e+07, 0, 0, 0, 1e+07, 0, 0, 0 )
+
+[node name="Planetoid Molten Shell" parent="Planetoid Molten Shell/Scenes" index="0" instance=ExtResource( 6 )]
 transform = Transform( 0.289016, -0.874403, 0.38973, 0.884324, 0.0879291, -0.458518, 0.366661, 0.477166, 0.798669, 0, 0, 0 )
 script = ExtResource( 7 )
-marker_range = 3
+autopilot_range = 200000.0
 
-[editable path="Local_space_stellar"]
-[editable path="Local_space_planetary"]
+[editable path="Star Red"]
+[editable path="Planetoid Molten Shell"]

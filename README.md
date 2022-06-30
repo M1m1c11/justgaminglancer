@@ -30,6 +30,9 @@ accelerate rapidly.
 - Optimized paths.
 - Some temporary fixes for collision model (caused stuttering due to polygon number).
 - Tweaks to desktop UI.
+- Fixed lag due to complex collision trimesh.
+- Autopilot added.
+- New UI elements.
 
 ## TODO list:
 - Make primitive building blocks with simple collision shapes (performace).
@@ -38,7 +41,14 @@ accelerate rapidly.
 - Scalable UI (control panel, texts, buttons, etc).
 - Grouping for overlapping markers.
 - Due to space being a complex sandwich got to figure out how to just teleport and spawn at will.
-
+- Handle markers disappearance properly.
+- Refactor ship code.
+- Make standard shapes have LOD zones (test if scaling will work as intended).
+- Make autopilot detect obstacles.
+- Add star sprites as LOD2.
+- Improve star shaders?
+- Prevent camera orbiting from interrupting autopilot.
+- Disable CD after some velocity threshold.
 
 ## How to
 You can download one of the pre-compiled binary in the [releases](https://github.com/roalyr/GDTLancer/releases) section.

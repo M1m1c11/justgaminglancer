@@ -76,7 +76,6 @@ surfaces/0 = {
 
 [node name="Blue star" type="Position3D"]
 script = ExtResource( 2 )
-marker_range = 2
 
 [node name="OmniLight_1e15" type="OmniLight" parent="."]
 light_color = Color( 0.52549, 0.823529, 1, 1 )

@@ -16,6 +16,9 @@ signal sig_fov_value_changed(value)
 signal sig_viewport_update
 signal sig_quit_game
 
+# UI MARKERS
+signal sig_fetch_markers
+
 # CAMERA
 signal sig_turret_mode_on(flag)
 signal sig_mouse_flight_on(flag)
@@ -24,6 +27,9 @@ signal sig_zoom_value_changed(value)
 # SHIP
 signal sig_accelerate(flag)
 signal sig_engine_kill
+signal sig_autopilot_start
+signal sig_autopilot_disable
+signal sig_target_clear
 
 # LOCAL SPACE TRIGGERS
 signal sig_entered_local_space_galaxy(zone)
@@ -34,3 +40,5 @@ signal sig_entered_local_space_stellar(zone)
 signal sig_exited_local_space_stellar(zone)
 signal sig_entered_local_space_planetary(zone)
 signal sig_exited_local_space_planetary(zone)
+signal sig_entered_local_space_structure(zone)
+signal sig_exited_local_space_structure(zone)

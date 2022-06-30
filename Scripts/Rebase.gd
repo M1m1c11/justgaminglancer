@@ -22,6 +22,7 @@ func _physics_process(_delta):
 		p.local_space_system.translation.x -= rebase_limit
 		p.local_space_stellar.translation.x -= rebase_limit
 		p.local_space_planetary.translation.x -= rebase_limit
+		p.local_space_structure.translation.x -= rebase_limit
 		
 	elif p.ship.translation.x < -rebase_limit:
 		p.ship.translation.x = 0
@@ -30,6 +31,7 @@ func _physics_process(_delta):
 		p.local_space_system.translation.x += rebase_limit
 		p.local_space_stellar.translation.x += rebase_limit
 		p.local_space_planetary.translation.x += rebase_limit
+		p.local_space_structure.translation.x += rebase_limit
 		
 	if p.ship.translation.y > rebase_limit:
 		p.ship.translation.y = 0
@@ -38,6 +40,7 @@ func _physics_process(_delta):
 		p.local_space_system.translation.y -= rebase_limit
 		p.local_space_stellar.translation.y -= rebase_limit
 		p.local_space_planetary.translation.y -= rebase_limit
+		p.local_space_structure.translation.y -= rebase_limit
 		
 	elif p.ship.translation.y < -rebase_limit:
 		p.ship.translation.y = 0
@@ -46,6 +49,7 @@ func _physics_process(_delta):
 		p.local_space_system.translation.y += rebase_limit
 		p.local_space_stellar.translation.y += rebase_limit
 		p.local_space_planetary.translation.y += rebase_limit
+		p.local_space_structure.translation.y += rebase_limit
 		
 	if p.ship.translation.z > rebase_limit:
 		p.ship.translation.z = 0
@@ -54,6 +58,7 @@ func _physics_process(_delta):
 		p.local_space_system.translation.z -= rebase_limit
 		p.local_space_stellar.translation.z -= rebase_limit
 		p.local_space_planetary.translation.z -= rebase_limit
+		p.local_space_structure.translation.z -= rebase_limit
 		
 	elif p.ship.translation.z < -rebase_limit:
 		p.ship.translation.z = 0
@@ -62,3 +67,4 @@ func _physics_process(_delta):
 		p.local_space_system.translation.z += rebase_limit
 		p.local_space_stellar.translation.z += rebase_limit
 		p.local_space_planetary.translation.z += rebase_limit
+		p.local_space_structure.translation.z += rebase_limit

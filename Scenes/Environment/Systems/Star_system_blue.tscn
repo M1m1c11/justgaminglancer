@@ -85,16 +85,23 @@ transform = Transform( 3.00568, 0, 0, 0, 1.22308, 0, 0, 0, 1.22308, -0.147841, -
 mesh = SubResource( 29 )
 material/0 = SubResource( 15 )
 
-[node name="Local_space_stellar" parent="." instance=ExtResource( 4 )]
+[node name="Star Blue" parent="." instance=ExtResource( 4 )]
 
-[node name="Blue star" parent="Local_space_stellar/Scenes" index="0" instance=ExtResource( 3 )]
+[node name="Zone shape" parent="Star Blue" index="1"]
+transform = Transform( 1e+11, 0, 0, 0, 1e+11, 0, 0, 0, 1e+11, 0, 0, 0 )
 
-[node name="Local_space_planetary" parent="." instance=ExtResource( 5 )]
+[node name="Star Blue" parent="Star Blue/Scenes" index="0" instance=ExtResource( 3 )]
+autopilot_range = 2.5e+10
+
+[node name="Planet Blue" parent="." instance=ExtResource( 5 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 5.11887e+11, -5.12447e+10, 9.70431e+11 )
 
-[node name="Planet blue" parent="Local_space_planetary/Scenes" index="0" instance=ExtResource( 2 )]
-script = ExtResource( 7 )
-marker_range = 3
+[node name="Zone shape" parent="Planet Blue" index="1"]
+transform = Transform( 7e+07, 0, 0, 0, 7e+07, 0, 0, 0, 7e+07, 0, 0, 0 )
 
-[editable path="Local_space_stellar"]
-[editable path="Local_space_planetary"]
+[node name="Planet Blue" parent="Planet Blue/Scenes" index="0" instance=ExtResource( 2 )]
+script = ExtResource( 7 )
+autopilot_range = 1.6e+07
+
+[editable path="Star Blue"]
+[editable path="Planet Blue"]

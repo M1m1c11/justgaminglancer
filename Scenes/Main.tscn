@@ -1,4 +1,4 @@
-[gd_scene load_steps=34 format=2]
+[gd_scene load_steps=35 format=2]
 
 [ext_resource path="res://Scripts/Main.gd" type="Script" id=1]
 [ext_resource path="res://Scenes/Ships/Phoenix_heavy.tscn" type="PackedScene" id=2]
@@ -27,6 +27,7 @@
 [ext_resource path="res://Scripts/Origin_rebase/Rebase_local_system.gd" type="Script" id=25]
 [ext_resource path="res://Scripts/Common/Viewport.gd" type="Script" id=26]
 [ext_resource path="res://Scripts/Origin_rebase/Rebase_local_stellar.gd" type="Script" id=27]
+[ext_resource path="res://Scripts/Origin_rebase/Rebase_local_structure.gd" type="Script" id=28]
 [ext_resource path="res://Scripts/Origin_rebase/Rebase_local_planetary.gd" type="Script" id=31]
 [ext_resource path="res://Scenes/Environment/Systems/Star_system_red.tscn" type="PackedScene" id=32]
 
@@ -146,15 +147,16 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 7.47879e+17, 2.73504e+14, -3.3
 [node name="Zone shape" parent="Container/Viewport/Global_space/Galaxy local" index="1"]
 transform = Transform( 1.44e+18, 0, 0, 0, 2.88e+17, 0, 0, 0, 1.44e+18, 0, 0, 0 )
 
-[node name="Galaxy" parent="Container/Viewport/Global_space/Galaxy local/Scenes" index="0" instance=ExtResource( 19 )]
+[node name="Galaxy center" parent="Container/Viewport/Global_space/Galaxy local/Scenes" index="0" instance=ExtResource( 19 )]
 transform = Transform( 1, 6.21725e-15, -3.55271e-15, -2.66454e-15, 1, 0, -1.77636e-15, 0, 1, 0, 0, 0 )
+autopilot_range = 1.0
 
 [node name="System blue" parent="Container/Viewport/Global_space/Galaxy local/Scenes" index="1" instance=ExtResource( 22 )]
 transform = Transform( 1, 9.76996e-15, -5.32907e-15, -5.32907e-15, 1, 0, 8.88178e-16, 0, 1, -4.05644e+17, 5.12474e+10, 4.78997e+17 )
 
-[node name="Star system Blue" parent="Container/Viewport/Global_space/Galaxy local/Scenes/System blue/Scenes" index="0" instance=ExtResource( 7 )]
+[node name="System Blue" parent="Container/Viewport/Global_space/Galaxy local/Scenes/System blue/Scenes" index="0" instance=ExtResource( 7 )]
 script = ExtResource( 17 )
-marker_range = 1
+autopilot_range = 1e+11
 
 [node name="System red" parent="Container/Viewport/Global_space/Galaxy local/Scenes" index="2" instance=ExtResource( 22 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 9.92206e+17, 1.2673e+16, -4.3131e+17 )
@@ -162,9 +164,9 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 9.92206e+17, 1.2673e+16, -4.31
 [node name="Zone shape" parent="Container/Viewport/Global_space/Galaxy local/Scenes/System red" index="1"]
 transform = Transform( 1e+13, 0, 0, 0, 1e+13, 0, 0, 0, 1e+13, 0, 0, 0 )
 
-[node name="Star system Red" parent="Container/Viewport/Global_space/Galaxy local/Scenes/System red/Scenes" index="0" instance=ExtResource( 32 )]
+[node name="System Red" parent="Container/Viewport/Global_space/Galaxy local/Scenes/System red/Scenes" index="0" instance=ExtResource( 32 )]
 script = ExtResource( 17 )
-marker_range = 1
+autopilot_range = 1e+10
 
 [node name="Local_space_galaxy" type="Position3D" parent="Container/Viewport"]
 script = ExtResource( 20 )
@@ -197,6 +199,14 @@ __meta__ = {
 }
 
 [node name="Do not translate and do not remove" type="Node" parent="Container/Viewport/Local_space_planetary"]
+
+[node name="Local_space_structure" type="Position3D" parent="Container/Viewport"]
+script = ExtResource( 28 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="Do not translate and do not remove" type="Node" parent="Container/Viewport/Local_space_structure"]
 
 [node name="Ship_space" type="Position3D" parent="Container/Viewport"]
 __meta__ = {

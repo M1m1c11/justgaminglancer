@@ -36,7 +36,14 @@ var tx = 0
 var ty = 0
 var tz = 0
 var engine_delay = false
-var autopilot = true
+
+
+
+
+var autopilot = false
+var dist_val = 0
+var steering_vector = Vector3(0,0,0)
+
 
 # Objects.
 var torque = Vector3(0,0,0)
@@ -49,8 +56,8 @@ onready var engines = get_node("Engines")
 
 
 # AUTOPILOT
-onready var target = p.common_space_state.markers[3]
-onready var target_area = target.get_parent().get_parent().get_node("Zone shape").scale.x
+onready var target = p.ship_state.aim_target
+onready var target_area = 1e5
 
 
 
@@ -60,6 +67,8 @@ func _ready():
 	# ============================= Connect signals ===========================
 	p.signals.connect("sig_accelerate", self, "is_accelerating")
 	p.signals.connect("sig_engine_kill", self, "is_engine_kill")
+	p.signals.connect("sig_autopilot_start", self, "is_autopilot_start")
+	p.signals.connect("sig_autopilot_disable", self, "is_autopilot_disable")
 	# =========================================================================
 	
 	# Get default values.
@@ -67,7 +76,8 @@ func _ready():
 	
 	# Initialize the vessel params.
 	init_ship()
-
+	# TODO: move it to dedicated script
+	p.ui_paths.desktop_button_autopilot_disable.hide()
 
 func _integrate_forces(state):	
 	
@@ -91,19 +101,19 @@ func _integrate_forces(state):
 
 	# AUTOPILOT
 
-
-
-	var target_origin = target.global_transform.origin
-	var ship_origin = self.global_transform.origin
-	var dist_val = round(ship_origin.distance_to(target_origin))
-	var ship_forward = -self.global_transform.basis.z
-	var dir_vector = ship_origin.direction_to(target_origin)
-	var dot_product = ship_forward.dot(dir_vector)
-
-	var steering_vector = ship_forward.cross(dir_vector)
 	
 	# Acceleration control.
 	if autopilot:
+		
+		var target_origin = target.global_transform.origin
+		var ship_origin = self.global_transform.origin
+		dist_val = round(ship_origin.distance_to(target_origin))
+		var ship_forward = -self.global_transform.basis.z
+		var dir_vector = ship_origin.direction_to(target_origin)
+		var dot_product = ship_forward.dot(dir_vector)
+
+		steering_vector = ship_forward.cross(dir_vector)
+		
 		if (vel < dist_val*autopilot_accel_factor) and (dot_product > autopilot_angle_deviation)\
 			and (dist_val > target_area):
 			is_accelerating(true)
@@ -114,6 +124,7 @@ func _integrate_forces(state):
 	if autopilot and dist_val < target_area:
 		is_engine_kill()
 		autopilot = false
+		p.ui_paths.desktop_button_autopilot_disable.hide()
 	
 	# Steering.
 	# Get deltas (multiply and clamp):
@@ -238,3 +249,17 @@ func is_engine_kill():
 	p.ship_state.acceleration = 0
 	p.ship_state.accel_ticks = 0
 	adjust_exhaust()
+
+
+func is_autopilot_start():
+	p.ui_paths.desktop_button_autopilot_disable.show()
+	if p.ship_state.aim_target_locked:
+		# To stop at a reasonable distance.
+		# TODO: figure out a better way?
+		target = p.ship_state.aim_target
+		target_area = target.autopilot_range
+		autopilot = true
+	
+func is_autopilot_disable():
+	autopilot = false
+	p.ui_paths.desktop_button_autopilot_disable.hide()

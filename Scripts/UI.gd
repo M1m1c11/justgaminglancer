@@ -49,8 +49,10 @@ func _process(_delta):
 	# Adjust displayed speed
 	var speed_val = round(p.ship_state.apparent_velocity)
 	var result_s = p.ui_paths.common_readouts.get_magnitude_units(speed_val)
-	apparent_velocity.text = str(result_s[0])
-	apparent_velocity_units.text = str(result_s[1])+"/s"
+	# To prevent from crashing on Nil
+	if result_s:
+		apparent_velocity.text = str(result_s[0])
+		apparent_velocity_units.text = str(result_s[1])+"/s"
 	p.ui_paths.gameplay.get_node("Accel_ticks").text = str("Accel: ", p.ship_state.accel_ticks)
 
 # ================================== Other ====================================
@@ -216,3 +218,20 @@ func _on_Button_hide_ui_pressed():
 func _on_Button_ekill_pressed():
 	p.signals.emit_signal("sig_engine_kill")
 
+# DESKTOP
+func _on_Button_nav_pressed():
+	p.signals.emit_signal("sig_fetch_markers")
+	if not p.ui_paths.desktop_nav_popup.visible: p.ui_paths.desktop_nav_popup.show()
+	else: p.ui_paths.desktop_nav_popup.hide()
+
+# DESKTOP
+func _on_Button_autopilot_start_pressed():
+	p.signals.emit_signal("sig_autopilot_start")
+
+# DESKTOP
+func _on_Button_autopilot_disable_pressed():
+	p.signals.emit_signal("sig_autopilot_disable")
+
+# DESKTOP
+func _on_Button_target_clear_pressed():
+	p.signals.emit_signal("sig_target_clear")

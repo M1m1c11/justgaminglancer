@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=2]
+[gd_scene load_steps=29 format=2]
 
 [ext_resource path="res://Scripts/UI.gd" type="Script" id=1]
 [ext_resource path="res://Assets/UI_styles/Button_red/Red_hover_focus.tres" type="StyleBox" id=2]
@@ -17,11 +17,21 @@
 [ext_resource path="res://Scripts/UI/Readouts.gd" type="Script" id=15]
 [ext_resource path="res://Scripts/UI/Ui_paths.gd" type="Script" id=16]
 [ext_resource path="res://Scripts/UI/Pad.gd" type="Script" id=17]
+[ext_resource path="res://Assets/UI_images/PNG/buttons/nav.png" type="Texture" id=18]
+[ext_resource path="res://Scripts/UI/ItemList_nav.gd" type="Script" id=19]
+[ext_resource path="res://Assets/UI_images/PNG/buttons/autopilot.png" type="Texture" id=20]
+[ext_resource path="res://Scripts/UI/Targeting.gd" type="Script" id=21]
+[ext_resource path="res://Scenes/UI/Target.tscn" type="PackedScene" id=22]
+[ext_resource path="res://Assets/UI_images/PNG/buttons/remove_target.png" type="Texture" id=23]
+[ext_resource path="res://Assets/UI_images/PNG/buttons/autopilot_disable.png" type="Texture" id=24]
 
 [sub_resource type="ShaderMaterial" id=2]
 
 [sub_resource type="DynamicFont" id=4]
 size = 35
+font_data = ExtResource( 5 )
+
+[sub_resource type="DynamicFont" id=5]
 font_data = ExtResource( 5 )
 
 [sub_resource type="CanvasItemMaterial" id=3]
@@ -46,17 +56,15 @@ script = ExtResource( 15 )
 
 [node name="Debug" type="Node" parent="Common"]
 
+[node name="Targeting" type="Node" parent="Common"]
+script = ExtResource( 21 )
+
 [node name="Gameplay" type="Control" parent="."]
 anchor_right = 1.0
 anchor_bottom = 1.0
 __meta__ = {
-"_edit_lock_": true,
 "_edit_use_anchors_": false
 }
-
-[node name="Markers" type="Control" parent="Gameplay"]
-anchor_right = 1.0
-anchor_bottom = 1.0
 
 [node name="Debug" type="Control" parent="Gameplay"]
 visible = false
@@ -157,10 +165,10 @@ anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
-margin_left = -321.0
-margin_top = -60.0
-margin_right = -133.0
-margin_bottom = -9.0
+margin_left = -192.0
+margin_top = -66.0
+margin_right = -4.0
+margin_bottom = -15.0
 custom_colors/font_color = Color( 0.498039, 0.498039, 0.498039, 1 )
 custom_fonts/font = SubResource( 4 )
 text = "0000"
@@ -173,10 +181,10 @@ anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
-margin_left = -113.0
-margin_top = -60.0
-margin_right = -23.0
-margin_bottom = -9.0
+margin_left = 4.0
+margin_top = -67.0
+margin_right = 94.0
+margin_bottom = -16.0
 custom_colors/font_color = Color( 0.498039, 0.498039, 0.498039, 1 )
 custom_fonts/font = SubResource( 4 )
 text = "du/s"
@@ -190,13 +198,20 @@ anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
-margin_left = 42.0
-margin_top = -57.0
-margin_right = 447.0
-margin_bottom = -6.0
+margin_left = -103.5
+margin_top = -22.0
+margin_right = 103.5
+margin_bottom = -3.0
 custom_colors/font_color = Color( 0.498039, 0.498039, 0.498039, 1 )
-custom_fonts/font = SubResource( 4 )
+custom_fonts/font = SubResource( 5 )
 text = "Accel: 0"
+align = 1
+
+[node name="Target" parent="Gameplay" instance=ExtResource( 22 )]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
 
 [node name="GUI_prompt_greeting" type="Control" parent="."]
 visible = false
@@ -307,12 +322,16 @@ __meta__ = {
 anchor_right = 1.0
 anchor_bottom = 0.867
 margin_bottom = -0.200012
+mouse_default_cursor_shape = 3
 
 [node name="Main" type="Control" parent="GUI_desktop"]
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_top = -75.0
+__meta__ = {
+"_edit_lock_": true
+}
 
 [node name="Button_turret" type="Button" parent="GUI_desktop/Main"]
 anchor_left = 1.0
@@ -329,6 +348,18 @@ icon = ExtResource( 11 )
 flat = true
 icon_align = 1
 
+[node name="Button_hide_ui" type="Button" parent="GUI_desktop/Main"]
+margin_left = 15.0
+margin_top = 12.0
+margin_right = 119.0
+margin_bottom = 116.0
+rect_scale = Vector2( 0.5, 0.5 )
+theme = ExtResource( 10 )
+keep_pressed_outside = true
+icon = ExtResource( 13 )
+flat = true
+icon_align = 1
+
 [node name="Button_options" type="Button" parent="GUI_desktop/Main"]
 margin_left = 80.0
 margin_top = 12.0
@@ -341,17 +372,75 @@ icon = ExtResource( 14 )
 flat = true
 icon_align = 1
 
-[node name="Button_hide_ui" type="Button" parent="GUI_desktop/Main"]
-margin_left = 15.0
+[node name="Button_nav" type="Button" parent="GUI_desktop/Main"]
+margin_left = 145.0
 margin_top = 12.0
-margin_right = 119.0
+margin_right = 249.0
 margin_bottom = 116.0
 rect_scale = Vector2( 0.5, 0.5 )
 theme = ExtResource( 10 )
 keep_pressed_outside = true
-icon = ExtResource( 13 )
+icon = ExtResource( 18 )
 flat = true
 icon_align = 1
+
+[node name="Button_target_clear" type="Button" parent="GUI_desktop/Main"]
+margin_left = 209.0
+margin_top = 12.0
+margin_right = 313.0
+margin_bottom = 116.0
+rect_scale = Vector2( 0.5, 0.5 )
+theme = ExtResource( 10 )
+keep_pressed_outside = true
+icon = ExtResource( 23 )
+flat = true
+icon_align = 1
+
+[node name="Button_autopilot_disable" type="Button" parent="GUI_desktop/Main"]
+margin_left = 274.0
+margin_top = 13.0
+margin_right = 374.0
+margin_bottom = 113.0
+rect_scale = Vector2( 0.5, 0.5 )
+theme = ExtResource( 10 )
+keep_pressed_outside = true
+icon = ExtResource( 24 )
+flat = true
+icon_align = 1
+
+[node name="Popup_nav" type="ReferenceRect" parent="GUI_desktop/Main"]
+anchor_top = 1.0
+anchor_bottom = 1.0
+margin_left = 16.0
+margin_top = -292.0
+margin_right = 316.0
+margin_bottom = -75.0
+border_color = Color( 0.501961, 0.501961, 0.501961, 0.501961 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="Button_autopilot_start" type="Button" parent="GUI_desktop/Main/Popup_nav"]
+margin_top = -62.0
+margin_right = 100.0
+margin_bottom = 38.0
+rect_scale = Vector2( 0.5, 0.5 )
+theme = ExtResource( 10 )
+keep_pressed_outside = true
+icon = ExtResource( 20 )
+flat = true
+icon_align = 1
+
+[node name="ItemList_nav" type="ItemList" parent="GUI_desktop/Main/Popup_nav"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+focus_mode = 0
+theme = ExtResource( 10 )
+auto_height = true
+script = ExtResource( 19 )
+__meta__ = {
+"_edit_lock_": true
+}
 
 [node name="Options" type="Control" parent="GUI_desktop"]
 visible = false
@@ -628,6 +717,7 @@ normal = ExtResource( 8 )
 pressed = ExtResource( 8 )
 
 [node name="Options" type="Control" parent="GUI_touchscreen"]
+visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 __meta__ = {
@@ -750,8 +840,14 @@ __meta__ = {
 [connection signal="mouse_entered" from="GUI_desktop/Mouse_area" to="." method="_on_Mouse_area_mouse_entered"]
 [connection signal="mouse_exited" from="GUI_desktop/Mouse_area" to="." method="_on_Mouse_area_mouse_exited"]
 [connection signal="toggled" from="GUI_desktop/Main/Button_turret" to="." method="_on_Button_turret_toggled"]
-[connection signal="pressed" from="GUI_desktop/Main/Button_options" to="." method="_on_Button_options_pressed"]
 [connection signal="pressed" from="GUI_desktop/Main/Button_hide_ui" to="." method="_on_Button_hide_ui_pressed"]
+[connection signal="pressed" from="GUI_desktop/Main/Button_options" to="." method="_on_Button_options_pressed"]
+[connection signal="pressed" from="GUI_desktop/Main/Button_nav" to="." method="_on_Button_nav_pressed"]
+[connection signal="pressed" from="GUI_desktop/Main/Button_target_clear" to="." method="_on_Button_target_clear_pressed"]
+[connection signal="pressed" from="GUI_desktop/Main/Button_autopilot_disable" to="." method="_on_Button_autopilot_disable_pressed"]
+[connection signal="pressed" from="GUI_desktop/Main/Popup_nav/Button_autopilot_start" to="." method="_on_Button_autopilot_start_pressed"]
+[connection signal="item_selected" from="GUI_desktop/Main/Popup_nav/ItemList_nav" to="GUI_desktop/Main/Popup_nav/ItemList_nav" method="_on_ItemList_nav_item_selected"]
+[connection signal="visibility_changed" from="GUI_desktop/Main/Popup_nav/ItemList_nav" to="GUI_desktop/Main/Popup_nav/ItemList_nav" method="_on_ItemList_nav_visibility_changed"]
 [connection signal="toggled" from="GUI_desktop/Options/Button_debug" to="." method="_on_Button_debug_toggled"]
 [connection signal="pressed" from="GUI_desktop/Options/Button_quit" to="." method="_on_Button_quit_pressed"]
 [connection signal="toggled" from="GUI_desktop/Options/Button_screen_filter" to="." method="_on_Button_screen_filter_toggled"]

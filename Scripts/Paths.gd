@@ -24,6 +24,7 @@ onready var local_space_galaxy = viewport.get_node("Local_space_galaxy")
 onready var local_space_system = viewport.get_node("Local_space_system")
 onready var local_space_stellar = viewport.get_node("Local_space_stellar")
 onready var local_space_planetary = viewport.get_node("Local_space_planetary")
+onready var local_space_structure = viewport.get_node("Local_space_structure")
 onready var ship_space = viewport.get_node("Ship_space")
 
 # SHIP

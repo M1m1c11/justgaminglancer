@@ -1,10 +1,11 @@
-[gd_scene load_steps=16 format=2]
+[gd_scene load_steps=17 format=2]
 
 [ext_resource path="res://Assets/Shaders/Solid/Solid.gdshader" type="Shader" id=1]
 [ext_resource path="res://Assets/Shaders/Planetary/Planet_atmosphere.gdshader" type="Shader" id=2]
 [ext_resource path="res://Scripts/Editor_object.gd" type="Script" id=3]
 [ext_resource path="res://Assets/Shaders/Clouds/Cloud.gdshader" type="Shader" id=4]
 [ext_resource path="res://Scripts/Marker.gd" type="Script" id=5]
+[ext_resource path="res://Scenes/Zones/Local_space_triggers/Local_space_structure.tscn" type="PackedScene" id=6]
 
 [sub_resource type="SphereShape" id=43]
 
@@ -100,36 +101,43 @@ mesh = SubResource( 42 )
 skeleton = NodePath("../Planet mesh")
 material/0 = SubResource( 65 )
 
-[node name="Cube" type="Position3D" parent="."]
+[node name="Object Cube" parent="." instance=ExtResource( 6 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -1.41819e+07, 3.88531e+06, 7.92986e+06 )
-script = ExtResource( 5 )
-marker_range = 4
 
-[node name="Cube1" type="MeshInstance" parent="Cube"]
+[node name="Zone shape" parent="Object Cube" index="1"]
+transform = Transform( 1000, 0, 0, 0, 1000, 0, 0, 0, 1000, 0, 0, 0 )
+
+[node name="Object Cube" type="Position3D" parent="Object Cube/Scenes" index="1"]
+script = ExtResource( 5 )
+autopilot_range = 100.0
+
+[node name="Cube1" type="MeshInstance" parent="Object Cube/Scenes/Object Cube"]
 transform = Transform( 0.744568, -0.623848, 0.237557, 0.448529, 0.731096, 0.514121, -0.49441, -0.276246, 0.824165, 0, 0, 0 )
 mesh = SubResource( 45 )
-skeleton = NodePath("../..")
+skeleton = NodePath("../../../..")
 material/0 = SubResource( 48 )
 
-[node name="StaticBody" type="StaticBody" parent="Cube/Cube1"]
+[node name="StaticBody" type="StaticBody" parent="Object Cube/Scenes/Object Cube/Cube1"]
 
-[node name="CollisionShape" type="CollisionShape" parent="Cube/Cube1/StaticBody"]
+[node name="CollisionShape" type="CollisionShape" parent="Object Cube/Scenes/Object Cube/Cube1/StaticBody"]
 shape = SubResource( 46 )
 
-[node name="OmniLight" type="OmniLight" parent="Cube/Cube1"]
+[node name="OmniLight" type="OmniLight" parent="Object Cube/Scenes/Object Cube/Cube1"]
 transform = Transform( 0.999999, 4.32134e-07, -8.9407e-08, -2.98023e-08, 1, 6.10948e-07, 0, -1.49012e-07, 1, -0.170631, -0.278122, -0.19557 )
 light_color = Color( 0.662745, 1, 0.431373, 1 )
 light_energy = 100.0
 omni_range = 34.9003
 omni_attenuation = 2.0
 
-[node name="Cube2" type="MeshInstance" parent="Cube/Cube1"]
+[node name="Cube2" type="MeshInstance" parent="Object Cube/Scenes/Object Cube/Cube1"]
 transform = Transform( -0.484811, -9.95165, -1.72111, 10.055, -0.63709, 0.851363, -0.946396, -1.67074, 9.92701, 2, -19, -5 )
 mesh = SubResource( 45 )
-skeleton = NodePath("../../..")
+skeleton = NodePath("../../../../..")
 material/0 = SubResource( 47 )
 
-[node name="StaticBody" type="StaticBody" parent="Cube/Cube1/Cube2"]
+[node name="StaticBody" type="StaticBody" parent="Object Cube/Scenes/Object Cube/Cube1/Cube2"]
 
-[node name="CollisionShape" type="CollisionShape" parent="Cube/Cube1/Cube2/StaticBody"]
+[node name="CollisionShape" type="CollisionShape" parent="Object Cube/Scenes/Object Cube/Cube1/Cube2/StaticBody"]
 shape = SubResource( 46 )
+
+[editable path="Object Cube"]
