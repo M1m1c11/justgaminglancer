@@ -13,10 +13,12 @@ onready var common_viewport = common.get_node("Viewport")
 onready var signals = common.get_node("Signals")
 onready var ship_state = common.get_node("Ship_state")
 onready var common_space_state = common.get_node("Space_state")
+onready var common_constants = common.get_node("Constants")
 
 # VIEWPORT CONTAINER
 onready var container = main.get_node("Container")
 onready var viewport = container.get_node("Viewport")
+onready var environment = viewport.get_node("Environment")
 
 # SPACE
 onready var global_space = viewport.get_node("Global_space")

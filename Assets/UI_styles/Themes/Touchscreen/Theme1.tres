@@ -1,4 +1,4 @@
-[gd_resource type="Theme" load_steps=12 format=2]
+[gd_resource type="Theme" load_steps=16 format=2]
 
 [ext_resource path="res://Assets/Fonts/Ubuntu-Bold.ttf" type="DynamicFontData" id=1]
 [ext_resource path="res://Assets/UI_styles/Themes/Touchscreen/Theme1/button_normal.tres" type="StyleBox" id=2]
@@ -27,6 +27,18 @@ bg_color = Color( 0.6, 0.6, 0.6, 0 )
 size = 32
 font_data = ExtResource( 4 )
 
+[sub_resource type="StyleBoxFlat" id=12]
+bg_color = Color( 0.501961, 0.501961, 0.501961, 0.501961 )
+
+[sub_resource type="StyleBoxFlat" id=17]
+bg_color = Color( 0.168627, 0.168627, 0.168627, 1 )
+border_width_left = 30
+border_color = Color( 0.501961, 0.501961, 0.501961, 0.25098 )
+
+[sub_resource type="StyleBoxFlat" id=15]
+
+[sub_resource type="StyleBoxFlat" id=16]
+
 [resource]
 Button/fonts/font = SubResource( 6 )
 Button/styles/disabled = ExtResource( 2 )
@@ -47,3 +59,10 @@ ItemList/constants/line_separation = 10
 ItemList/fonts/font = SubResource( 10 )
 ItemList/styles/bg = SubResource( 11 )
 Label/fonts/font = SubResource( 8 )
+VScrollBar/styles/grabber = SubResource( 12 )
+VScrollBar/styles/grabber_highlight = SubResource( 12 )
+VScrollBar/styles/grabber_pressed = SubResource( 12 )
+VScrollBar/styles/scroll = SubResource( 17 )
+VScrollBar/styles/scroll_focus = SubResource( 17 )
+VSlider/styles/grabber_area = SubResource( 15 )
+VSlider/styles/grabber_area_highlight = SubResource( 16 )

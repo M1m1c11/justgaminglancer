@@ -19,8 +19,14 @@ var horiz = 0
 var mouse_vector = Vector2(0,0)
 
 # TODO: move to common?
-var camera_fov_velocity_factor = 1e-5
-var camera_fov_max_delta = 100
+# Those numbers are made to create a distortion effect 
+var camera_fov_velocity_factor = 1e-4
+var camera_fov_wrap_factor = 21.5
+# TODO: make this reliable
+var camera_fov_max_delta = 179 - 60
+var camera_brightness_velocity_factor = 1e-5
+var camera_brightness_max_delta = 5.0
+# TODO: adjust background colors separatenly?
 
 var camera_z_near_velocity_factor = 1e-5
 
@@ -90,6 +96,7 @@ func chase_camera(mv, delta):
 	var init_tilt = Vector2($Camera.rotation.x, $Camera.rotation.y)
 	var init_push = Vector2(0.0, 0.0)
 	var init_fov = Vector2(0.0, 0.0)
+	var init_brightness = Vector2(0.0, 0.0)
 	var init_near = Vector2(0.0, 0.0)
 	# $Camera.rotation.x - vertical, $Camera.rotation.y - horizontal
 	# UP - DOWN
@@ -115,6 +122,7 @@ func chase_camera(mv, delta):
 	var fin_tilt = Vector2(vert, horiz)
 	var fin_push = Vector2(p.ship_state.ship_linear_velocity, 0.0)
 	var fin_fov = Vector2(p.ship_state.ship_linear_velocity, 0.0)
+	var fin_brightness = Vector2(p.ship_state.ship_linear_velocity, 0.0)
 	var fin_near = Vector2(p.ship_state.ship_linear_velocity, 0.0)
 		
 	var tmp_tilt = init_tilt.linear_interpolate(fin_tilt, delta
@@ -123,6 +131,10 @@ func chase_camera(mv, delta):
 		*p.ship.camera_push_velocity_factor,3))
 	var tmp_fov = init_fov.linear_interpolate(fin_fov, delta
 		* camera_fov_velocity_factor)
+	var tmp_brightness = init_brightness.linear_interpolate(fin_brightness, delta
+		* camera_brightness_velocity_factor)
+	
+	# Needed to prevent artifacts.
 	var tmp_near = init_near.linear_interpolate(fin_near, delta
 		* camera_z_near_velocity_factor)
 		
@@ -145,7 +157,11 @@ func chase_camera(mv, delta):
 	
 	# This simulates warp effect and hides ship model.
 	p.camera.fov = p.common_camera.camera_fov \
-		+ clamp(5*log(tmp_fov.x), 0.0, camera_fov_max_delta)
+		+ clamp(camera_fov_wrap_factor*log(tmp_fov.x), 0.0, camera_fov_max_delta)
+	
+	# Brightness adjustment for velocity.
+	p.environment.environment.adjustment_brightness = 1.0 \
+		+ clamp(tmp_brightness.x, 0.0, camera_brightness_max_delta)
 	
 	# Increasing camera Z near value prevents flickering.
 	p.camera.near = p.common_camera.camera_near + tmp_near.x

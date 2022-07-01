@@ -7,7 +7,7 @@ onready var object_origin = p.ship.global_transform.origin
 onready var player = p.camera_rig.global_transform.origin
 
 var dist_val = 0
-var target_hidden = true
+var target_controls_hidden = true
 
 func _ready():
 	# ============================= Connect signals ===========================
@@ -17,16 +17,20 @@ func _ready():
 	p.ui_paths.target.hide()
 	p.ui_paths.desktop_button_target_clear.hide()
 	p.ui_paths.desktop_button_autopilot_start.hide()
+	p.ui_paths.touchscreen_button_target_clear.hide()
+	p.ui_paths.touchscreen_button_autopilot_start.hide()
 
 func _physics_process(_delta):
 	
 	if  p.ship_state.aim_target_locked:	
 		
-		if target_hidden:
+		if target_controls_hidden:
 			p.ui_paths.target.show()
 			p.ui_paths.desktop_button_target_clear.show()
 			p.ui_paths.desktop_button_autopilot_start.show()
-			target_hidden = false
+			p.ui_paths.touchscreen_button_target_clear.show()
+			p.ui_paths.touchscreen_button_autopilot_start.show()
+			target_controls_hidden = false
 		
 		# Get coordinates and distance.
 		object_origin = p.ship_state.aim_target.global_transform.origin
@@ -55,11 +59,13 @@ func _physics_process(_delta):
 		p.ui_paths.target.get_node("Text_object").set_fit_content_height(true)
 		p.ui_paths.target.get_node("Text_object").text = object_name
 				
-	elif not p.ship_state.aim_target_locked and not target_hidden:
+	elif not p.ship_state.aim_target_locked and not target_controls_hidden:
 		p.ui_paths.target.hide()
 		p.ui_paths.desktop_button_target_clear.hide()
 		p.ui_paths.desktop_button_autopilot_start.hide()
-		target_hidden = true
+		p.ui_paths.touchscreen_button_target_clear.hide()
+		p.ui_paths.touchscreen_button_autopilot_start.hide()
+		target_controls_hidden = true
 
 func is_target_clear():
 	# Clear target.

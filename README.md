@@ -2,12 +2,15 @@
 ![Progress][Progress]
 
 A space game inspired by Freelancer, Orbiter and EVE Online. 
-Developed in Godot 3 for desktop and mobile (Android) platforms.
+Developed in Godot 3 for desktop (Windows, Linux) and mobile (Android) platforms.
 
 [Progress]: Doc/Images/Progress.png "Progress"
 
 ## Recent changelog
-### Since v0.7-alpha
+### Since v0.8-alpha (current)
+- A new release!
+
+### Since v0.7-alpha (previous)
 - A new star system!
 - Switched to full-scale stellar bodies (stars and planets are up to scale now).
 - Using `meters` instead of `units` now. Updated distance prefixes according to 
@@ -33,6 +36,7 @@ accelerate rapidly.
 - Fixed lag due to complex collision trimesh.
 - Autopilot added.
 - New UI elements.
+- Some tweaks to superliminal velocity effects.
 
 ## TODO list:
 - Make primitive building blocks with simple collision shapes (performace).
@@ -47,8 +51,11 @@ accelerate rapidly.
 - Make autopilot detect obstacles.
 - Add star sprites as LOD2.
 - Improve star shaders?
-- Prevent camera orbiting from interrupting autopilot.
+- Prevent camera orbiting from interrupting autopilot and warp effect adjustments.
 - Disable CD after some velocity threshold.
+- Make "Orient only" autopilot feature.
+- Nebula LODS.
+- Procedural skybox distant light (to get rid of static effect due to warp).
 
 ## How to
 You can download one of the pre-compiled binary in the [releases](https://github.com/roalyr/GDTLancer/releases) section.

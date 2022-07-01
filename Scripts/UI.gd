@@ -6,7 +6,6 @@ extends CanvasLayer
 # VARIABLES
 var stick_held = false
 var turret_view = false
-var touchscreen_mode = false
 var update_debug_text_on = false
 var ui_hidden = false
 var ui_alpha = 1.0
@@ -14,9 +13,12 @@ var viewport_size = Vector2(1,1)
 
 onready var p = get_tree().get_root().get_node("Main/Paths")
 
+# TODO: to paths
 onready var mouse_vector_debug = p.ui.get_node("Gameplay/Debug/Mouse_vector")
 
+# TODO: to paths
 onready var apparent_velocity = p.ui.get_node("Gameplay/Apparent_velocity")
+onready var apparent_velocity_c = p.ui.get_node("Gameplay/Apparent_velocity_c")
 onready var apparent_velocity_units = p.ui.get_node("Gameplay/Apparent_velocity_units")
 
 
@@ -53,6 +55,7 @@ func _process(_delta):
 	if result_s:
 		apparent_velocity.text = str(result_s[0])
 		apparent_velocity_units.text = str(result_s[1])+"/s"
+		apparent_velocity_c.text = "| c: " + str(speed_val/p.common_constants.C)
 	p.ui_paths.gameplay.get_node("Accel_ticks").text = str("Accel: ", p.ship_state.accel_ticks)
 
 # ================================== Other ====================================
@@ -72,7 +75,7 @@ func update_debug_text():
 
 # UI SWITCHING
 func _on_Button_touchscreen_switch_pressed():
-	touchscreen_mode = true
+	p.main.touchscreen_mode = true
 	# Main GUI elements.
 	p.ui_paths.gameplay.show()
 	# Controls.
@@ -86,7 +89,7 @@ func _on_Button_touchscreen_switch_pressed():
 # DESKTOP
 # UI SWITCHING
 func _on_Button_cumputer_gui_switch_pressed():
-	touchscreen_mode = false
+	p.main.touchscreen_mode = false
 	# Main GUI elements.
 	p.ui_paths.gameplay.show()
 	# Controls.
@@ -218,20 +221,42 @@ func _on_Button_hide_ui_pressed():
 func _on_Button_ekill_pressed():
 	p.signals.emit_signal("sig_engine_kill")
 
+# Navigation button
 # DESKTOP
 func _on_Button_nav_pressed():
 	p.signals.emit_signal("sig_fetch_markers")
 	if not p.ui_paths.desktop_nav_popup.visible: p.ui_paths.desktop_nav_popup.show()
 	else: p.ui_paths.desktop_nav_popup.hide()
 
+# MOBILE
+func _on_Button_nav_touchscreen_pressed():
+	p.signals.emit_signal("sig_fetch_markers")
+	if not p.ui_paths.touchscreen_nav_popup.visible: p.ui_paths.touchscreen_nav_popup.show()
+	else: p.ui_paths.touchscreen_nav_popup.hide()
+
+# Autopilot controls
 # DESKTOP
 func _on_Button_autopilot_start_pressed():
 	p.signals.emit_signal("sig_autopilot_start")
+# MOBILE
+func _on_Button_autopilot_start_touchscreen_pressed():
+	p.signals.emit_signal("sig_autopilot_start")
 
-# DESKTOP
+# DESKTOP 
 func _on_Button_autopilot_disable_pressed():
 	p.signals.emit_signal("sig_autopilot_disable")
+	
+# MOBILE
+func _on_Button_autopilot_disable_touchscreen_pressed():
+	p.signals.emit_signal("sig_autopilot_disable")
 
+# Targeting
 # DESKTOP
 func _on_Button_target_clear_pressed():
 	p.signals.emit_signal("sig_target_clear")
+# MOBILE
+func _on_Button_target_clear_touchscreen_pressed():
+	p.signals.emit_signal("sig_target_clear")
+
+
+

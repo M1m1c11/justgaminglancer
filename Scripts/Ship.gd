@@ -78,6 +78,7 @@ func _ready():
 	init_ship()
 	# TODO: move it to dedicated script
 	p.ui_paths.desktop_button_autopilot_disable.hide()
+	p.ui_paths.touchscreen_button_autopilot_disable.hide()
 
 func _integrate_forces(state):	
 	
@@ -95,8 +96,12 @@ func _integrate_forces(state):
 	
 	# Limiting by engine ticks. It is a hard rebase_limits.
 	# TODO: move capped velocity to constants.
-	#if vel > 2000000:
-	#	p.signals.emit_signal("sig_accelerate", false)
+	if vel > p.common_constants.C*0.01 and self.continuous_cd:
+		self.continuous_cd = false
+		print("disable ship CCD due to high velocity")
+	elif vel < p.common_constants.C*0.01 and not self.continuous_cd:
+		self.continuous_cd = true
+		print("enable ship CCD")
 
 
 	# AUTOPILOT
@@ -125,6 +130,7 @@ func _integrate_forces(state):
 		is_engine_kill()
 		autopilot = false
 		p.ui_paths.desktop_button_autopilot_disable.hide()
+		p.ui_paths.touchscreen_button_autopilot_disable.hide()
 	
 	# Steering.
 	# Get deltas (multiply and clamp):
@@ -134,7 +140,20 @@ func _integrate_forces(state):
 	var autopilot_factor_y = clamp(autopilot_torque_factor*steering_vector.y, -1.0, 1.0)
 	var autopilot_factor_z = clamp(autopilot_torque_factor*steering_vector.z, -1.0, 1.0)
 
-	if not (p.input.LMB_held or p.ship_state.mouse_flight) and autopilot:
+
+	
+	# Due to difference in handling LMB and stick actuation, check those separately for
+	# different game modes.
+	var control_held = false
+	if not p.main.touchscreen_mode and p.input.LMB_held:
+		control_held = true
+	elif p.main.touchscreen_mode and p.ui.stick_held:
+		control_held = true
+	else: 
+		control_held = false
+	
+	
+	if not (control_held or p.ship_state.mouse_flight) and autopilot:
 
 		# Fix directions being flipped
 
@@ -253,6 +272,7 @@ func is_engine_kill():
 
 func is_autopilot_start():
 	p.ui_paths.desktop_button_autopilot_disable.show()
+	p.ui_paths.touchscreen_button_autopilot_disable.show()
 	if p.ship_state.aim_target_locked:
 		# To stop at a reasonable distance.
 		# TODO: figure out a better way?
@@ -263,3 +283,4 @@ func is_autopilot_start():
 func is_autopilot_disable():
 	autopilot = false
 	p.ui_paths.desktop_button_autopilot_disable.hide()
+	p.ui_paths.touchscreen_button_autopilot_disable.hide()
