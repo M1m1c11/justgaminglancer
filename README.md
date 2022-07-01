@@ -7,10 +7,18 @@ Developed in Godot 3 for desktop (Windows, Linux) and mobile (Android) platforms
 [Progress]: Doc/Images/Progress.png "Progress"
 
 ## Recent changelog
-### Since v0.8-alpha (current)
-- A new release!
+### Since v0.9-alpha (current)
+- CCD is disabled upon reaching specific velocity threshold.
 
-### Since v0.7-alpha (previous)
+### Since v0.8-alpha
+- Tweaks to desktop UI.
+- Fixed lag due to complex collision trimesh.
+- Autopilot added.
+- New UI elements.
+- Default window size is 720p.
+- Some tweaks to superliminal velocity effects.
+
+### Since v0.7-alpha
 - A new star system!
 - Switched to full-scale stellar bodies (stars and planets are up to scale now).
 - Using `meters` instead of `units` now. Updated distance prefixes according to 
@@ -32,27 +40,22 @@ accelerate rapidly.
 - Added icons for custom zone nodes.
 - Optimized paths.
 - Some temporary fixes for collision model (caused stuttering due to polygon number).
-- Tweaks to desktop UI.
-- Fixed lag due to complex collision trimesh.
-- Autopilot added.
-- New UI elements.
-- Some tweaks to superliminal velocity effects.
+
+## Priority TODO list:
+- Refactor ship code.
+- Prevent camera orbiting from interrupting autopilot and warp effect adjustments.
+- Make standard shapes have LOD zones (test if scaling will work as intended).
+- Investigate flickering on high velocity.
+- Handle markers disappearance properly.
+- Due to space being a complex sandwich got to figure out how to just teleport and spawn at will.
+- Make autopilot detect obstacles.
 
 ## TODO list:
 - Make primitive building blocks with simple collision shapes (performace).
 - Investigate enabling/disabling trimesh collision shapes on the go.
-- Enable/disable CCD based on velocity?
 - Scalable UI (control panel, texts, buttons, etc).
-- Grouping for overlapping markers.
-- Due to space being a complex sandwich got to figure out how to just teleport and spawn at will.
-- Handle markers disappearance properly.
-- Refactor ship code.
-- Make standard shapes have LOD zones (test if scaling will work as intended).
-- Make autopilot detect obstacles.
 - Add star sprites as LOD2.
 - Improve star shaders?
-- Prevent camera orbiting from interrupting autopilot and warp effect adjustments.
-- Disable CD after some velocity threshold.
 - Make "Orient only" autopilot feature.
 - Nebula LODS.
 - Procedural skybox distant light (to get rid of static effect due to warp).
