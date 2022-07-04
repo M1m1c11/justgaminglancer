@@ -43,7 +43,7 @@ func _ready():
 	
 	# Safeguards to prevent clipping.
 	camera_min_zoom = p.ship.camera_horiz_offset
-	camera_max_zoom = camera_min_zoom * p.common_camera.camera_zoom_out_times
+	camera_max_zoom = p.common_camera.camera_zoom_out_max
 	# Puts camera at proper distance from the model at start.
 	current_zoom = p.ship.camera_horiz_offset
 	fix_camera()
@@ -198,18 +198,21 @@ func fix_camera():
 	
 func zoom_camera(mouse_event):
 	if mouse_event.is_pressed():
-		# print(camera_min_zoom," | ",  current_zoom, " | ", camera_max_zoom)
+		var delta = get_physics_process_delta_time()
+		#print(camera_min_zoom," | ",  current_zoom, " | ", camera_max_zoom)
 		if mouse_event.button_index == BUTTON_WHEEL_UP and \
 		current_zoom <= camera_max_zoom:
-			zoom_ticks += 1
-			current_zoom += p.common_camera.camera_zoom_step*zoom_ticks
+			#zoom_ticks += 1
+			#current_zoom += pow(p.common_camera.camera_zoom_step*zoom_ticks,3)
+			current_zoom *= 2
 			$Camera.translation.z = current_zoom
 		elif mouse_event.button_index == BUTTON_WHEEL_DOWN and \
-		current_zoom >= camera_min_zoom and zoom_ticks > 0:
-			current_zoom -= p.common_camera.camera_zoom_step*zoom_ticks
-			zoom_ticks -= 1
+		current_zoom >= camera_min_zoom: # and zoom_ticks > 0:
+			#current_zoom -= pow(p.common_camera.camera_zoom_step*zoom_ticks,3)
+			#zoom_ticks -= 1
+			current_zoom /= 2
 			$Camera.translation.z = current_zoom
-
+	
 # SIGNAL PROCESSING
 func is_turret_mode_on(flag):
 	if flag:

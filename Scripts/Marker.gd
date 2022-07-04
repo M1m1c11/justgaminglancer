@@ -1,6 +1,7 @@
 extends Position3D
 
 export var autopilot_range = 1e5
+export var visible_on_starmap = true
 
 onready var p = get_tree().get_root().get_node("Main/Paths")
 

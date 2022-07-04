@@ -9,7 +9,9 @@ func _ready():
 	p.signals.connect("sig_exited_local_space_planetary", self, "is_exited_local_space_planetary")
 	p.signals.connect("sig_entered_local_space_planetary", self, "is_entered_local_space_planetary")
 	# =========================================================================
-
+	# Make sure space is zeroed.
+	self.global_transform.origin = Vector3(0,0,0)
+	
 # SIGNAL PROCESSING
 func is_entered_local_space_planetary(zone):
 	

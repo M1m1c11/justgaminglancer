@@ -1,0 +1,102 @@
+[gd_scene load_steps=2 format=2]
+
+[sub_resource type="GDScript" id=43]
+script/source = "extends Node
+
+export var system_number = 1e5
+export var galaxy_size = Vector3(1440000004889509888, 287999994105954304, 1440000004889509888)
+var generated_systems_file = \"res://Data/Galaxy.systemlist\"
+var generated_systems_file_pack = \"res://Data/Galaxy.pck\"
+	
+
+var generated_systems = {}
+var data = {}
+var regex = RegEx.new()
+var regex_space = RegEx.new()
+var ID = 0
+var file = File.new()
+
+func _ready():
+	# Adding three different generators for the sake of consistency of distributions each way.
+	var rng_x = RandomNumberGenerator.new()
+	rng_x.seed = hash(\"x\")
+	
+	var rng_y = RandomNumberGenerator.new()
+	rng_y.seed = hash(\"y\")
+	
+	var rng_z = RandomNumberGenerator.new()
+	rng_z.seed = hash(\"z\")
+	
+	var mean = 0.0
+	var deviation = 2.0
+	
+	# Create zones to spawn stellar systems in.
+	for system in system_number:
+
+		# Make up a position.
+		var pos_x = (rng_x.randfn(mean, deviation)*0.2)*galaxy_size.x
+		var pos_y = (rng_y.randfn(mean, deviation)*0.2)*galaxy_size.y
+		var pos_z = (rng_z.randfn(mean, deviation)*0.2)*galaxy_size.z
+		
+		# Make up a name.
+		regex.compile(\"[^a-zA-Z]+\")
+		regex_space.compile(\"[\\\\s]+\")
+		
+		var name_part_1_components = str(hash(pos_x)).bigrams()
+		var name_part_1 = \"\"
+		for part in name_part_1_components:
+			name_part_1 += char(int(part))
+		
+		var space_replace_1 = char(rng_x.randi_range(65,90))
+		var result_1 = regex_space.sub(name_part_1, space_replace_1, true)
+		result_1 = regex.sub(result_1, \"\", true)
+		if not result_1: 
+			result_1 = char(rng_x.randi_range(65,90))+char(rng_y.randi_range(65,90))+char(rng_z.randi_range(65,90))
+			
+		var name_part_2_components = str(hash(pos_y)).bigrams()
+		var name_part_2 = \"\"
+		for part in name_part_2_components:
+			name_part_2 += char(int(part))
+
+		var space_replace_2 = char(rng_y.randi_range(65,90))
+		var result_2 = regex_space.sub(name_part_2, space_replace_2, true)
+		result_2 = regex.sub(result_2, \"\", true)
+		if not result_2:
+			result_2 = char(rng_x.randi_range(65,90))+char(rng_y.randi_range(65,90))+char(rng_z.randi_range(65,90))
+		
+		# Finalize data.
+		var name = result_1.to_upper().substr(0,3)+\"-\"+result_2.to_upper().substr(0,3)+\"-\"+str(hash(pos_z)).substr(0,3)
+		var pos = Vector3(pos_x, pos_y, pos_z)
+		generated_systems[ID] = [name, pos]
+		
+		# Roll system ID.
+		ID += 1
+
+	data[\"systems_number\"] = system_number
+	data[\"systems_list\"] = generated_systems
+
+	print(data[\"systems_number\"])
+	print(data[\"systems_list\"][0])
+
+	#file.open(generated_systems_file, File.WRITE)
+	#file.store_var(data, true)
+	#file.close()
+	
+	#print(\"DONE GENERATING SYSTEMS\")
+	
+	#var packer = PCKPacker.new()
+	#packer.pck_start(generated_systems_file_pack)
+	#packer.add_file(generated_systems_file, generated_systems_file)
+	#packer.flush()
+	
+	#print(\"DONE PACKING SYSTEMS\")
+	
+	#get_tree().quit()
+	
+"
+
+[node name="Procedural space generator" type="Node"]
+script = SubResource( 43 )
+__meta__ = {
+"_editor_description_": "Launch as a scene (F6)"
+}

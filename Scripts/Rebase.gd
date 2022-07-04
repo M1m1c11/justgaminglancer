@@ -5,6 +5,10 @@ onready var p = get_tree().get_root().get_node("Main/Paths")
 onready var rebase_limit = p.common_engine.rebase_limit_margin
 var rebase_local = false
 
+func _ready():
+	# Make sure space is zeroed.
+	self.global_transform.origin = Vector3(0,0,0)
+
 func _physics_process(_delta):
 	# Hide ship from view to prevent annoying visuals jitter.
 	# TODO: add a sprite for the value above which is projected.

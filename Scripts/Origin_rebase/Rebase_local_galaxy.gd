@@ -9,6 +9,8 @@ func _ready():
 	p.signals.connect("sig_exited_local_space_galaxy", self, "is_exited_local_space_galaxy")
 	p.signals.connect("sig_entered_local_space_galaxy", self, "is_entered_local_space_galaxy")
 	# =========================================================================
+	# Make sure space is zeroed.
+	self.global_transform.origin = Vector3(0,0,0)
 
 # SIGNAL PROCESSING
 func is_entered_local_space_galaxy(zone):

@@ -2,15 +2,16 @@ extends Node
 
 # CONSTANTS
 const camera_far = 9e18 # 9e18 is a safe cap.
-const camera_near = 0.01 # base value.
+const camera_near = 1e-2 # base value.
 const camera_fov = 60 # Initial value.
 const camera_inertia_factor = 1.1 # 1.05 ... 1.5 Affects camera inertia.
 const camera_sensitivity = 3
 const camera_turret_roll_vert_limit = 70 # Deg +\-
 # Zoom out times is multiplied by minimum ship camera distance to define maximum.
 # Sync with touchscreen control slider (max_val = camera_zoom_out_times/camera_zoom_step).
-const camera_zoom_out_times = 50
-const camera_zoom_step = 0.1 # 0.05 ... 0.2
+const camera_zoom_out_times = 500 # For sandnbox mode
+const camera_zoom_out_max = 5e17 # For sandnbox mode
+const camera_zoom_step = 1 # 0.05 ... 0.2
 
 # VARIABLES
 onready var p = get_tree().get_root().get_node("Main/Paths")

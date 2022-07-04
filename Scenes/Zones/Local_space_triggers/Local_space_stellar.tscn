@@ -6,6 +6,7 @@
 
 [node name="Local_space_stellar" type="Area"]
 input_ray_pickable = false
+monitorable = false
 gravity = 0.0
 linear_damp = 0.0
 angular_damp = 0.0

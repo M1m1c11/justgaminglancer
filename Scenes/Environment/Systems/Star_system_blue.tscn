@@ -86,6 +86,7 @@ mesh = SubResource( 29 )
 material/0 = SubResource( 15 )
 
 [node name="Star Blue" parent="." instance=ExtResource( 4 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 8.22561e+11, -2.6051e+10, 3.17508e+10 )
 
 [node name="Zone shape" parent="Star Blue" index="1"]
 transform = Transform( 1e+11, 0, 0, 0, 1e+11, 0, 0, 0, 1e+11, 0, 0, 0 )

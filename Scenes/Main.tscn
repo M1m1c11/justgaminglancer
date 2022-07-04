@@ -1,4 +1,4 @@
-[gd_scene load_steps=36 format=2]
+[gd_scene load_steps=40 format=2]
 
 [ext_resource path="res://Scripts/Main.gd" type="Script" id=1]
 [ext_resource path="res://Scenes/Ships/Phoenix_heavy.tscn" type="PackedScene" id=2]
@@ -29,8 +29,26 @@
 [ext_resource path="res://Scripts/Origin_rebase/Rebase_local_stellar.gd" type="Script" id=27]
 [ext_resource path="res://Scripts/Origin_rebase/Rebase_local_structure.gd" type="Script" id=28]
 [ext_resource path="res://Scripts/Common/Constants.gd" type="Script" id=29]
+[ext_resource path="res://Scripts/Procedural_space/Procedural_space_galaxy.gd" type="Script" id=30]
 [ext_resource path="res://Scripts/Origin_rebase/Rebase_local_planetary.gd" type="Script" id=31]
 [ext_resource path="res://Scenes/Environment/Systems/Star_system_red.tscn" type="PackedScene" id=32]
+[ext_resource path="res://Tools/Procedural space generator.tscn" type="PackedScene" id=33]
+
+[sub_resource type="CubeMesh" id=41]
+
+[sub_resource type="GDScript" id=42]
+script/source = "extends MeshInstance
+
+
+# Declare member variables here. Examples:
+# var a = 2
+# var b = \"text\"
+
+
+# Called when the node enters the scene tree for the first time.
+func _ready():
+	self.global_scale(Vector3(1e21,1e21,1e21))
+"
 
 [sub_resource type="ArrayMesh" id=34]
 surfaces/0 = {
@@ -86,6 +104,8 @@ script = ExtResource( 1 )
 script = ExtResource( 16 )
 
 [node name="Common" type="Node" parent="."]
+
+[node name="Resources" type="Node" parent="Common"]
 
 [node name="Constants" type="Node" parent="Common"]
 script = ExtResource( 29 )
@@ -146,23 +166,30 @@ __meta__ = {
 [node name="Do not translate, do not remove" type="Node" parent="Container/Viewport/Global_space"]
 
 [node name="Galaxy local" parent="Container/Viewport/Global_space" instance=ExtResource( 18 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 7.47879e+17, 2.73504e+14, -3.38627e+17 )
 
 [node name="Zone shape" parent="Container/Viewport/Global_space/Galaxy local" index="1"]
 transform = Transform( 1.44e+18, 0, 0, 0, 2.88e+17, 0, 0, 0, 1.44e+18, 0, 0, 0 )
 
-[node name="Galaxy center" parent="Container/Viewport/Global_space/Galaxy local/Scenes" index="0" instance=ExtResource( 19 )]
+[node name="Procedural_space_galaxy" type="Position3D" parent="Container/Viewport/Global_space/Galaxy local/Scenes" index="0"]
+script = ExtResource( 30 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="Procedural space generator" parent="Container/Viewport/Global_space/Galaxy local/Scenes/Procedural_space_galaxy" instance=ExtResource( 33 )]
+
+[node name="Galaxy center" parent="Container/Viewport/Global_space/Galaxy local/Scenes" index="1" instance=ExtResource( 19 )]
 transform = Transform( 1, 6.21725e-15, -3.55271e-15, -2.66454e-15, 1, 0, -1.77636e-15, 0, 1, 0, 0, 0 )
 autopilot_range = 1.0
 
-[node name="System blue" parent="Container/Viewport/Global_space/Galaxy local/Scenes" index="1" instance=ExtResource( 22 )]
+[node name="System blue" parent="Container/Viewport/Global_space/Galaxy local/Scenes" index="2" instance=ExtResource( 22 )]
 transform = Transform( 1, 9.76996e-15, -5.32907e-15, -5.32907e-15, 1, 0, 8.88178e-16, 0, 1, -4.05644e+17, 5.12474e+10, 4.78997e+17 )
 
 [node name="System Blue" parent="Container/Viewport/Global_space/Galaxy local/Scenes/System blue/Scenes" index="0" instance=ExtResource( 7 )]
 script = ExtResource( 17 )
-autopilot_range = 1e+11
+autopilot_range = 100.0
 
-[node name="System red" parent="Container/Viewport/Global_space/Galaxy local/Scenes" index="2" instance=ExtResource( 22 )]
+[node name="System red" parent="Container/Viewport/Global_space/Galaxy local/Scenes" index="3" instance=ExtResource( 22 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 9.92206e+17, 1.2673e+16, -4.3131e+17 )
 
 [node name="Zone shape" parent="Container/Viewport/Global_space/Galaxy local/Scenes/System red" index="1"]
@@ -224,6 +251,10 @@ __meta__ = {
 "_edit_lock_": true
 }
 
+[node name="Cube rendering zone 1e21" type="MeshInstance" parent="Container/Viewport/Ship_space/Camera_decorations"]
+mesh = SubResource( 41 )
+script = SubResource( 42 )
+
 [node name="Background lights 1500 9e18" type="MeshInstance" parent="Container/Viewport/Ship_space/Camera_decorations"]
 transform = Transform( 9.22337e+18, 0, 0, 0, 9.22337e+18, 0, 0, 0, 9.22337e+18, 0, 0, 0 )
 mesh = SubResource( 34 )
@@ -235,6 +266,24 @@ script = ExtResource( 14 )
 __meta__ = {
 "_edit_lock_": true
 }
+
+[node name="Background lights 1500 9e19" type="MeshInstance" parent="Container/Viewport/Ship_space/Camera_decorations"]
+transform = Transform( -9.86862e+16, -8.15784e+18, -4.30238e+18, -8.51816e+18, 1.73013e+18, -3.08515e+18, 3.53579e+18, 3.94041e+18, -7.55261e+18, 0, 0, 0 )
+mesh = SubResource( 34 )
+skeleton = NodePath("../../../Global_space")
+material/0 = SubResource( 35 )
+material/1 = SubResource( 36 )
+material/2 = SubResource( 37 )
+script = ExtResource( 14 )
+
+[node name="Background lights 1500 9e20" type="MeshInstance" parent="Container/Viewport/Ship_space/Camera_decorations"]
+transform = Transform( 1.0577e+18, -4.09032e+18, -8.19884e+18, -8.54459e+17, 8.17329e+18, -4.18781e+18, 9.12259e+18, 1.23979e+18, 5.5835e+17, 0, 0, 0 )
+mesh = SubResource( 34 )
+skeleton = NodePath("../../../Global_space")
+material/0 = SubResource( 35 )
+material/1 = SubResource( 36 )
+material/2 = SubResource( 37 )
+script = ExtResource( 14 )
 
 [node name="OmniLight 9e18 (anti-flicker)" type="OmniLight" parent="Container/Viewport/Ship_space/Camera_decorations"]
 layers = 0
