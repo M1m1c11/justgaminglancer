@@ -23,7 +23,7 @@ const camera_push_visibility_velocity = 1e8
 
 var engine_step_delay = 0.2
 
-var autopilot_angle_deviation = 0.9
+var autopilot_angle_deviation = 0.8
 
 # Lesser is more precise, aim at ration 1:2 for decel being larger
 # Higher numbers mean more agressive AP velocity handling.
