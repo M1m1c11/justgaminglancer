@@ -13,6 +13,7 @@ func _ready():
 	self.global_transform.origin = Vector3(0,0,0)
 	
 # SIGNAL PROCESSING
+# TODO: handle overlapping zones.
 func is_entered_local_space_system(zone):
 	
 	# Get a child scenes.

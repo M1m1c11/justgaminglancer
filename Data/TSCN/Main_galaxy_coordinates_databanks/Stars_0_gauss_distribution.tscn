@@ -1,0 +1,13 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://Scenes/Zones/Local_space_triggers/Local_space_system.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Scripts/Local_space_triggers/Local_space_system.gd" type="Script" id=2]
+[ext_resource path="res://Scripts/Procedural_space/Procedural_space_galaxy.gd" type="Script" id=3]
+
+[node name="Procedural_space_galaxy" type="Position3D"]
+script = ExtResource( 3 )
+__meta__ = {
+"_edit_lock_": true
+}
+galaxy_size = Vector3( 1.44e+18, 2.88e+17, 1.44e+18 )
+

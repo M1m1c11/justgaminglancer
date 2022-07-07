@@ -19,5 +19,5 @@ script = SubResource( 43 )
 __meta__ = {
 "_editor_description_": "Launch as a scene (F6)"
 }
-tscn_path = "res://Data/Stars_10k_gauss_distribution_4.tscn"
-scn_path = "res://Data/SCN/Stars_10k_gauss_distribution_4.scn"
+tscn_path = "res://Data/TSCN/Main_galaxy_coordinates_databanks/Stars_50k_gauss_distribution.tscn"
+scn_path = "res://Data/SCN/Main_galaxy_coordinates_databanks/Stars_50k_gauss_distribution.scn"

@@ -43,6 +43,7 @@ accelerate rapidly.
 
 ## Priority TODO list:
 - Info / help window.
+- Handle overlapping local space zones properly.
 - Refactor ship code.
 - Prevent camera orbiting from interrupting autopilot and warp effect adjustments.
 - Make standard shapes have LOD zones (test if scaling will work as intended).
@@ -61,6 +62,7 @@ accelerate rapidly.
 - Nebula LODS.
 - Procedural skybox distant light (to get rid of static effect due to warp).
 - When procedural star system generation is done, figure out to "scan" for their markers.
+- Keep spawned stellar systems in space for a while (number of systems simultaneously).
 
 ## How to
 You can download one of the pre-compiled binary in the [releases](https://github.com/roalyr/GDTLancer/releases) section.
