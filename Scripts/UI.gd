@@ -252,11 +252,10 @@ func _on_Button_autopilot_disable_touchscreen_pressed():
 
 # Targeting
 # DESKTOP
-func _on_Button_target_clear_pressed():
-	p.signals.emit_signal("sig_target_clear")
+func _on_Button_target_aim_clear_pressed():
+	p.signals.emit_signal("sig_target_aim_clear")
 # MOBILE
-func _on_Button_target_clear_touchscreen_pressed():
-	p.signals.emit_signal("sig_target_clear")
-
+func _on_Button_target_aim_clear_touchscreen_pressed():
+	p.signals.emit_signal("sig_target_aim_clear")
 
 

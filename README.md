@@ -17,6 +17,12 @@ Developed in Godot 3 for desktop (Windows, Linux) and mobile (Android) platforms
 - New UI elements.
 - Default window size is 720p.
 - Some tweaks to superliminal velocity effects.
+- Tweaked autopilot to perform some rotation (approach is slightly spiraled).
+- Introduced star system coordinates databank for main galaxy (50k stars for now).
+- Split targeting into "selection" and "autopilot" controls for clarity.
+- Upon picking a stellar coordinate - spawn a system scene there (currently only a star).
+- Keep a track of recently visited star systems and do not despawn them if their number is within limit.
+- Proper spawner / despawner of stellar systems upon selecting them in order to create seamless travel.
 
 ### Since v0.7-alpha
 - A new star system!
@@ -43,26 +49,25 @@ accelerate rapidly.
 
 ## Priority TODO list:
 - Info / help window.
+- Proper stellar system generator.
 - Handle overlapping local space zones properly.
 - Refactor ship code.
 - Prevent camera orbiting from interrupting autopilot and warp effect adjustments.
 - Make standard shapes have LOD zones (test if scaling will work as intended).
 - Investigate flickering on high velocity.
-- Handle markers disappearance properly.
 - Due to space being a complex sandwich got to figure out how to just teleport and spawn at will.
 - Make autopilot detect obstacles.
 
 ## TODO list:
+- Add some nebulas and dwarf galaxies around main galaxy for extra visuals.
 - Make primitive building blocks with simple collision shapes (performace).
 - Investigate enabling/disabling trimesh collision shapes on the go.
 - Scalable UI (control panel, texts, buttons, etc).
-- Add star sprites as LOD2.
 - Improve star shaders?
 - Make "Orient only" autopilot feature.
 - Nebula LODS.
 - Procedural skybox distant light (to get rid of static effect due to warp).
-- When procedural star system generation is done, figure out to "scan" for their markers.
-- Keep spawned stellar systems in space for a while (number of systems simultaneously).
+- Add a list (options) of allowed post-effects (which work with log depth).
 
 ## How to
 You can download one of the pre-compiled binary in the [releases](https://github.com/roalyr/GDTLancer/releases) section.

@@ -4,12 +4,14 @@ onready var p = get_tree().get_root().get_node("Main/Paths")
 onready var coordinates_bank = p.common_resources.systems_coordinates_bank_1
 
 var selected = 0
+var targeted_scene = Position3D
 
 # Fetch a fresh list of markers whenever nav button is pressed.
 func _ready():
 	# ============================= Connect signals ===========================
 	p.signals.connect("sig_fetch_markers", self, "is_fetch_markers")
-	p.signals.connect("sig_target_clear", self, "is_target_clear")
+	p.signals.connect("sig_target_aim_clear", self, "is_target_aim_clear")
+	p.signals.connect("sig_autopilot_start", self, "is_autopilot_start")
 	p.signals.connect("sig_autopilot_disable", self, "is_autopilot_disable")
 	p.signals.connect("sig_system_spawned", self, "is_system_spawned")
 	# =========================================================================
@@ -50,28 +52,39 @@ func _on_ItemList_nav_visibility_changed():
 
 	# TODO: Also clear selection when target lock is removed.
 
-func is_target_clear():
-	self.unselect_all()
-
-# Perform marker refreshing upon arrival in order to get markers in global / local
-func is_autopilot_disable():
-	is_fetch_markers()
 
 
 func _on_ItemList_nav_item_selected(index):
 	selected = index
 	var coordinates = self.get_item_metadata(index)
-	#print(index, " | ", coordinates)
+	p.signals.emit_signal("sig_system_coordinates_selected", coordinates)
 	
-	# Set space coordinates and emit a signal to spawn a system there.
-	p.common_space_state.system_coordinates = coordinates
-	p.signals.emit_signal("sig_system_coordinates_selected")
+func is_system_spawned(system_scene):
+	# Save currently selected scene reference in memory
+	targeted_scene = system_scene
 	
-	# Set ship targeting system onto marker.
-	#p.ship_state.aim_target = marker
-	#p.ship_state.aim_target_locked = true
-	
-func is_system_spawned(position_3d):
-	# Set ship targeting system onto marker.
-	p.ship_state.aim_target = position_3d
+	# Update aim target.
+	p.ship_state.aim_target = targeted_scene
 	p.ship_state.aim_target_locked = true
+	
+func is_autopilot_start():
+	# When AP starts, update and use this target.
+	p.ship_state.autopilot_target = targeted_scene
+	p.ship_state.autopilot_target_locked = true
+	
+# If aim is disable and then AUP immediately after that - it prevents systems from despawning.
+# It happens when target is the same for both modes and is consequtively disabled.
+func is_target_aim_clear():
+	# Clear list selection.
+	self.unselect_all()
+	# Clear aim target.
+	p.ship_state.aim_target_locked = false
+	p.ship_state.aim_target = Position3D
+
+func is_autopilot_disable():
+	# Update markers
+	# TODO: keep it for local markers which will be in the future.
+	#is_fetch_markers()
+	# Clear AP target.
+	p.ship_state.autopilot_target_locked = false
+	p.ship_state.autopilot_target = Position3D

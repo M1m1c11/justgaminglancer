@@ -17,7 +17,7 @@ func _ready():
 func is_entered_local_space_system(zone):
 	
 	# Get a child scenes.
-	print("Entered zone: ", zone)
+	#print("Entered zone: ", zone)
 	scenes = zone.get_node("Scenes")
 	
 	# Recenter local space origin onto zone for best precision.
@@ -29,7 +29,7 @@ func is_entered_local_space_system(zone):
 
 func is_exited_local_space_system(zone):
 	
-	print("Exited zone: ", zone)
+	#print("Exited zone: ", zone)
 	
 	# Reparent scenes from local to global space (back to zone).
 	p.local_space_system.remove_child(scenes)

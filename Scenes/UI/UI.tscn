@@ -1,4 +1,4 @@
-[gd_scene load_steps=32 format=2]
+[gd_scene load_steps=33 format=2]
 
 [ext_resource path="res://Scripts/UI.gd" type="Script" id=1]
 [ext_resource path="res://Assets/UI_styles/Button_red/Red_hover_focus.tres" type="StyleBox" id=2]
@@ -15,15 +15,79 @@
 [ext_resource path="res://Assets/UI_images/PNG/buttons/ui_opacity.png" type="Texture" id=13]
 [ext_resource path="res://Assets/UI_images/PNG/buttons/options.png" type="Texture" id=14]
 [ext_resource path="res://Scripts/UI/Readouts.gd" type="Script" id=15]
-[ext_resource path="res://Scripts/UI/Ui_paths.gd" type="Script" id=16]
+[ext_resource path="res://Scenes/UI/Target_aim.tscn" type="PackedScene" id=16]
 [ext_resource path="res://Scripts/UI/Pad.gd" type="Script" id=17]
 [ext_resource path="res://Assets/UI_images/PNG/buttons/nav.png" type="Texture" id=18]
 [ext_resource path="res://Scripts/UI/ItemList_nav.gd" type="Script" id=19]
 [ext_resource path="res://Assets/UI_images/PNG/buttons/autopilot.png" type="Texture" id=20]
 [ext_resource path="res://Scripts/UI/Targeting.gd" type="Script" id=21]
-[ext_resource path="res://Scenes/UI/Target.tscn" type="PackedScene" id=22]
+[ext_resource path="res://Scenes/UI/Target_autopilot.tscn" type="PackedScene" id=22]
 [ext_resource path="res://Assets/UI_images/PNG/buttons/remove_target.png" type="Texture" id=23]
 [ext_resource path="res://Assets/UI_images/PNG/buttons/autopilot_disable.png" type="Texture" id=24]
+
+[sub_resource type="GDScript" id=9]
+script/source = "extends Node
+
+# GLOBAL PATHS 
+onready var p = get_tree().get_root().get_node(\"Main/Paths\")
+# Common
+onready var common = p.ui.get_node(\"Common\")
+onready var common_mobile_buttons = common.get_node(\"Mobile_buttons\")
+onready var common_mobile_buttons_pad = common_mobile_buttons.get_node(\"Pad\")
+onready var common_desktop_buttons = common.get_node(\"Desktop_buttons\")
+onready var common_readouts = common.get_node(\"Readouts\")
+onready var common_debug = common.get_node(\"Debug\")
+# Desktop UI
+onready var controls_desktop = p.ui.get_node(\"GUI_desktop\")
+onready var mouse_area = controls_desktop.get_node(\"Mouse_area\")
+onready var desktop_options = controls_desktop.get_node(\"Options\")
+onready var desktop_main = controls_desktop.get_node(\"Main\")
+# Desktop nav popup
+onready var desktop_nav_popup = desktop_main.get_node(\"Popup_nav\")
+onready var desktop_nav_list = desktop_nav_popup.get_node(\"ItemList_nav\")
+# Desktop buttons
+onready var desktop_button_target_aim_clear = desktop_main.get_node(\"Button_target_aim_clear\")
+onready var desktop_button_autopilot_disable = desktop_main.get_node(\"Button_autopilot_disable\")
+onready var desktop_button_autopilot_start = desktop_nav_popup.get_node(\"Button_autopilot_start\")
+
+# Touchscreen UI
+onready var controls_touchscreen = p.ui.get_node(\"GUI_touchscreen\")
+onready var touchscreen_options = controls_touchscreen.get_node(\"Options\")
+onready var touchscreen_main = controls_touchscreen.get_node(\"Main\")
+onready var touchscreen_pad_base = touchscreen_main.get_node(\"Pad_base\")
+onready var touchscreen_stick = touchscreen_pad_base.get_node(\"Stick\")
+# Touchscreen nav popup
+onready var touchscreen_nav_popup = touchscreen_main.get_node(\"Popup_nav_touchscreen\")
+onready var touchscreen_nav_list = touchscreen_nav_popup.get_node(\"ItemList_nav_touchscreen\")
+# Touchscreen buttons
+onready var touchscreen_button_target_aim_clear = touchscreen_main.get_node(\"Button_target_aim_clear_touchscreen\")
+onready var touchscreen_button_autopilot_disable = touchscreen_main.get_node(\"Button_autopilot_disable_touchscreen\")
+onready var touchscreen_button_autopilot_start = touchscreen_nav_popup.get_node(\"Button_autopilot_start_touchscreen\")
+# Gameplay UI
+onready var gameplay = p.ui.get_node(\"Gameplay\")
+onready var debug = gameplay.get_node(\"Debug\")
+onready var target_autopilot = gameplay.get_node(\"Target_autopilot\")
+onready var target_aim = gameplay.get_node(\"Target_aim\")
+onready var text_panel = gameplay.get_node(\"Text_panel\")
+# Other windows
+onready var gui_prompt = p.ui.get_node(\"GUI_prompt_greeting\")
+
+
+
+func init_gui():
+	# Initialize windows in switched off mode to match button states.
+	gui_prompt.hide()
+	gui_prompt.show()
+	
+	controls_desktop.hide()
+	controls_touchscreen.hide()
+	touchscreen_options.hide()
+	mouse_area.hide() # TODO: Maybe not the best approach?
+	gameplay.hide()
+	debug.hide()
+	text_panel.hide()
+	desktop_nav_popup.hide()
+"
 
 [sub_resource type="ShaderMaterial" id=2]
 
@@ -59,7 +123,7 @@ font_data = ExtResource( 5 )
 script = ExtResource( 1 )
 
 [node name="Paths" type="Node" parent="."]
-script = ExtResource( 16 )
+script = SubResource( 9 )
 
 [node name="Common" type="Node" parent="."]
 
@@ -238,7 +302,13 @@ custom_fonts/font = SubResource( 5 )
 text = "Accel: 0"
 align = 1
 
-[node name="Target" parent="Gameplay" instance=ExtResource( 22 )]
+[node name="Target_autopilot" parent="Gameplay" instance=ExtResource( 22 )]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+
+[node name="Target_aim" parent="Gameplay" instance=ExtResource( 16 )]
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
@@ -416,7 +486,7 @@ icon = ExtResource( 18 )
 flat = true
 icon_align = 1
 
-[node name="Button_target_clear" type="Button" parent="GUI_desktop/Main"]
+[node name="Button_target_aim_clear" type="Button" parent="GUI_desktop/Main"]
 margin_left = 209.0
 margin_top = 12.0
 margin_right = 313.0
@@ -723,7 +793,7 @@ icon = ExtResource( 18 )
 flat = true
 icon_align = 1
 
-[node name="Button_target_clear_touchscreen" type="Button" parent="GUI_touchscreen/Main"]
+[node name="Button_target_aim_clear_touchscreen" type="Button" parent="GUI_touchscreen/Main"]
 margin_left = 447.0
 margin_top = 64.0
 margin_right = 551.0
@@ -944,7 +1014,7 @@ __meta__ = {
 [connection signal="pressed" from="GUI_desktop/Main/Button_hide_ui" to="." method="_on_Button_hide_ui_pressed"]
 [connection signal="pressed" from="GUI_desktop/Main/Button_options" to="." method="_on_Button_options_pressed"]
 [connection signal="pressed" from="GUI_desktop/Main/Button_nav" to="." method="_on_Button_nav_pressed"]
-[connection signal="pressed" from="GUI_desktop/Main/Button_target_clear" to="." method="_on_Button_target_clear_pressed"]
+[connection signal="pressed" from="GUI_desktop/Main/Button_target_aim_clear" to="." method="_on_Button_target_aim_clear_pressed"]
 [connection signal="pressed" from="GUI_desktop/Main/Button_autopilot_disable" to="." method="_on_Button_autopilot_disable_pressed"]
 [connection signal="pressed" from="GUI_desktop/Main/Popup_nav/Button_autopilot_start" to="." method="_on_Button_autopilot_start_pressed"]
 [connection signal="item_selected" from="GUI_desktop/Main/Popup_nav/ItemList_nav" to="GUI_desktop/Main/Popup_nav/ItemList_nav" method="_on_ItemList_nav_item_selected"]
@@ -961,7 +1031,7 @@ __meta__ = {
 [connection signal="pressed" from="GUI_touchscreen/Main/_Button_ekill" to="." method="_on_Button_ekill_pressed"]
 [connection signal="pressed" from="GUI_touchscreen/Main/Button_hide_ui" to="." method="_on_Button_hide_ui_pressed"]
 [connection signal="pressed" from="GUI_touchscreen/Main/Button_nav_touchscreen" to="." method="_on_Button_nav_touchscreen_pressed"]
-[connection signal="pressed" from="GUI_touchscreen/Main/Button_target_clear_touchscreen" to="." method="_on_Button_target_clear_touchscreen_pressed"]
+[connection signal="pressed" from="GUI_touchscreen/Main/Button_target_aim_clear_touchscreen" to="." method="_on_Button_target_aim_clear_touchscreen_pressed"]
 [connection signal="pressed" from="GUI_touchscreen/Main/Button_autopilot_disable_touchscreen" to="." method="_on_Button_autopilot_disable_touchscreen_pressed"]
 [connection signal="pressed" from="GUI_touchscreen/Main/Popup_nav_touchscreen/Button_autopilot_start_touchscreen" to="." method="_on_Button_autopilot_start_touchscreen_pressed"]
 [connection signal="item_selected" from="GUI_touchscreen/Main/Popup_nav_touchscreen/ItemList_nav_touchscreen" to="GUI_touchscreen/Main/Popup_nav_touchscreen/ItemList_nav_touchscreen" method="_on_ItemList_nav_item_selected"]

@@ -25,7 +25,7 @@ file_body = ''
 raw_dict = {}
 ordered_dict = {}
 sep = "-"
-file_name = "Procedural_space_generator_result.txt"
+file_name = "../Data/TSCN/Main_galaxy_stars_50k.tscn"
 
 if system_number > 100000:
 	input('Too many systems, setting to 100000')
@@ -128,23 +128,34 @@ for system in range(system_number):
 ordered_dict = collections.OrderedDict(sorted(raw_dict.items()))
 
 # Write the text and do preview output.
+file_body += '[gd_scene format=2]\n\n[node name="Procedural_space" type="Position3D"]\n\n'
+
 i = 0
 for key, value in ordered_dict.items():
 	print(i, key, value)
 	i += 1
 	
 
-	str0 = '\n\n'
-	str1 = '[node name="'+key+'" type="Area" parent="." instance=ExtResource( 1 )]\n'
-	str2 = 'transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, '+str(value[0])+', '+str(value[1])+', '+str(value[2])+')\n'
-	str3 = 'script = ExtResource( 2 )'
+	str1 = '[node name="'+key+'" type="Position3D" parent="."]\n'
+	str2 = 'transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, '+str(value[0])+', '+str(value[1])+', '+str(value[2])+')\n\n'
 	
-	file_body += str0+str1+str2+str3
+	file_body += str1+str2
 	
 	
 print(file_body, file=open(file_name, "w"))
-	
-#[node name="Local_space_system" type="Area" parent="." instance=ExtResource( 1 )]
-# transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -3.4566e+17, -5.84979e+16, -6.59702e+17 )
-# script = ExtResource( 2 )
+
+################################################################################	
+#[gd_scene format=2]
+#
+#[node name="Procedural_space" type="Position3D"]
+#
+#[node name="Coordinates1" type="Position3D" parent="."]
+#transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.769, -0.546, -0.989 )
+#
+#[node name="Coordinates2" type="Position3D" parent="."]
+#transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -1.032, 0.879, -1.561 )
+#
+#[node name="Coordinates3" type="Position3D" parent="."]
+#transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.111, 0.282, 0.52 )
+#
 	

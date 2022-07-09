@@ -88,7 +88,7 @@ onready var ui_paths = ui.get_node(\"Paths\")
 resource_name = "Resources"
 script/source = "extends Node
 
-var generated_systems_file_node_1 = load(\"res://Data/TSCN/Main_galaxy_coordinates_databanks/Stars_50k_gauss_distribution.tscn\")
+var generated_systems_file_node_1 = load(\"res://Data/TSCN/Main_galaxy_stars_50k.tscn\")
 
 var systems_coordinates_bank_1 = generated_systems_file_node_1.instance()
 
@@ -98,7 +98,12 @@ var systems_coordinates_bank_1 = generated_systems_file_node_1.instance()
 resource_name = "Constants"
 script/source = "extends Node
 
+# Physical
 const C = 299792458 # Speed of light in vacuum
+
+# Other
+# TODO: revivew what goes where.
+const maximum_systems_spawned_on_visiting = 3
 "
 
 [sub_resource type="GDScript" id=46]
@@ -181,8 +186,8 @@ signal sig_quit_game
 signal sig_fetch_markers
 
 # SPACE OBJECTS SPAWNING
-signal sig_system_coordinates_selected
-signal sig_system_spawned(position_3d)
+signal sig_system_coordinates_selected(coordinates)
+signal sig_system_spawned(system_scene)
 
 # CAMERA
 signal sig_turret_mode_on(flag)
@@ -194,7 +199,7 @@ signal sig_accelerate(flag)
 signal sig_engine_kill
 signal sig_autopilot_start
 signal sig_autopilot_disable
-signal sig_target_clear
+signal sig_target_aim_clear
 
 # LOCAL SPACE TRIGGERS
 signal sig_entered_local_space_galaxy(zone)
@@ -223,14 +228,20 @@ var ship_linear_velocity = 0
 
 var aim_target = Position3D
 var aim_target_locked = false
+
+var autopilot_target = Position3D
+var autopilot_target_locked = false
+var autopilot = false
 "
 
 [sub_resource type="GDScript" id=51]
 resource_name = "Space_state"
 script/source = "extends Node
 
-var markers = []
-var system_coordinates = []
+var markers = [] # Array of global markers.
+var system_coordinates = Position3D # Selected while targeting.
+var systems_spawned = [] # Queue of spawned systems in order to manage memory.
+var systems_visited = [] # Queue of spawned systems in order to manage memory.
 "
 
 [sub_resource type="CubeMesh" id=41]
@@ -366,6 +377,7 @@ __meta__ = {
 [node name="Do not translate, do not remove" type="Node" parent="Container/Viewport/Global_space"]
 
 [node name="Galaxy local" parent="Container/Viewport/Global_space" instance=ExtResource( 18 )]
+transform = Transform( -0.0533076, -0.165096, 0.984836, 0.758477, 0.634796, 0.147471, -0.649516, 0.754836, 0.091382, -1.58621e+17, 7.47256e+17, -1.74482e+18 )
 
 [node name="Zone shape" parent="Container/Viewport/Global_space/Galaxy local" index="1"]
 transform = Transform( 1.44e+18, 0, 0, 0, 2.88e+17, 0, 0, 0, 1.44e+18, 0, 0, 0 )

@@ -30,6 +30,9 @@ var autopilot_angle_deviation = 0.8
 var autopilot_accel_factor = 0.3
 var autopilot_deccel_factor = 0.6
 
+# Orbiting factor allows to approach not at a straight line, but slightly orbiting.
+var autopilot_orbiting_factor = 0.05 # Keep it small.
+
 # Vars.
 var default_linear_damp = 0
 var tx = 0
@@ -37,10 +40,10 @@ var ty = 0
 var tz = 0
 var engine_delay = false
 
+var autopilot_target = Position3D
+var target_origin = Vector3(0,0,0)
+var autopilot_range = 0
 
-
-
-var autopilot = false
 var dist_val = 0
 var steering_vector = Vector3(0,0,0)
 
@@ -52,12 +55,6 @@ var torque = Vector3(0,0,0)
 onready var p = get_tree().get_root().get_node("Main/Paths")
 onready var engines = get_node("Engines")
 
-
-
-
-# AUTOPILOT
-onready var target = p.ship_state.aim_target
-onready var target_area = 1e5
 
 
 
@@ -76,9 +73,6 @@ func _ready():
 	
 	# Initialize the vessel params.
 	init_ship()
-	# TODO: move it to dedicated script
-	p.ui_paths.desktop_button_autopilot_disable.hide()
-	p.ui_paths.touchscreen_button_autopilot_disable.hide()
 
 func _integrate_forces(state):	
 	
@@ -105,12 +99,18 @@ func _integrate_forces(state):
 
 
 	# AUTOPILOT
+	
+	# Coordinates must be within physics process because they are updating.
+	if p.ship_state.autopilot_target_locked:
+		target_origin = autopilot_target.global_transform.origin
+		autopilot_range = autopilot_target.autopilot_range
+	
+	#print(autopilot_range)
 
 	
 	# Acceleration control.
-	if autopilot:
-		
-		var target_origin = target.global_transform.origin
+	if p.ship_state.autopilot:
+
 		var ship_origin = self.global_transform.origin
 		dist_val = round(ship_origin.distance_to(target_origin))
 		var ship_forward = -self.global_transform.basis.z
@@ -119,27 +119,24 @@ func _integrate_forces(state):
 
 		steering_vector = ship_forward.cross(dir_vector)
 		
+		# TODO: improve acceleration rate based on distance.
 		if (vel < dist_val*autopilot_accel_factor) and (dot_product > autopilot_angle_deviation)\
-			and (dist_val > target_area):
+			and (dist_val > autopilot_range):
 			is_accelerating(true)
 		elif (vel > dist_val*autopilot_deccel_factor) or (dot_product < autopilot_angle_deviation)\
-			or (dist_val < target_area): 
+			or (dist_val < autopilot_range): 
 			is_accelerating(false)
 	
-	if autopilot and dist_val < target_area:
-		is_engine_kill()
-		autopilot = false
-		p.ui_paths.desktop_button_autopilot_disable.hide()
-		p.ui_paths.touchscreen_button_autopilot_disable.hide()
+	if p.ship_state.autopilot and dist_val < autopilot_range:
+		p.signals.emit_signal("sig_autopilot_disable")
 	
 	# Steering.
 	# Get deltas (multiply and clamp):
 	var autopilot_torque_factor = 10
-	
-	var autopilot_factor_x = clamp(autopilot_torque_factor*steering_vector.x, -1.0, 1.0)
-	var autopilot_factor_y = clamp(autopilot_torque_factor*steering_vector.y, -1.0, 1.0)
-	var autopilot_factor_z = clamp(autopilot_torque_factor*steering_vector.z, -1.0, 1.0)
 
+	var autopilot_factor_x = clamp(autopilot_torque_factor*steering_vector.x+autopilot_orbiting_factor, -1.0, 1.0)
+	var autopilot_factor_y = clamp(autopilot_torque_factor*steering_vector.y+autopilot_orbiting_factor, -1.0, 1.0)
+	var autopilot_factor_z = clamp(autopilot_torque_factor*steering_vector.z+autopilot_orbiting_factor, -1.0, 1.0)
 
 	
 	# Due to difference in handling LMB and stick actuation, check those separately for
@@ -153,7 +150,7 @@ func _integrate_forces(state):
 		control_held = false
 	
 	
-	if not (control_held or p.ship_state.mouse_flight) and autopilot:
+	if not (control_held or p.ship_state.mouse_flight) and p.ship_state.autopilot:
 
 		# Fix directions being flipped
 
@@ -271,16 +268,10 @@ func is_engine_kill():
 
 
 func is_autopilot_start():
-	p.ui_paths.desktop_button_autopilot_disable.show()
-	p.ui_paths.touchscreen_button_autopilot_disable.show()
-	if p.ship_state.aim_target_locked:
-		# To stop at a reasonable distance.
-		# TODO: figure out a better way?
-		target = p.ship_state.aim_target
-		target_area = target.autopilot_range
-		autopilot = true
+	if p.ship_state.autopilot_target_locked:
+		autopilot_target = p.ship_state.autopilot_target
+		p.ship_state.autopilot = true
 	
 func is_autopilot_disable():
-	autopilot = false
-	p.ui_paths.desktop_button_autopilot_disable.hide()
-	p.ui_paths.touchscreen_button_autopilot_disable.hide()
+	is_engine_kill()
+	p.ship_state.autopilot = false
