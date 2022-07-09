@@ -9,6 +9,12 @@ Developed in Godot 3 for desktop (Windows, Linux) and mobile (Android) platforms
 ## Recent changelog
 ### Since v0.9-alpha (current)
 - CCD is disabled upon reaching specific velocity threshold.
+- Tweaked autopilot to perform some rotation (approach is slightly spiraled).
+- Introduced star system coordinates databank for main galaxy (50k stars for now).
+- Split targeting into "selection" and "autopilot" controls for clarity.
+- Upon picking a stellar coordinate - spawn a system scene there (currently only a star).
+- Keep a track of recently visited star systems and do not despawn them if their number is within limit.
+- Proper spawner / despawner of stellar systems upon selecting them in order to create seamless travel.
 
 ### Since v0.8-alpha
 - Tweaks to desktop UI.
@@ -17,12 +23,6 @@ Developed in Godot 3 for desktop (Windows, Linux) and mobile (Android) platforms
 - New UI elements.
 - Default window size is 720p.
 - Some tweaks to superliminal velocity effects.
-- Tweaked autopilot to perform some rotation (approach is slightly spiraled).
-- Introduced star system coordinates databank for main galaxy (50k stars for now).
-- Split targeting into "selection" and "autopilot" controls for clarity.
-- Upon picking a stellar coordinate - spawn a system scene there (currently only a star).
-- Keep a track of recently visited star systems and do not despawn them if their number is within limit.
-- Proper spawner / despawner of stellar systems upon selecting them in order to create seamless travel.
 
 ### Since v0.7-alpha
 - A new star system!
