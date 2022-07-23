@@ -50,7 +50,7 @@ func _physics_process(_delta):
 		
 		#if is_instance_valid(aim_target):
 		object_aim_origin = aim_target.global_transform.origin
-		object_aim_name = aim_target.marker_name
+		object_aim_name = aim_target.get_name()
 		
 		# Player coords must be updated.
 		player = p.camera_rig.global_transform.origin

@@ -15,6 +15,12 @@ Developed in Godot 3 for desktop (Windows, Linux) and mobile (Android) platforms
 - Upon picking a stellar coordinate - spawn a system scene there (currently only a star).
 - Keep a track of recently visited star systems and do not despawn them if their number is within limit.
 - Proper spawner / despawner of stellar systems upon selecting them in order to create seamless travel.
+- Moved galaxy mesh into decoration background (scoping the space down for gameplay sake).
+- Temporarily disabled procedural coords.
+- Tweaked systems.
+- Tweaked velocity, damping is implemented in the game (due to recent engine changes).
+- Removed textures and uneeded sources.
+
 
 ### Since v0.8-alpha
 - Tweaks to desktop UI.

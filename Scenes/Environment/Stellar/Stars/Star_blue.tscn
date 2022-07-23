@@ -31,20 +31,20 @@ noise = SubResource( 82 )
 
 [sub_resource type="ShaderMaterial" id=42]
 shader = ExtResource( 3 )
-shader_param/halo_color = Color( 0, 0.905882, 1, 1 )
-shader_param/corona_color = Color( 0, 0.929412, 1, 1 )
-shader_param/core_color = Color( 0, 1, 0.929412, 1 )
-shader_param/halo_strength = 0.116
-shader_param/halo_power = 1.0
+shader_param/halo_color = Color( 0, 1, 0.882353, 1 )
+shader_param/corona_color = Color( 0, 1, 0.623529, 1 )
+shader_param/core_color = Color( 0.0941176, 0.639216, 1, 1 )
+shader_param/halo_strength = 0.2
+shader_param/halo_power = 2.459
 shader_param/halo_amount = 1.0
 shader_param/corona_strength = 10.0
-shader_param/corona_power = 11.507
+shader_param/corona_power = 3.34
 shader_param/corona_amount = 1.0
 shader_param/core_strength = 50.0
-shader_param/core_power = 50.0
+shader_param/core_power = 12.717
 shader_param/core_amount = 50.0
-shader_param/displacement_scale = 0.015
-shader_param/displacement_velocity = 0.02
+shader_param/displacement_scale = 0.006
+shader_param/displacement_velocity = 0.096
 shader_param/displacement_texture = SubResource( 83 )
 
 [sub_resource type="ArrayMesh" id=40]
@@ -96,6 +96,7 @@ surfaces/0 = {
 
 [node name="Blue star" type="Position3D"]
 script = ExtResource( 2 )
+autopilot_range = 8e+10
 
 [node name="OmniLight_1e15" type="OmniLight" parent="."]
 light_color = Color( 0.52549, 0.823529, 1, 1 )
@@ -112,7 +113,7 @@ __meta__ = {
 }
 
 [node name="CollisionShape" type="CollisionShape" parent="Star_blue_2e10"]
-transform = Transform( 0.503425, 0, 0, 0, 0.503425, 0, 0, 0, 0.503425, 0, 0, 0 )
+transform = Transform( 1.09296, 0, 0, 0, 1.09296, 0, 0, 0, 1.09296, 0, 0, 0 )
 shape = SubResource( 38 )
 
 [node name="LOD_trigger_zone" type="Spatial" parent="Star_blue_2e10"]

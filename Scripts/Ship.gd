@@ -4,7 +4,9 @@ extends RigidBody
 # Params.
 var ship_mass = 1e6
 var accel_factor = 1e3 # Propulsion force.
-var accel_ticks_max = pow(2,28) # Engine propulsion increments. Pow 2.
+var accel_ticks_max = pow(2,23) # Engine propulsion increments. Pow 2.
+const ship_linear_damp = 1
+const ship_angular_damp = 5
 # Turning sensitivity LEFT-RIGHT | UP-DOWN | ROLL
 var torque_factor = Vector3(15e8,7e8,7e8)
 var camera_vert_offset = 1
@@ -31,7 +33,7 @@ var autopilot_accel_factor = 0.3
 var autopilot_deccel_factor = 0.6
 
 # Orbiting factor allows to approach not at a straight line, but slightly orbiting.
-var autopilot_orbiting_factor = 0.05 # Keep it small.
+var autopilot_orbiting_factor = 0.1 # Keep it small. Less than 1.0 - deviation
 
 # Vars.
 var default_linear_damp = 0
@@ -68,13 +70,11 @@ func _ready():
 	p.signals.connect("sig_autopilot_disable", self, "is_autopilot_disable")
 	# =========================================================================
 	
-	# Get default values.
-	default_linear_damp = p.common_engine.ship_linear_damp
-	
 	# Initialize the vessel params.
 	init_ship()
 
 func _integrate_forces(state):	
+
 	
 	#print("L: ", state.total_linear_damp, "   A: ", state.total_angular_damp)
 	# TODO: arrange for proper signs for accel and torque.
@@ -176,7 +176,27 @@ func _integrate_forces(state):
 		var ty = -transform.basis.x*self.torque_factor.y* p.input.mouse_vector.y
 		
 		state.add_torque(tx+ty)
-		
+	
+	#print(state.get_total_angular_damp())
+
+
+	# DAMPING
+	var damp_coeff = 1e-4
+	var damp_linear = 1.0 - state.step * ship_linear_damp
+
+	if (damp_linear < 0):
+		damp_linear = 0
+
+
+	var damp_angular = 1.0 - state.step * ship_angular_damp 
+
+	if (damp_angular < 0):
+		damp_angular = 0
+	
+	state.linear_velocity *= damp_linear
+	state.angular_velocity *= damp_angular
+
+
 
 # ================================== Other ====================================
 # TODO: Split it off to self's specific properties later on.
@@ -187,8 +207,6 @@ func init_ship():
 	self.custom_integrator = true
 	self.can_sleep = false
 	self.mass = self.ship_mass
-	self.linear_damp = p.common_engine.ship_linear_damp
-	self.angular_damp = p.common_engine.ship_angular_damp
 	adjust_exhaust()
 	engine_cooldown()
 	

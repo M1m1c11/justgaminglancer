@@ -1,13 +1,14 @@
-[gd_scene load_steps=15 format=2]
+[gd_scene load_steps=18 format=2]
 
 [ext_resource path="res://Assets/Shaders/Solid/Solid.gdshader" type="Shader" id=1]
-[ext_resource path="res://Scenes/Environment/Stellar/Planets/Planet_blue.tscn" type="PackedScene" id=2]
-[ext_resource path="res://Scenes/Environment/Stellar/Stars/Star_blue.tscn" type="PackedScene" id=3]
-[ext_resource path="res://Scenes/Zones/Local_space_triggers/Local_space_stellar.tscn" type="PackedScene" id=4]
-[ext_resource path="res://Scenes/Zones/Local_space_triggers/Local_space_planetary.tscn" type="PackedScene" id=5]
+[ext_resource path="res://Scripts/Local_space_triggers/Local_space_stellar.gd" type="Script" id=2]
+[ext_resource path="res://Scripts/Local_space_triggers/Local_space_planetary.gd" type="Script" id=3]
+[ext_resource path="res://Scenes/Environment/Stellar/Planets/Planet_blue.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Scenes/Environment/Stellar/Stars/Star_blue.tscn" type="PackedScene" id=5]
 [ext_resource path="res://Assets/Shaders/Clouds/Cloud.gdshader" type="Shader" id=6]
 [ext_resource path="res://Scripts/Marker.gd" type="Script" id=7]
 [ext_resource path="res://Scripts/Editor_object.gd" type="Script" id=8]
+[ext_resource path="res://Assets/Shaders/Clouds/Cloud_halo_cull_front.gdshader" type="Shader" id=9]
 
 [sub_resource type="CubeMesh" id=65]
 
@@ -37,9 +38,9 @@ surfaces/0 = {
 
 [sub_resource type="ShaderMaterial" id=28]
 shader = ExtResource( 6 )
-shader_param/albedo = Color( 0, 0.976471, 1, 1 )
-shader_param/rim_strength = 0.027
-shader_param/rim_power = 15.0
+shader_param/albedo = Color( 0.443137, 0.584314, 0.760784, 1 )
+shader_param/rim_strength = 0.05
+shader_param/rim_power = 9.0
 
 [sub_resource type="ArrayMesh" id=29]
 surfaces/0 = {
@@ -55,12 +56,20 @@ surfaces/0 = {
 }
 
 [sub_resource type="ShaderMaterial" id=15]
-shader = ExtResource( 6 )
-shader_param/albedo = Color( 0.572549, 1, 0.8, 1 )
-shader_param/rim_strength = 0.012
-shader_param/rim_power = 18.26
+shader = ExtResource( 9 )
+shader_param/albedo = Color( 0.00784314, 0.2, 0.0901961, 1 )
+shader_param/rim_strength = 4.224
+shader_param/rim_power = 8.4
+shader_param/rim_strength_inner = 0.971
+shader_param/rim_power_inner = 7.216
 
-[node name="Some_system_name" type="Position3D"]
+[sub_resource type="SphereShape" id=79]
+
+[sub_resource type="SphereShape" id=91]
+
+[node name="System Blue" type="Position3D"]
+script = ExtResource( 7 )
+autopilot_range = 1.6e+11
 
 [node name="_Marker" type="MeshInstance" parent="."]
 transform = Transform( 1e+14, 0, 0, 0, 9.22337e+17, 0, 0, 0, 1e+14, 0, 0, 0 )
@@ -69,40 +78,63 @@ mesh = SubResource( 65 )
 material/0 = SubResource( 66 )
 script = ExtResource( 8 )
 
-[node name="Cloud_spheroid3" type="Spatial" parent="."]
-transform = Transform( 5.04e+12, 5.94792e+11, 8.61653e+12, -3.23063e+10, 9.97749e+12, -6.69841e+11, -8.63697e+12, 3.09763e+11, 5.03058e+12, 3.09927e+13, -1.02189e+12, 4.79988e+13 )
-
-[node name="Mball012" type="MeshInstance" parent="Cloud_spheroid3"]
-transform = Transform( 4.49819, 1.49012e-08, 2.38419e-07, -1.49012e-08, 1.83042, -3.35276e-08, 0, 0, 1.83042, -0.147842, -0.0390935, -0.222604 )
+[node name="Cloud_big" type="MeshInstance" parent="."]
+transform = Transform( 5.5944e+14, 6.60219e+13, 9.56435e+14, -3.586e+12, 1.1075e+15, -7.43524e+13, -9.58704e+14, 3.43837e+13, 5.58394e+14, 3.09927e+13, -1.02189e+12, 4.79988e+13 )
 mesh = SubResource( 27 )
+skeleton = NodePath("")
 material/0 = SubResource( 28 )
 
-[node name="Cloud_spheroid1" type="Spatial" parent="."]
-transform = Transform( 6.231e+12, 1.06969e+12, 7.74793e+12, 6.37651e+11, 9.80359e+12, -1.8663e+12, -7.79539e+12, 1.65694e+12, 6.04041e+12, 1.60393e+09, 1.87998e+08, -2.09498e+09 )
-
-[node name="Mball012" type="MeshInstance" parent="Cloud_spheroid1"]
-transform = Transform( 3.00568, 0, 0, 0, 1.22308, 0, 0, 0, 1.22308, -0.147841, -0.0390934, -0.222604 )
+[node name="Cloud_med_green" type="MeshInstance" parent="."]
+transform = Transform( -3.89146e+14, -1.73878e+13, -1.7745e+14, 2.94396e+13, 3.07339e+14, -5.88531e+13, 2.66393e+14, -5.93647e+13, -2.52715e+14, -1.90507e+14, 2.04741e+13, -2.58574e+14 )
 mesh = SubResource( 29 )
+skeleton = NodePath("")
 material/0 = SubResource( 15 )
 
-[node name="Star Blue" parent="." instance=ExtResource( 4 )]
+[node name="Star Blue" type="Area" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 8.22561e+11, -2.6051e+10, 3.17508e+10 )
+input_ray_pickable = false
+monitorable = false
+gravity = 0.0
+linear_damp = 0.0
+angular_damp = 0.0
+script = ExtResource( 2 )
 
-[node name="Zone shape" parent="Star Blue" index="1"]
-transform = Transform( 1e+11, 0, 0, 0, 1e+11, 0, 0, 0, 1e+11, 0, 0, 0 )
+[node name="Must not intersect with other zones of this magnitude" type="Node" parent="Star Blue"]
 
-[node name="Star Blue" parent="Star Blue/Scenes" index="0" instance=ExtResource( 3 )]
-autopilot_range = 2.5e+10
+[node name="Zone shape" type="CollisionShape" parent="Star Blue"]
+transform = Transform( 1e+12, 0, 0, 0, 1e+12, 0, 0, 0, 1e+12, 0, 0, 0 )
+shape = SubResource( 79 )
 
-[node name="Planet Blue" parent="." instance=ExtResource( 5 )]
+[node name="Scenes" type="Spatial" parent="Star Blue"]
+__meta__ = {
+"_editor_description_": "Add marker to scene and set its level."
+}
+
+[node name="Star Blue" parent="Star Blue/Scenes" instance=ExtResource( 5 )]
+
+[node name="Planet Blue" type="Area" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 5.11887e+11, -5.12447e+10, 9.70431e+11 )
+input_ray_pickable = false
+monitorable = false
+gravity = 0.0
+linear_damp = 0.0
+angular_damp = 0.0
+script = ExtResource( 3 )
 
-[node name="Zone shape" parent="Planet Blue" index="1"]
-transform = Transform( 7e+07, 0, 0, 0, 7e+07, 0, 0, 0, 7e+07, 0, 0, 0 )
+[node name="Must not intersect with other zones of this magnitude" type="Node" parent="Planet Blue"]
 
-[node name="Planet Blue" parent="Planet Blue/Scenes" index="0" instance=ExtResource( 2 )]
-script = ExtResource( 7 )
-autopilot_range = 1.6e+07
+[node name="Zone shape" type="CollisionShape" parent="Planet Blue"]
+transform = Transform( 1e+08, 0, 0, 0, 1e+08, 0, 0, 0, 1e+08, 0, 0, 0 )
+shape = SubResource( 91 )
 
-[editable path="Star Blue"]
-[editable path="Planet Blue"]
+[node name="Scenes" type="Spatial" parent="Planet Blue"]
+__meta__ = {
+"_editor_description_": "Add marker to scene and set its level."
+}
+
+[node name="Planet blue" parent="Planet Blue/Scenes" instance=ExtResource( 4 )]
+
+[connection signal="body_entered" from="Star Blue" to="Star Blue" method="_on_Local_space_trigger_zone_body_entered"]
+[connection signal="body_exited" from="Star Blue" to="Star Blue" method="_on_Local_space_trigger_zone_body_exited"]
+[connection signal="body_entered" from="Planet Blue" to="Planet Blue" method="_on_Local_space_trigger_zone_body_entered"]
+[connection signal="body_exited" from="Planet Blue" to="Planet Blue" method="_on_Local_space_trigger_zone_body_exited"]

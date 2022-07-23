@@ -73,6 +73,8 @@ shader_param/rim = 0.01
 shader_param/rim_tint = 0.0
 
 [node name="Planet blue" type="Position3D"]
+script = ExtResource( 5 )
+autopilot_range = 2e+07
 
 [node name="Planet 7e6" type="StaticBody" parent="."]
 transform = Transform( 7e+06, 0, 0, 0, 7e+06, 0, 0, 0, 7e+06, 0, 0, 0 )
@@ -107,9 +109,9 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -1.41819e+07, 3.88531e+06, 7.9
 [node name="Zone shape" parent="Object Cube" index="1"]
 transform = Transform( 1000, 0, 0, 0, 1000, 0, 0, 0, 1000, 0, 0, 0 )
 
-[node name="Object Cube" type="Position3D" parent="Object Cube/Scenes" index="1"]
+[node name="Object Cube" type="Position3D" parent="Object Cube/Scenes" index="0"]
 script = ExtResource( 5 )
-autopilot_range = 100.0
+autopilot_range = 200.0
 
 [node name="Cube1" type="MeshInstance" parent="Object Cube/Scenes/Object Cube"]
 transform = Transform( 0.744568, -0.623848, 0.237557, 0.448529, 0.731096, 0.514121, -0.49441, -0.276246, 0.824165, 0, 0, 0 )

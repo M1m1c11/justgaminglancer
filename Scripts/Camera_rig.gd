@@ -17,13 +17,14 @@ var horiz = 0
 
 # Objects.
 var mouse_vector = Vector2(0,0)
+var control_held = false
 
 # TODO: move to common?
 # Those numbers are made to create a distortion effect 
 var camera_fov_velocity_factor = 1e-4
 var camera_fov_wrap_factor = 21.5
 # TODO: make this reliable
-var camera_fov_max_delta = 179 - 60
+var camera_fov_max_delta = 159 - 60
 var camera_brightness_velocity_factor = 1e-5
 var camera_brightness_max_delta = 3.0
 # TODO: adjust background colors separatenly?
@@ -49,14 +50,26 @@ func _ready():
 	fix_camera()
 	
 func _physics_process(delta):
+	
+	# Due to difference in handling LMB and stick actuation, check those separately for
+	# different game modes.
+	var control_held = false
+	if not p.main.touchscreen_mode and p.input.LMB_held:
+		control_held = true
+	elif p.main.touchscreen_mode and p.ui.stick_held:
+		control_held = true
+	else: 
+		control_held = false
+	
+	
 	# Track the change in camera mode and update mouse vector when LMB is held.
 	# When the mouse is released proceed with a little of inertia for smoothness.
 	if p.ship_state.turret_mode and \
-	(p.input.LMB_held or p.ship_state.mouse_flight):
+	(control_held or p.ship_state.mouse_flight):
 		mouse_vector = p.input.mouse_vector
 		orbit_camera(mouse_vector)
 	elif p.ship_state.turret_mode and \
-	(not p.input.LMB_held or not p.ship_state.mouse_flight):
+	(not control_held or not p.ship_state.mouse_flight):
 		# Stop inertia at small value of the vector.
 		if abs(mouse_vector.x) > 0.01:
 			mouse_vector /= p.common_camera.camera_inertia_factor
@@ -65,12 +78,12 @@ func _physics_process(delta):
 	
 	# Chase camera.
 	if not p.ship_state.turret_mode and \
-	(p.input.LMB_held or p.ship_state.mouse_flight):
+	(control_held or p.ship_state.mouse_flight):
 		mouse_vector = p.input.mouse_vector
 		chase_camera(mouse_vector, delta)\
 	# Return to initial position.
 	elif not p.ship_state.turret_mode and not \
-	(p.input.LMB_held or p.ship_state.mouse_flight):
+	(control_held or p.ship_state.mouse_flight):
 		mouse_vector = Vector2(0,0)
 		chase_camera(mouse_vector, delta)
 	

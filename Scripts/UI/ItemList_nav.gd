@@ -1,7 +1,8 @@
 extends ItemList
 
 onready var p = get_tree().get_root().get_node("Main/Paths")
-onready var coordinates_bank = p.common_resources.systems_coordinates_bank_1
+#onready var coordinates_bank = p.common_resources.systems_coordinates_bank_1
+onready var coordinates_bank = p.common_space_state.markers
 
 var selected = 0
 var targeted_scene = Position3D
@@ -27,7 +28,7 @@ func is_fetch_markers():
 	# Fetch a fresh list of markers.
 	# TODO: add custom / temporary coordinates for local space.
 
-	for coordinates in coordinates_bank.get_children():
+	for coordinates in coordinates_bank:
 		
 		# Count ID.
 		var id = self.get_item_count()
@@ -57,7 +58,11 @@ func _on_ItemList_nav_visibility_changed():
 func _on_ItemList_nav_item_selected(index):
 	selected = index
 	var coordinates = self.get_item_metadata(index)
+	print(coordinates)
 	p.signals.emit_signal("sig_system_coordinates_selected", coordinates)
+	# TODO: sort out markers vs dyn. spawned objects.
+	var marker_scene = coordinates
+	p.signals.emit_signal("sig_system_spawned", marker_scene)
 	
 func is_system_spawned(system_scene):
 	# Save currently selected scene reference in memory
