@@ -4,7 +4,7 @@ extends RigidBody
 # Params.
 var ship_mass = 1e6
 var accel_factor = 1e3 # Propulsion force.
-var accel_ticks_max = pow(2,23) # Engine propulsion increments. Pow 2.
+var accel_ticks_max = pow(2,25) # Engine propulsion increments. Pow 2.
 const ship_linear_damp = 1
 const ship_angular_damp = 5
 # Turning sensitivity LEFT-RIGHT | UP-DOWN | ROLL

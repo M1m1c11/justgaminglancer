@@ -24,7 +24,7 @@ var control_held = false
 var camera_fov_velocity_factor = 1e-4
 var camera_fov_wrap_factor = 21.5
 # TODO: make this reliable
-var camera_fov_max_delta = 159 - 60
+var camera_fov_max_delta = 169 - 60
 var camera_brightness_velocity_factor = 1e-5
 var camera_brightness_max_delta = 3.0
 # TODO: adjust background colors separatenly?

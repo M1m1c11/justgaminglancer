@@ -88,6 +88,7 @@ shader_param/rim = 0.01
 shader_param/rim_tint = 0.0
 
 [node name="Ship" type="RigidBody"]
+input_ray_pickable = false
 mass = 1000.0
 physics_material_override = SubResource( 76 )
 custom_integrator = true
