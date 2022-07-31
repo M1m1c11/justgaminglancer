@@ -1,9 +1,9 @@
 shader_type spatial;
-render_mode depth_draw_opaque, blend_add, cull_disabled, unshaded;
+render_mode depth_draw_opaque, blend_add, cull_front, unshaded;
 
 uniform vec4 albedo : hint_color;
 uniform float rim_strength = 0.05;
-uniform float rim_power = 9.0;
+uniform float rim_power = 15.0;
 
 uniform sampler2D displacement_texture;
 uniform float displacement_scale = 0.02;
@@ -26,7 +26,7 @@ void vertex() {
 
 void fragment()
 {	
-	float rim = clamp(pow( dot( NORMAL, VIEW ), rim_power)*rim_strength, 0.0, 1.0);
+	float rim = clamp(pow(dot(NORMAL, VIEW), rim_power)*rim_strength, 0.0, 1.0);
 	ALBEDO = albedo.rgb*COLOR.rgb;
 	ALPHA = rim;
 }

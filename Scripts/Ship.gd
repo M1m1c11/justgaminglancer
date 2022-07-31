@@ -102,6 +102,9 @@ func _integrate_forces(state):
 	
 	# Coordinates must be within physics process because they are updating.
 	if p.ship_state.autopilot_target_locked:
+		# Fail-safety
+		if autopilot_target.is_class("GDScriptNativeClass"):
+			return
 		target_origin = autopilot_target.global_transform.origin
 		autopilot_range = autopilot_target.autopilot_range
 	

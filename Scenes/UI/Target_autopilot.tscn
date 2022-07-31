@@ -39,7 +39,7 @@ margin_bottom = 99.0
 grow_horizontal = 0
 custom_colors/default_color = Color( 0.501961, 1, 0.501961, 1 )
 custom_fonts/normal_font = SubResource( 3 )
-text = "Some object name that can be long"
+text = "No target"
 fit_content_height = true
 scroll_active = false
 

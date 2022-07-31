@@ -24,7 +24,7 @@ onready var apparent_velocity_units = p.ui.get_node("Gameplay/Apparent_velocity_
 
 func _ready():
 	p.ui_paths.common_mobile_buttons_pad.pad_recenter_stick()
-	p.ui_paths.init_gui()
+	p.ui_paths.gui_logic.init_gui()
 
 	
 	
@@ -66,7 +66,6 @@ func update_debug_text():
 	p.ui_paths.debug.get_node("Mouse_y").text = str("Mouse / Pad y: ", p.input.mouse_vector.y)
 
 
-
 # SIGNAL PROCESSING
 # TODO: sort out
 
@@ -76,28 +75,19 @@ func update_debug_text():
 # UI SWITCHING
 func _on_Button_touchscreen_switch_pressed():
 	p.main.touchscreen_mode = true
-	# Main GUI elements.
-	p.ui_paths.gameplay.show()
-	# Controls.
-	p.ui_paths.controls_touchscreen.show()
-	p.ui_paths.touchscreen_main.show()
-	# Hide prompt and disable irrelevant scheme.
-	p.ui_paths.controls_desktop.hide()
-	p.ui_paths.gui_prompt.hide()
-	p.ui_paths.mouse_area.hide() # TODO: Maybe not the best approach?
+	p.ui_paths.gui_logic.gameplay_gui_show()
+	p.ui_paths.gui_logic.touchscreen_gui_show()
+	p.ui_paths.gui_logic.desktop_gui_hide()
+	p.ui_paths.gui_logic.select_gui_prompt_hide()
 
 # DESKTOP
 # UI SWITCHING
 func _on_Button_cumputer_gui_switch_pressed():
 	p.main.touchscreen_mode = false
-	# Main GUI elements.
-	p.ui_paths.gameplay.show()
-	# Controls.
-	p.ui_paths.controls_desktop.show()
-	p.ui_paths.mouse_area.show() # TODO: Maybe not the best approach?
-	# Hide prompt and disable irrelevant scheme.
-	p.ui_paths.controls_touchscreen.hide()
-	p.ui_paths.gui_prompt.hide()
+	p.ui_paths.gui_logic.gameplay_gui_show()
+	p.ui_paths.gui_logic.desktop_gui_show()
+	p.ui_paths.gui_logic.touchscreen_gui_hide()
+	p.ui_paths.gui_logic.select_gui_prompt_hide()
 
 
 

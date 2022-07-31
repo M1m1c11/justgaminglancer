@@ -15,6 +15,11 @@ _global_script_classes=[ {
 "path": "res://Scripts/Local_space_triggers/Local_space_galaxy.gd"
 }, {
 "base": "Area",
+"class": "PlanetLocalSpace",
+"language": "GDScript",
+"path": "res://Scripts/Local_space_triggers/Local_space_planetary.gd"
+}, {
+"base": "Area",
 "class": "StellarLocalSpace",
 "language": "GDScript",
 "path": "res://Scripts/Local_space_triggers/Local_space_stellar.gd"
@@ -31,6 +36,7 @@ _global_script_classes=[ {
 } ]
 _global_script_class_icons={
 "GalaxyLocalSpace": "res://Assets/UI_images/SVG/icons/galaxy.svg",
+"PlanetLocalSpace": "res://Assets/UI_images/SVG/icons/planet_rings.svg",
 "StellarLocalSpace": "res://Assets/UI_images/SVG/icons/star.svg",
 "StructureLocalSpace": "res://Assets/UI_images/SVG/icons/structure.svg",
 "SystemLocalSpace": "res://Assets/UI_images/SVG/icons/system.svg"

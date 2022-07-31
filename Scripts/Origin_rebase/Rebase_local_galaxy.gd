@@ -15,6 +15,19 @@ func _ready():
 # SIGNAL PROCESSING
 func is_entered_local_space_galaxy(zone):
 	
+	# Check if local space was previously freed (to prevent overlapping and messing coordinates).
+	if p.local_space_galaxy.has_node("Scenes"):
+		var scene_names = []
+
+		for c in p.local_space_galaxy.get_node("Scenes").get_children():
+			scene_names.append(c)
+			
+		var message = "Local space '"+p.local_space_galaxy.get_name() \
+			+ "' was not freed properly, which led to overlapping and corrupt object coordinates.\n" \
+			+ "Scenes which were not freed properly: " + str(scene_names) 
+			
+		p.ui_paths.gui_logic.popup_panic(message)
+		
 	# Get a child scenes.
 	print("Entered zone: ", zone)
 	scenes = zone.get_node("Scenes")

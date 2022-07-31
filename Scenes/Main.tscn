@@ -7,9 +7,9 @@
 [ext_resource path="res://Scripts/Rebase.gd" type="Script" id=5]
 [ext_resource path="res://Scripts/Input/Input.gd" type="Script" id=6]
 [ext_resource path="res://Scenes/Environment/Systems/Star_system_blue.tscn" type="PackedScene" id=7]
-[ext_resource path="res://Assets/Shaders/Clouds/Cloud_halo_cull_front.gdshader" type="Shader" id=8]
-[ext_resource path="res://Assets/Shaders/Clouds/Cloud_cull_front.gdshader" type="Shader" id=9]
-[ext_resource path="res://Assets/Shaders/Clouds/Cloud_halo_dark_cull_front.gdshader" type="Shader" id=10]
+[ext_resource path="res://Assets/Shaders/Clouds/Cloud_add/CloudHalo_add/CloudHalo_add_cull_front.gdshader" type="Shader" id=8]
+[ext_resource path="res://Assets/Shaders/Clouds/Cloud_add/CloudSolid_add/CloudSolid_add_cull_front.gdshader" type="Shader" id=9]
+[ext_resource path="res://Assets/Shaders/Clouds/Cloud_sub/CloudSolid_sub/CloudSolid_sub_cull_front.gdshader" type="Shader" id=10]
 [ext_resource path="res://Scripts/Local_space_triggers/Local_space_system.gd" type="Script" id=11]
 [ext_resource path="res://Scenes/Environment/Environment.tscn" type="PackedScene" id=12]
 [ext_resource path="res://Scripts/View.gd" type="Script" id=13]
@@ -278,7 +278,7 @@ surfaces/0 = {
 
 [sub_resource type="ShaderMaterial" id=88]
 shader = ExtResource( 8 )
-shader_param/albedo = Color( 0.109804, 0, 0.34902, 1 )
+shader_param/albedo = Color( 0.105882, 0, 0.341176, 1 )
 shader_param/rim_strength = 3.706
 shader_param/rim_power = 9.362
 shader_param/rim_strength_inner = 2.131
@@ -304,11 +304,9 @@ surfaces/0 = {
 
 [sub_resource type="ShaderMaterial" id=82]
 shader = ExtResource( 10 )
-shader_param/albedo = Color( 0.556863, 0, 0.313726, 1 )
-shader_param/rim_strength = 4.464
-shader_param/rim_power = 3.748
-shader_param/rim_strength_inner = 8.765
-shader_param/rim_power_inner = 5.165
+shader_param/albedo = Color( 0.768627, 0.768627, 0.768627, 1 )
+shader_param/rim_strength = 0.05
+shader_param/rim_power = 15.0
 
 [sub_resource type="ShaderMaterial" id=90]
 shader = ExtResource( 8 )
@@ -334,7 +332,7 @@ surfaces/0 = {
 
 [sub_resource type="ShaderMaterial" id=77]
 shader = ExtResource( 9 )
-shader_param/albedo = Color( 0.99881, 1, 0.847656, 1 )
+shader_param/albedo = Color( 0.866667, 0.866667, 0.74902, 1 )
 shader_param/rim_strength = 0.131
 shader_param/rim_power = 15.457
 
@@ -354,14 +352,14 @@ surfaces/0 = {
 
 [sub_resource type="ShaderMaterial" id=92]
 shader = ExtResource( 9 )
-shader_param/albedo = Color( 0, 0.811765, 1, 1 )
+shader_param/albedo = Color( 0, 0.65098, 0.8, 1 )
 shader_param/rim_strength = 0.127
 shader_param/rim_power = 15.0
 
 [sub_resource type="ShaderMaterial" id=80]
 shader = ExtResource( 9 )
 shader_param/albedo = Color( 0, 0.952941, 1, 1 )
-shader_param/rim_strength = 0.027
+shader_param/rim_strength = 0.018
 shader_param/rim_power = 15.0
 
 [sub_resource type="ArrayMesh" id=34]
@@ -532,49 +530,43 @@ __meta__ = {
 [node name="Local_space_galaxy" type="Position3D" parent="Container/Viewport"]
 script = ExtResource( 20 )
 __meta__ = {
-"_edit_lock_": true
+"_edit_lock_": true,
+"_editor_description_": "Do not translate and do not remove"
 }
-
-[node name="Do not translate and do not remove" type="Node" parent="Container/Viewport/Local_space_galaxy"]
 
 [node name="Local_space_system" type="Position3D" parent="Container/Viewport"]
 script = ExtResource( 25 )
 __meta__ = {
-"_edit_lock_": true
+"_edit_lock_": true,
+"_editor_description_": "Do not translate and do not remove"
 }
-
-[node name="Do not translate and do not remove" type="Node" parent="Container/Viewport/Local_space_system"]
 
 [node name="Local_space_stellar" type="Position3D" parent="Container/Viewport"]
 script = ExtResource( 27 )
 __meta__ = {
-"_edit_lock_": true
+"_edit_lock_": true,
+"_editor_description_": "Do not translate and do not remove"
 }
-
-[node name="Do not translate and do not remove" type="Node" parent="Container/Viewport/Local_space_stellar"]
 
 [node name="Local_space_planetary" type="Position3D" parent="Container/Viewport"]
 script = ExtResource( 31 )
 __meta__ = {
-"_edit_lock_": true
+"_edit_lock_": true,
+"_editor_description_": "Do not translate and do not remove"
 }
-
-[node name="Do not translate and do not remove" type="Node" parent="Container/Viewport/Local_space_planetary"]
 
 [node name="Local_space_structure" type="Position3D" parent="Container/Viewport"]
 script = ExtResource( 28 )
 __meta__ = {
-"_edit_lock_": true
+"_edit_lock_": true,
+"_editor_description_": "Do not translate and do not remove"
 }
-
-[node name="Do not translate and do not remove" type="Node" parent="Container/Viewport/Local_space_structure"]
 
 [node name="Ship_space" type="Position3D" parent="Container/Viewport"]
 __meta__ = {
-"_edit_lock_": true
+"_edit_lock_": true,
+"_editor_description_": "Do not translate and do not remove"
 }
-
-[node name="Do not translate and do not remove" type="Node" parent="Container/Viewport/Ship_space"]
 
 [node name="Camera_decorations" type="Spatial" parent="Container/Viewport/Ship_space"]
 __meta__ = {
@@ -588,7 +580,7 @@ script = SubResource( 42 )
 [node name="Galaxy_belt" type="Spatial" parent="Container/Viewport/Ship_space/Camera_decorations"]
 transform = Transform( -3.28783e+17, -8.55737e+14, 9.44405e+17, -1.20318e+15, 1e+18, 4.87239e+14, -9.44404e+17, -9.76091e+14, -3.28784e+17, 3.04444e+17, 1.58019e+16, -1.58996e+18 )
 
-[node name="Ring_inner" type="MeshInstance" parent="Container/Viewport/Ship_space/Camera_decorations/Galaxy_belt"]
+[node name="Ring_inner_emit" type="MeshInstance" parent="Container/Viewport/Ship_space/Camera_decorations/Galaxy_belt"]
 transform = Transform( 1, 0, 0, 0, 0.81, 0, 0, 0, 1, 0, 0, 0 )
 mesh = SubResource( 87 )
 skeleton = NodePath("../../Galactic_background_light")
@@ -599,7 +591,7 @@ transform = Transform( 0.217966, -0.00270386, 0.769699, 0.0123144, 0.294961, 0.0
 mesh = SubResource( 81 )
 material/0 = SubResource( 82 )
 
-[node name="Ring_outer" type="MeshInstance" parent="Container/Viewport/Ship_space/Camera_decorations/Galaxy_belt"]
+[node name="Ring_outer_emit" type="MeshInstance" parent="Container/Viewport/Ship_space/Camera_decorations/Galaxy_belt"]
 transform = Transform( 1.41421, 0, 1.41421, 0, 1.512, 0, -1.41421, 0, 1.41421, 0, 0, 0 )
 mesh = SubResource( 87 )
 skeleton = NodePath("../../Galactic_background_light")

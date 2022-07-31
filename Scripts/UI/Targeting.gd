@@ -97,6 +97,9 @@ func _physics_process(_delta):
 			target_autopilot_controls_hidden = false
 		
 		# Get coordinates and distance.
+		# Fail-safety.
+		if p.ship_state.autopilot_target.is_class("GDScriptNativeClass"):
+			return
 		object_autopilot_origin = p.ship_state.autopilot_target.global_transform.origin
 		object_autopilot_name = p.ship_state.autopilot_target.get_name()
 		# Player coords must be updated.
@@ -128,16 +131,10 @@ func _physics_process(_delta):
 		target_autopilot_controls_hidden = true
 
 func is_target_aim_clear():
-	p.ui_paths.desktop_button_target_aim_clear.hide()
-	p.ui_paths.touchscreen_button_target_aim_clear.hide()
-	p.ui_paths.target_aim.hide()
+	p.ui_paths.gui_logic.target_controls_hide()
 
 func is_autopilot_start():
-	p.ui_paths.desktop_button_autopilot_disable.show()
-	p.ui_paths.touchscreen_button_autopilot_disable.show()
-	p.ui_paths.target_autopilot.show()
+	p.ui_paths.gui_logic.autopilot_controls_show()
 
 func is_autopilot_disable():
-	p.ui_paths.desktop_button_autopilot_disable.hide()
-	p.ui_paths.touchscreen_button_autopilot_disable.hide()
-	p.ui_paths.target_autopilot.hide()
+	p.ui_paths.gui_logic.autopilot_controls_hide()
