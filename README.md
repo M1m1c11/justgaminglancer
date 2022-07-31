@@ -20,7 +20,12 @@ Developed in Godot 3 for desktop (Windows, Linux) and mobile (Android) platforms
 - Tweaked systems.
 - Tweaked velocity, damping is implemented in the game (due to recent engine changes).
 - Removed textures and uneeded sources.
-
+- Refactored UI a little.
+- Added panic screen.
+- Refactored cloud shaders.
+- Re-implemented LOD system (again).
+- Refactored cloud meshes.
+- Tweaked camera decorations.
 
 ### Since v0.8-alpha
 - Tweaks to desktop UI.
