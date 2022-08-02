@@ -1,4 +1,4 @@
-[gd_scene load_steps=39 format=2]
+[gd_scene load_steps=54 format=2]
 
 [ext_resource path="res://Scripts/UI.gd" type="Script" id=1]
 [ext_resource path="res://Assets/UI_styles/Button_red/Red_hover_focus.tres" type="StyleBox" id=2]
@@ -24,6 +24,10 @@
 [ext_resource path="res://Scenes/UI/Target_autopilot.tscn" type="PackedScene" id=22]
 [ext_resource path="res://Assets/UI_images/PNG/buttons/remove_target.png" type="Texture" id=23]
 [ext_resource path="res://Assets/UI_images/PNG/buttons/autopilot_disable.png" type="Texture" id=24]
+[ext_resource path="res://Assets/Fonts/Ubuntu-Bold.ttf" type="DynamicFontData" id=25]
+[ext_resource path="res://Assets/UI_styles/Themes/Touchscreen/Theme1/button_normal.tres" type="StyleBox" id=26]
+[ext_resource path="res://Assets/UI_styles/Themes/Touchscreen/Theme1/slider_area.tres" type="StyleBox" id=27]
+[ext_resource path="res://Assets/UI_styles/Themes/Touchscreen/Theme1/button_pressed.tres" type="StyleBox" id=28]
 
 [sub_resource type="GDScript" id=9]
 resource_name = "Paths_UI"
@@ -220,6 +224,70 @@ func _ready():
 "
 
 [sub_resource type="DynamicFont" id=6]
+size = 29
+font_data = ExtResource( 25 )
+
+[sub_resource type="StyleBoxEmpty" id=18]
+
+[sub_resource type="StyleBoxFlat" id=19]
+border_width_top = 26
+border_color = Color( 0.192157, 0.192157, 0.192157, 1 )
+
+[sub_resource type="DynamicFont" id=20]
+size = 20
+font_data = ExtResource( 5 )
+
+[sub_resource type="StyleBoxFlat" id=21]
+bg_color = Color( 0.6, 0.6, 0.6, 0 )
+
+[sub_resource type="DynamicFont" id=22]
+size = 32
+font_data = ExtResource( 5 )
+
+[sub_resource type="StyleBoxFlat" id=23]
+bg_color = Color( 0.501961, 0.501961, 0.501961, 0.501961 )
+border_width_top = 10
+border_width_bottom = 10
+border_color = Color( 0.501961, 0.501961, 0.501961, 0.501961 )
+
+[sub_resource type="StyleBoxFlat" id=17]
+bg_color = Color( 0.168627, 0.168627, 0.168627, 1 )
+border_width_left = 60
+border_color = Color( 0.501961, 0.501961, 0.501961, 0.25098 )
+
+[sub_resource type="StyleBoxFlat" id=15]
+
+[sub_resource type="StyleBoxFlat" id=16]
+
+[sub_resource type="Theme" id=24]
+Button/fonts/font = SubResource( 6 )
+Button/styles/disabled = ExtResource( 26 )
+Button/styles/focus = SubResource( 18 )
+Button/styles/hover = ExtResource( 26 )
+Button/styles/normal = ExtResource( 26 )
+Button/styles/pressed = ExtResource( 28 )
+HSlider/icons/grabber = null
+HSlider/icons/grabber_disabled = null
+HSlider/icons/grabber_highlight = null
+HSlider/icons/tick = null
+HSlider/styles/grabber_area = ExtResource( 27 )
+HSlider/styles/grabber_area_highlight = ExtResource( 27 )
+HSlider/styles/slider = SubResource( 19 )
+ItemList/colors/font_color = Color( 0.501961, 0.501961, 0.501961, 1 )
+ItemList/colors/font_color_selected = Color( 1, 1, 1, 1 )
+ItemList/constants/line_separation = 10
+ItemList/fonts/font = SubResource( 20 )
+ItemList/styles/bg = SubResource( 21 )
+Label/fonts/font = SubResource( 22 )
+VScrollBar/styles/grabber = SubResource( 23 )
+VScrollBar/styles/grabber_highlight = SubResource( 23 )
+VScrollBar/styles/grabber_pressed = SubResource( 23 )
+VScrollBar/styles/scroll = SubResource( 17 )
+VScrollBar/styles/scroll_focus = SubResource( 17 )
+VSlider/styles/grabber_area = SubResource( 15 )
+VSlider/styles/grabber_area_highlight = SubResource( 16 )
+
+[sub_resource type="DynamicFont" id=25]
 size = 35
 font_data = ExtResource( 5 )
 
@@ -230,7 +298,7 @@ bg_color = Color( 0.568627, 0, 0, 1 )
 size = 30
 font_data = ExtResource( 5 )
 
-[sub_resource type="GDScript" id=15]
+[sub_resource type="GDScript" id=26]
 script/source = "extends Button
 
 func _on_Button_quit_panic_pressed():
@@ -409,6 +477,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 color = Color( 0.168627, 0.168627, 0.168627, 0.729412 )
 __meta__ = {
+"_edit_lock_": true,
 "_edit_use_anchors_": false
 }
 
@@ -474,6 +543,17 @@ text = "Quality"
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="Label2" type="Label" parent="GUI_prompt_greeting/Slider_screen_res"]
+margin_left = -120.0
+margin_top = 50.0
+margin_right = 406.0
+margin_bottom = 167.0
+theme = ExtResource( 10 )
+text = "
+Reduce internal 
+render quality to
+improve FPS"
 
 [node name="Button_screen_filter2" type="Button" parent="GUI_prompt_greeting"]
 anchor_left = 0.5
@@ -743,7 +823,19 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="Label2" type="Label" parent="GUI_desktop/Options/Slider_screen_res2"]
+margin_left = -120.0
+margin_top = 50.0
+margin_right = 406.0
+margin_bottom = 167.0
+theme = ExtResource( 10 )
+text = "
+Reduce internal 
+render quality to
+improve FPS"
+
 [node name="GUI_touchscreen" type="Control" parent="."]
+visible = false
 material = SubResource( 3 )
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -929,8 +1021,8 @@ script = SubResource( 12 )
 anchor_right = 1.0
 anchor_bottom = 1.0
 focus_mode = 0
-theme = ExtResource( 10 )
-custom_fonts/font = SubResource( 6 )
+theme = SubResource( 24 )
+custom_fonts/font = SubResource( 25 )
 script = ExtResource( 19 )
 __meta__ = {
 "_edit_lock_": true
@@ -972,7 +1064,6 @@ normal = ExtResource( 8 )
 pressed = ExtResource( 8 )
 
 [node name="Options" type="Control" parent="GUI_touchscreen"]
-visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 __meta__ = {
@@ -1087,6 +1178,17 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="Label2" type="Label" parent="GUI_touchscreen/Options/Slider_screen_res2"]
+margin_left = -120.0
+margin_top = 50.0
+margin_right = 406.0
+margin_bottom = 167.0
+theme = ExtResource( 10 )
+text = "
+Reduce internal 
+render quality to
+improve FPS"
+
 [node name="GUI_popup_panic" type="PopupDialog" parent="."]
 pause_mode = 2
 anchor_right = 1.0
@@ -1127,7 +1229,7 @@ custom_styles/pressed = ExtResource( 4 )
 custom_styles/normal = ExtResource( 3 )
 keep_pressed_outside = true
 text = "Quit game"
-script = SubResource( 15 )
+script = SubResource( 26 )
 __meta__ = {
 "_edit_lock_": true,
 "_edit_use_anchors_": false
