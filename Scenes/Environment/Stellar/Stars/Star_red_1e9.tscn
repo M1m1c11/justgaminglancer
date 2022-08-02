@@ -22,26 +22,24 @@ surfaces/0 = {
 }
 
 [sub_resource type="NoiseTexture" id=83]
-width = 256
-height = 256
 noise = ExtResource( 6 )
 
 [sub_resource type="ShaderMaterial" id=42]
 shader = ExtResource( 3 )
-shader_param/halo_color = Color( 0, 1, 0.905882, 1 )
-shader_param/corona_color = Color( 0.32549, 0.807843, 1, 1 )
-shader_param/core_color = Color( 0.192157, 0.411765, 1, 1 )
-shader_param/halo_strength = 0.2
-shader_param/halo_power = 0.532
-shader_param/halo_amount = 1.0
-shader_param/corona_strength = 15.029
-shader_param/corona_power = 5.907
-shader_param/corona_amount = 1.0
-shader_param/core_strength = 10000.0
-shader_param/core_power = 32.0
-shader_param/core_amount = 50.0
-shader_param/displacement_scale = 0.016
-shader_param/displacement_velocity = 0.122
+shader_param/halo_color = Color( 0.239216, 0.0431373, 0, 1 )
+shader_param/corona_color = Color( 1, 0, 0, 1 )
+shader_param/core_color = Color( 0.803922, 1, 0, 1 )
+shader_param/halo_strength = 2.733
+shader_param/halo_power = 2.48
+shader_param/halo_amount = 1.807
+shader_param/corona_strength = 26.692
+shader_param/corona_power = 32.93
+shader_param/corona_amount = 14.931
+shader_param/core_strength = 50.88
+shader_param/core_power = 100.0
+shader_param/core_amount = 53.46
+shader_param/displacement_scale = 0.007
+shader_param/displacement_velocity = 0.243
 shader_param/displacement_texture = SubResource( 83 )
 
 [sub_resource type="ArrayMesh" id=86]
@@ -75,66 +73,73 @@ surfaces/0 = {
 [sub_resource type="ShaderMaterial" id=84]
 resource_local_to_scene = true
 shader = ExtResource( 4 )
-shader_param/albedo = Color( 0, 0.388235, 0.619608, 1 )
-shader_param/scale = 0.011
+shader_param/albedo = Color( 0.541176, 0.141176, 0, 1 )
+shader_param/scale = 0.009
 
-[node name="Blue star" type="Position3D"]
+[node name="Star red" type="Position3D"]
 script = ExtResource( 2 )
-autopilot_range = 8e+10
+autopilot_range = 2e+09
 
-[node name="OmniLight_1e15" type="OmniLight" parent="."]
-light_color = Color( 0.52549, 0.823529, 1, 1 )
-light_energy = 3.0
+[node name="OmniLight_1e14" type="OmniLight" parent="."]
+light_color = Color( 1, 0.282353, 0, 1 )
+light_energy = 2.006
 light_indirect_energy = 0.5
-omni_range = 1e+15
-omni_attenuation = 8.28211
+omni_range = 1e+14
+omni_attenuation = 150.0
 __meta__ = {
 "_edit_lock_": true
 }
 
-[node name="LODs star blue 1e10" type="Spatial" parent="."]
-transform = Transform( 1e+10, 0, 0, 0, 1e+10, 0, 0, 0, 1e+10, 0, 0, 0 )
+[node name="LODs star red 1e9" type="Spatial" parent="."]
+transform = Transform( 1e+09, 0, 0, 0, 1e+09, 0, 0, 0, 1e+09, 0, 0, 0 )
 script = ExtResource( 1 )
 __meta__ = {
-"_editor_description_": "Do not rename or edit the shape or area nodes
-Put scenes into Scene Items nodes
-Areas set on layer 16 for camera"
+"_editor_description_": "Do not rename or edit nodes.
+If object absolute size is set to 0, script will take size from transform.
+"
 }
+lod_2_relative_distance = 100
 
-[node name="LOD0" type="Spatial" parent="LODs star blue 1e10"]
+[node name="LOD0" type="Spatial" parent="LODs star red 1e9"]
 __meta__ = {
 "_edit_lock_": true
 }
 
-[node name="Icosphere_5120" type="MeshInstance" parent="LODs star blue 1e10/LOD0"]
+[node name="Icosphere_5120" type="MeshInstance" parent="LODs star red 1e9/LOD0"]
 mesh = SubResource( 85 )
+skeleton = NodePath("../../..")
 material/0 = SubResource( 42 )
 
-[node name="LOD1" type="Spatial" parent="LODs star blue 1e10"]
+[node name="LOD1" type="Spatial" parent="LODs star red 1e9"]
 visible = false
 __meta__ = {
 "_edit_lock_": true
 }
 
-[node name="Icosphere_1280" type="MeshInstance" parent="LODs star blue 1e10/LOD1"]
+[node name="Icosphere_1280" type="MeshInstance" parent="LODs star red 1e9/LOD1"]
 mesh = SubResource( 86 )
+skeleton = NodePath("../../..")
 material/0 = SubResource( 42 )
 
-[node name="LOD2" type="Spatial" parent="LODs star blue 1e10"]
+[node name="LOD2" type="Spatial" parent="LODs star red 1e9"]
 visible = false
 __meta__ = {
 "_edit_lock_": true
 }
 
-[node name="Icosphere_320" type="MeshInstance" parent="LODs star blue 1e10/LOD2"]
+[node name="Icosphere_320" type="MeshInstance" parent="LODs star red 1e9/LOD2"]
 mesh = SubResource( 87 )
+skeleton = NodePath("../../..")
 material/0 = SubResource( 42 )
 
-[node name="LOD3" type="Spatial" parent="LODs star blue 1e10"]
+[node name="LOD3" type="Spatial" parent="LODs star red 1e9"]
 __meta__ = {
 "_edit_lock_": true
 }
 
-[node name="Star_sprite" parent="LODs star blue 1e10/LOD3" instance=ExtResource( 5 )]
+[node name="Star_sprite" parent="LODs star red 1e9/LOD3" instance=ExtResource( 5 )]
 skeleton = NodePath("")
 material/0 = SubResource( 84 )
+__meta__ = {
+"_edit_lock_": true
+}

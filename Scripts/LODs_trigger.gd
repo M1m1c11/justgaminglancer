@@ -29,7 +29,7 @@ export var refresh_rate = 0.25
 # The internal refresh timer.
 var timer = 0.0
 # Keep a track on current lod level to pause showing / hiding calls.
-var lod_level = 0
+var lod_level = -1
 
 func _ready():
 	# Get actual size of the object.
@@ -70,45 +70,52 @@ func _physics_process(delta):
 	# Multiply distance values by scale for relativism.
 	
 	if distance < lod_0_relative_distance * object_absolute_size:
-		if not lod_level == 0:
-			# Show
+		# Show
+		if is_hidden("LOD0"):
 			show_scenes("LOD0")
-			# Hide
-			hide_scenes("LOD1")
-			hide_scenes("LOD2")
-			hide_scenes("LOD3")
-			lod_level = 0
+		# Hide
+		hide_scenes("LOD1")
+		hide_scenes("LOD2")
+		hide_scenes("LOD3")
+
 	elif distance < lod_1_relative_distance * object_absolute_size:
-		if not lod_level == 1:
-			# Show
+		# Show
+		if is_hidden("LOD1"):
 			show_scenes("LOD1")
-			# Hide
-			hide_scenes("LOD2")
-			hide_scenes("LOD0")
-			hide_scenes("LOD3")
-			lod_level = 1
+		# Hide
+		hide_scenes("LOD2")
+		hide_scenes("LOD0")
+		hide_scenes("LOD3")
+
 	elif distance < lod_2_relative_distance * object_absolute_size:
-		if not lod_level == 2:
-			# Show
+		# Show
+		if is_hidden("LOD2"):
 			show_scenes("LOD2")
-			# Hide
-			hide_scenes("LOD1")
-			hide_scenes("LOD0")
-			hide_scenes("LOD3")
-			lod_level = 2
+		# Hide
+		hide_scenes("LOD1")
+		hide_scenes("LOD0")
+		hide_scenes("LOD3")
+
 	else:
-		if not lod_level == 3:
-			# Show
+		# Show
+		if is_hidden("LOD3"):
 			show_scenes("LOD3")
-			# Hide
-			hide_scenes("LOD0")
-			hide_scenes("LOD1")
-			hide_scenes("LOD2")
-			lod_level = 3
+		# Hide
+		hide_scenes("LOD0")
+		hide_scenes("LOD1")
+		hide_scenes("LOD2")
+
+		
 		
 
 func show_scenes(lod_name):
+	print("Showing: ", lod_name)
 	self.get_node(lod_name).show()
 			
 func hide_scenes(lod_name):
 	self.get_node(lod_name).hide()
+
+func is_hidden(lod_name):
+	if not self.get_node(lod_name).visible:
+		return true
+			

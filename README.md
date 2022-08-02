@@ -32,6 +32,9 @@ Developed in Godot 3 for desktop (Windows, Linux) and mobile (Android) platforms
 - Tweaked planetary shader to include lava layer.
 - Added a sector-level nebula.
 - Refactored names of local spaces and markers to reflect what they are clearly.
+- Added a new star system.
+- Added a new planetary shader (ice).
+- Pre-release tweaks.
 
 ### Since v0.8-alpha
 - Tweaks to desktop UI.
