@@ -7,7 +7,10 @@ Developed in Godot 3 for desktop (Windows, Linux) and mobile (Android) platforms
 [Progress]: Doc/Images/Progress.png "Progress"
 
 ## Recent changelog
-### Since v0.9-alpha (current)
+### Since v0.10-alpha (current)
+- New release (and some last-minute tweaks)!
+
+### Since v0.9-alpha
 - CCD is disabled upon reaching specific velocity threshold.
 - Tweaked autopilot to perform some rotation (approach is slightly spiraled).
 - Introduced star system coordinates databank for main galaxy (50k stars for now).
@@ -95,4 +98,4 @@ If you want to open it in editor, then you must use a custom Godot build: https:
 
 
 ## Support
-[![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/U7U0BNQX5)
+<a href="https://www.buymeacoffee.com/roalyr" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me A Coffee" style="height: 60px !important;width: 217px !important;" ></a>
