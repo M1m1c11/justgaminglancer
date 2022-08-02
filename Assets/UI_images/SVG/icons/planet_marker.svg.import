@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/Icon_large.png-e1ba53a9eeef0eb2f944d45e0cebb650.stex"
+path="res://.import/planet_marker.svg-ffa67ad4a461ddae7d225ac92d7de7ff.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Images/Icon_large.png"
-dest_files=[ "res://.import/Icon_large.png-e1ba53a9eeef0eb2f944d45e0cebb650.stex" ]
+source_file="res://Assets/UI_images/SVG/icons/planet_marker.svg"
+dest_files=[ "res://.import/planet_marker.svg-ffa67ad4a461ddae7d225ac92d7de7ff.stex" ]
 
 [params]
 

@@ -1,12 +1,13 @@
-[gd_scene load_steps=26 format=2]
+[gd_scene load_steps=27 format=2]
 
 [ext_resource path="res://Assets/Shaders/Solid/Solid.gdshader" type="Shader" id=1]
 [ext_resource path="res://Assets/Shaders/Planetary/Planet_atmosphere.gdshader" type="Shader" id=2]
 [ext_resource path="res://Scenes/Editor scenes/_EDITOR OBJECTS_.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Assets/Shaders/Clouds/Cloud_add/CloudSolid_add/CloudSolid_add_cull_disabled.gdshader" type="Shader" id=4]
-[ext_resource path="res://Scripts/Marker.gd" type="Script" id=5]
+[ext_resource path="res://Scripts/Markers/Marker_planet.gd" type="Script" id=5]
 [ext_resource path="res://Scripts/Local_space_triggers/Local_space_structure.gd" type="Script" id=6]
 [ext_resource path="res://Scripts/LODs_trigger.gd" type="Script" id=7]
+[ext_resource path="res://Scripts/Markers/Marker_structure.gd" type="Script" id=8]
 
 [sub_resource type="SphereShape" id=79]
 
@@ -187,9 +188,10 @@ surfaces/0 = {
 
 [node name="Planet blue" type="Position3D"]
 script = ExtResource( 5 )
-autopilot_range = 2e+07
+autopilot_range = 1.4e+07
 
 [node name="_EDITOR OBJECTS_" parent="." instance=ExtResource( 3 )]
+visible = false
 
 [node name="Object Cube" type="Area" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -1.41819e+07, 3.88531e+06, 7.92986e+06 )
@@ -200,8 +202,8 @@ linear_damp = 0.0
 angular_damp = 0.0
 script = ExtResource( 6 )
 
-[node name="Zone shape" type="CollisionShape" parent="Object Cube"]
-transform = Transform( 1000, 0, 0, 0, 1000, 0, 0, 0, 1000, 0, 0, 0 )
+[node name="Zone shape 1e4" type="CollisionShape" parent="Object Cube"]
+transform = Transform( 10000, 0, 0, 0, 10000, 0, 0, 0, 10000, 0, 0, 0 )
 shape = SubResource( 79 )
 
 [node name="Scenes" type="Spatial" parent="Object Cube"]
@@ -210,8 +212,7 @@ __meta__ = {
 }
 
 [node name="Object Cube" type="Position3D" parent="Object Cube/Scenes"]
-script = ExtResource( 5 )
-autopilot_range = 200.0
+script = ExtResource( 8 )
 
 [node name="Cube1" type="MeshInstance" parent="Object Cube/Scenes/Object Cube"]
 transform = Transform( 0.744568, -0.623848, 0.237557, 0.448529, 0.731097, 0.51412, -0.49441, -0.276246, 0.824164, 0, 0, 0 )

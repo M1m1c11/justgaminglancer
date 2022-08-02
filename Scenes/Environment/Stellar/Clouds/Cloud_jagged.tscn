@@ -61,6 +61,7 @@ __meta__ = {
 Put meshes into Scene Items nodes
 "
 }
+lod_2_relative_distance = 250
 
 [node name="LOD0" type="Spatial" parent="LODs Cloud jagged"]
 __meta__ = {

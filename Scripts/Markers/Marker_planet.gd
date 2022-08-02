@@ -1,9 +1,8 @@
 extends Position3D
+class_name MarkerPlanet, "res://Assets/UI_images/SVG/icons/planet_marker.svg"
 
-export var marker_name = ""
-export var autopilot_range = 1e5
-export var visible_on_starmap = true
-#var autopilot_targeted = false
+export var autopilot_range = 1e8
+export var targetable = true
 
 onready var p = get_tree().get_root().get_node("Main/Paths")
 

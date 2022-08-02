@@ -1,9 +1,9 @@
 shader_type spatial;
-render_mode depth_draw_opaque, cull_front, unshaded;
+render_mode depth_draw_opaque, cull_front, unshaded, blend_add;
 
-uniform vec4 halo_color : hint_color;
-uniform vec4 corona_color : hint_color;
-uniform vec4 core_color : hint_color;
+uniform vec4 halo_color : hint_color = vec4(1.0, 0.9, 0.4, 1.0);
+uniform vec4 corona_color : hint_color = vec4(1.0, 0.9, 0.4, 1.0);
+uniform vec4 core_color : hint_color = vec4(1.0, 0.9, 0.4, 1.0);
 
 uniform float halo_strength = 0.2;
 uniform float halo_power = 1.0;
@@ -21,7 +21,6 @@ uniform sampler2D displacement_texture;
 uniform float displacement_scale = 0.02;
 uniform float displacement_velocity = 0.01;
 
-
 void vertex() {
 	vec2 tex_position_x = VERTEX.yz / 1.0 - TIME*displacement_velocity;
 	vec2 tex_position_y = VERTEX.xz / 1.0 + TIME*displacement_velocity;
@@ -38,12 +37,14 @@ void vertex() {
 
 void fragment()
 {
-	float halo = clamp(pow( dot( NORMAL, VIEW ), halo_power)*halo_strength, 0.0, 1.0);
-	float corona = clamp(pow( dot( NORMAL, VIEW ), corona_power)*corona_strength, 0.0, 1.0);
-	float core = clamp(pow( dot( NORMAL, VIEW ), core_power)*core_strength, 0.0, 1.0);
+	float halo = clamp(pow(dot(NORMAL,VIEW), halo_power)*halo_strength, 0.0, 1.0);
+	float corona = clamp(pow(dot(NORMAL,VIEW), corona_power)*corona_strength, 0.0, 1.0);
+	float core = clamp(pow(dot(NORMAL,VIEW), core_power)*core_strength, 0.0, 1.0);
+	
 	ALBEDO = 
 		halo*halo_amount*halo_color.rgb 
 		+ corona*corona_amount*corona_color.rgb 
 		+ core*core_amount*core_color.rgb;
+		
 	ALPHA = halo;
 }

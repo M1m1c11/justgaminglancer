@@ -29,6 +29,9 @@ Developed in Godot 3 for desktop (Windows, Linux) and mobile (Android) platforms
 - Optimized background decorations.
 - Reworked primitive shapes scene (for importing).
 - Implemented planet surface shader (based on old implementation of star surface shader, but not animated).
+- Tweaked planetary shader to include lava layer.
+- Added a sector-level nebula.
+- Refactored names of local spaces and markers to reflect what they are clearly.
 
 ### Since v0.8-alpha
 - Tweaks to desktop UI.

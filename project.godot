@@ -12,17 +12,37 @@ _global_script_classes=[ {
 "base": "Area",
 "class": "GalaxyLocalSpace",
 "language": "GDScript",
-"path": "res://Scripts/Local_space_triggers/Local_space_galaxy.gd"
+"path": "res://Scripts/Local_space_triggers/_Local_space_galaxy.gd"
+}, {
+"base": "Position3D",
+"class": "MarkerPlanet",
+"language": "GDScript",
+"path": "res://Scripts/Markers/Marker_planet.gd"
+}, {
+"base": "Position3D",
+"class": "MarkerStar",
+"language": "GDScript",
+"path": "res://Scripts/Markers/Marker_star.gd"
+}, {
+"base": "Position3D",
+"class": "MarkerStructure",
+"language": "GDScript",
+"path": "res://Scripts/Markers/Marker_structure.gd"
+}, {
+"base": "Position3D",
+"class": "MarkerSystem",
+"language": "GDScript",
+"path": "res://Scripts/Markers/Marker_system.gd"
 }, {
 "base": "Area",
 "class": "PlanetLocalSpace",
 "language": "GDScript",
-"path": "res://Scripts/Local_space_triggers/Local_space_planetary.gd"
+"path": "res://Scripts/Local_space_triggers/Local_space_planet.gd"
 }, {
 "base": "Area",
 "class": "StellarLocalSpace",
 "language": "GDScript",
-"path": "res://Scripts/Local_space_triggers/Local_space_stellar.gd"
+"path": "res://Scripts/Local_space_triggers/Local_space_star.gd"
 }, {
 "base": "Area",
 "class": "StructureLocalSpace",
@@ -36,7 +56,11 @@ _global_script_classes=[ {
 } ]
 _global_script_class_icons={
 "GalaxyLocalSpace": "res://Assets/UI_images/SVG/icons/galaxy.svg",
-"PlanetLocalSpace": "res://Assets/UI_images/SVG/icons/planet_rings.svg",
+"MarkerPlanet": "res://Assets/UI_images/SVG/icons/planet_marker.svg",
+"MarkerStar": "res://Assets/UI_images/SVG/icons/star_marker.svg",
+"MarkerStructure": "res://Assets/UI_images/SVG/icons/structure_marker.svg",
+"MarkerSystem": "res://Assets/UI_images/SVG/icons/system_marker.svg",
+"PlanetLocalSpace": "res://Assets/UI_images/SVG/icons/planet.svg",
 "StellarLocalSpace": "res://Assets/UI_images/SVG/icons/star.svg",
 "StructureLocalSpace": "res://Assets/UI_images/SVG/icons/structure.svg",
 "SystemLocalSpace": "res://Assets/UI_images/SVG/icons/system.svg"
@@ -47,8 +71,8 @@ _global_script_class_icons={
 config/name="GDTLancer"
 config/description="A space game."
 run/main_scene="res://Scenes/Main.tscn"
-boot_splash/image="res://Assets/Images/Splash.png"
-config/icon="res://Assets/Images/Icon.png"
+boot_splash/image="res://Assets/UI_images/PNG/Icon_splash/Splash.png"
+config/icon="res://Assets/UI_images/PNG/Icon_splash/Icon.png"
 config/windows_native_icon="res://Assets/Images/Icon.ico"
 
 [display]

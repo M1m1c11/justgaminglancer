@@ -29,18 +29,19 @@ func is_fetch_markers():
 	# TODO: add custom / temporary coordinates for local space.
 
 	for coordinates in coordinates_bank:
-		
-		# Count ID.
-		var id = self.get_item_count()
+		if coordinates.targetable:
 			
-		# Add item with the node name.
-		self.add_item(coordinates.get_name(), null, true)
-		
-		# Disable tooltips.
-		self.set_item_tooltip_enabled(id, false)
-		
-		# Attach data to the item.
-		self.set_item_metadata(id, coordinates)
+			# Count ID.
+			var id = self.get_item_count()
+				
+			# Add item with the node name.
+			self.add_item(coordinates.get_name(), null, true)
+			
+			# Disable tooltips.
+			self.set_item_tooltip_enabled(id, false)
+			
+			# Attach data to the item.
+			self.set_item_metadata(id, coordinates)
 	
 	# Sort the list by name
 	self.sort_items_by_text()

@@ -1,10 +1,11 @@
 [gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://Scripts/LODs_trigger.gd" type="Script" id=1]
-[ext_resource path="res://Scripts/Marker.gd" type="Script" id=2]
-[ext_resource path="res://Assets/Shaders/Stellar/Star.gdshader" type="Shader" id=3]
+[ext_resource path="res://Scripts/Markers/Marker_star.gd" type="Script" id=2]
+[ext_resource path="res://Assets/Shaders/Star/Star.gdshader" type="Shader" id=3]
 [ext_resource path="res://Assets/Shaders/Sprites/Sprite_star_no_tex.gdshader" type="Shader" id=4]
 [ext_resource path="res://Scenes/Sprites/Star_sprite.tscn" type="PackedScene" id=5]
+[ext_resource path="res://Assets/Texture_resources/Simplex/Simplex_1_100_0_2.tres" type="OpenSimplexNoise" id=6]
 
 [sub_resource type="ArrayMesh" id=85]
 resource_name = "Primitives_Icosphere011"
@@ -20,14 +21,10 @@ surfaces/0 = {
 "vertex_count": 2737
 }
 
-[sub_resource type="OpenSimplexNoise" id=82]
-octaves = 1
-period = 113.6
-persistence = 0.0
-lacunarity = 0.1
-
 [sub_resource type="NoiseTexture" id=83]
-noise = SubResource( 82 )
+width = 256
+height = 256
+noise = ExtResource( 6 )
 
 [sub_resource type="ShaderMaterial" id=42]
 shader = ExtResource( 3 )
@@ -35,7 +32,7 @@ shader_param/halo_color = Color( 0, 1, 0.905882, 1 )
 shader_param/corona_color = Color( 0.32549, 0.807843, 1, 1 )
 shader_param/core_color = Color( 0.192157, 0.411765, 1, 1 )
 shader_param/halo_strength = 0.2
-shader_param/halo_power = 1.0
+shader_param/halo_power = 0.532
 shader_param/halo_amount = 1.0
 shader_param/corona_strength = 15.029
 shader_param/corona_power = 5.907
@@ -43,7 +40,7 @@ shader_param/corona_amount = 1.0
 shader_param/core_strength = 10000.0
 shader_param/core_power = 32.0
 shader_param/core_amount = 50.0
-shader_param/displacement_scale = 0.01
+shader_param/displacement_scale = 0.016
 shader_param/displacement_velocity = 0.122
 shader_param/displacement_texture = SubResource( 83 )
 
@@ -78,8 +75,8 @@ surfaces/0 = {
 [sub_resource type="ShaderMaterial" id=84]
 resource_local_to_scene = true
 shader = ExtResource( 4 )
-shader_param/albedo = Color( 0, 0.623529, 1, 1 )
-shader_param/scale = 0.01
+shader_param/albedo = Color( 0, 0.388235, 0.619608, 1 )
+shader_param/scale = 0.011
 
 [node name="Blue star" type="Position3D"]
 script = ExtResource( 2 )

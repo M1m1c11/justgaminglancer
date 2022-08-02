@@ -1,60 +1,57 @@
-[gd_scene load_steps=17 format=2]
+[gd_scene load_steps=19 format=2]
 
-[ext_resource path="res://Scripts/Marker.gd" type="Script" id=1]
+[ext_resource path="res://Scripts/Markers/Marker_planet.gd" type="Script" id=1]
 [ext_resource path="res://Scripts/LODs_trigger.gd" type="Script" id=2]
-[ext_resource path="res://Assets/Shaders/Planetary/Planet_surface_displacement.gdshader" type="Shader" id=3]
+[ext_resource path="res://Assets/Shaders/Planetary/Planet_surface_lava_displacement.gdshader" type="Shader" id=3]
 [ext_resource path="res://Scenes/Kinematic/Rotating_object.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Assets/Texture_resources/Simplex/Simplex_9_110_0.6_2.tres" type="OpenSimplexNoise" id=5]
+[ext_resource path="res://Assets/Texture_resources/Simplex/Simplex_9_100_0.7_4.tres" type="OpenSimplexNoise" id=6]
 [ext_resource path="res://Scenes/Editor scenes/_EDITOR OBJECTS_.tscn" type="PackedScene" id=7]
+[ext_resource path="res://Assets/Texture_resources/Simplex/Simplex_9_100_0.7_2.tres" type="OpenSimplexNoise" id=8]
+[ext_resource path="res://Assets/Texture_resources/Simplex/Simplex_9_0.1_0.5_2.tres" type="OpenSimplexNoise" id=9]
 
 [sub_resource type="SphereShape" id=43]
 
 [sub_resource type="SphereMesh" id=76]
 
-[sub_resource type="OpenSimplexNoise" id=72]
-octaves = 9
-period = 0.1
-persistence = 0.211
-
 [sub_resource type="NoiseTexture" id=73]
 seamless = true
-noise = SubResource( 72 )
+noise = ExtResource( 9 )
 
-[sub_resource type="OpenSimplexNoise" id=77]
-octaves = 9
-period = 162.5
-persistence = 0.706
+[sub_resource type="NoiseTexture" id=84]
+seamless = true
+noise = ExtResource( 8 )
 
 [sub_resource type="NoiseTexture" id=78]
 seamless = true
-noise = SubResource( 77 )
-
-[sub_resource type="OpenSimplexNoise" id=79]
-octaves = 9
-period = 93.6
-persistence = 0.741
-lacunarity = 4.0
+noise = ExtResource( 5 )
 
 [sub_resource type="NoiseTexture" id=80]
 seamless = true
-noise = SubResource( 79 )
+noise = ExtResource( 6 )
 
 [sub_resource type="ShaderMaterial" id=71]
 shader = ExtResource( 3 )
-shader_param/albedo = Color( 0.631373, 0.607843, 0.603922, 1 )
+shader_param/albedo = Color( 1, 1, 1, 1 )
 shader_param/specular = 0.0
 shader_param/metallic = 0.0
 shader_param/roughness = 1.0
 shader_param/rim = 0.0
-shader_param/displacement_scale = 0.032
-shader_param/major_detail_amount = -0.88
+shader_param/displacement_scale = 0.033
+shader_param/major_detail_amount = 1.535
 shader_param/major_detail_scale = 2.0
-shader_param/small_detail_amount = 1.161
+shader_param/small_detail_amount = 1.502
 shader_param/small_detail_scale = 8.0
-shader_param/uv_shift_x = 0.006
-shader_param/uv_shift_y = -1.424
+shader_param/lava_detail_amount = 1.032
+shader_param/lava_detail_intensity = 10.0
+shader_param/lava_detail_scale = 4.0
+shader_param/lava_noise_blend = 0.205
+shader_param/uv_shift_x = 0.021
+shader_param/uv_shift_y = -1.064
 shader_param/displacement_texture = SubResource( 73 )
 shader_param/major_detail_noise = SubResource( 78 )
 shader_param/small_detail_noise = SubResource( 80 )
+shader_param/lava_detail_noise = SubResource( 84 )
 
 [sub_resource type="SphereMesh" id=81]
 radial_segments = 32
@@ -71,7 +68,7 @@ autopilot_range = 2e+06
 [node name="_EDITOR OBJECTS_" parent="." instance=ExtResource( 7 )]
 
 [node name="Planet 1e6" type="StaticBody" parent="."]
-transform = Transform( 1e+06, 0, 0, 0, 1e+06, 0, 0, 0, 1e+06, 0, 0, 0 )
+transform = Transform( 1.01e+06, 0, 0, 0, 1.01e+06, 0, 0, 0, 1.01e+06, 0, 0, 0 )
 
 [node name="CollisionShape" type="CollisionShape" parent="Planet 1e6"]
 shape = SubResource( 43 )
