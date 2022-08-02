@@ -43,7 +43,7 @@ func is_fetch_markers():
 		self.set_item_metadata(id, coordinates)
 	
 	# Sort the list by name
-	# self.sort_items_by_text()
+	self.sort_items_by_text()
 
 
 func _on_ItemList_nav_visibility_changed():

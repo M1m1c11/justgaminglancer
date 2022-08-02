@@ -26,6 +26,9 @@ Developed in Godot 3 for desktop (Windows, Linux) and mobile (Android) platforms
 - Re-implemented LOD system (again).
 - Refactored cloud meshes.
 - Tweaked camera decorations.
+- Optimized background decorations.
+- Reworked primitive shapes scene (for importing).
+- Implemented planet surface shader (based on old implementation of star surface shader, but not animated).
 
 ### Since v0.8-alpha
 - Tweaks to desktop UI.

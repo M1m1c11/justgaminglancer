@@ -29,8 +29,8 @@ var autopilot_angle_deviation = 0.8
 
 # Lesser is more precise, aim at ration 1:2 for decel being larger
 # Higher numbers mean more agressive AP velocity handling.
-var autopilot_accel_factor = 0.3
-var autopilot_deccel_factor = 0.6
+var autopilot_accel_factor = 0.22
+var autopilot_deccel_factor = 0.44
 
 # Orbiting factor allows to approach not at a straight line, but slightly orbiting.
 var autopilot_orbiting_factor = 0.1 # Keep it small. Less than 1.0 - deviation
