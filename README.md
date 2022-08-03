@@ -72,24 +72,17 @@ accelerate rapidly.
 
 ## Priority TODO list:
 - Info / help window.
-- Proper stellar system generator.
-- Handle overlapping local space zones properly.
 - Refactor ship code.
 - Prevent camera orbiting from interrupting autopilot and warp effect adjustments.
-- Make standard shapes have LOD zones (test if scaling will work as intended).
 - Investigate flickering on high velocity.
 - Due to space being a complex sandwich got to figure out how to just teleport and spawn at will.
 - Make autopilot detect obstacles.
 
 ## TODO list:
-- Add some nebulas and dwarf galaxies around main galaxy for extra visuals.
 - Make primitive building blocks with simple collision shapes (performace).
 - Investigate enabling/disabling trimesh collision shapes on the go.
 - Scalable UI (control panel, texts, buttons, etc).
-- Improve star shaders?
 - Make "Orient only" autopilot feature.
-- Nebula LODS.
-- Procedural skybox distant light (to get rid of static effect due to warp).
 - Add a list (options) of allowed post-effects (which work with log depth).
 
 ## How to
